@@ -1,0 +1,22 @@
+<div class="container-fluid" style="height: 100vh; text-align: center">
+  <div class="row h-100 justify-content-center align-items-center">
+    <div class="col-12">
+      <router-outlet></router-outlet>
+      <div class="karte">
+        <div [hidden]="isDisplay">
+          <a routerLink="/as">
+            <app-card format="AS" (click)="toggleDisplay()"></app-card>
+          </a>
+        </div>
+      </div>
+      <div class="karte">
+        <div [hidden]="isDisplay">
+          <a routerLink="/fbs">
+            <app-card format="FBS" (click)="toggleDisplay()"></app-card>
+          </a>
+        </div>
+      </div>
+    </div>
+    <app-card></app-card>
+  </div>
+</div>
