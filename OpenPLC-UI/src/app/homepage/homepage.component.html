@@ -1,0 +1,17 @@
+<h1>{{title}}</h1>
+
+<div class="selectionButtons">
+  <a class="button" routerLink="editor">New Project</a>
+  <br>
+  <a class="button" (click)="openProjectModal()">Open Project</a>
+  <br>
+  <a class="button" routerLink="userManual">User Manual</a>
+</div>
+
+<div class="openProjectModal" id="openProjectModal">
+  <div class="modalBox">
+    <app-open-project></app-open-project>
+  </div>
+</div>
+
+

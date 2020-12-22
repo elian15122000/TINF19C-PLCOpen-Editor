@@ -1,0 +1,27 @@
+<div class="variablesList">
+
+  <button class="newVariable" (click)="newVariable()">New</button>
+  <table>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Class</th>
+      <th>Type</th>
+      <th>IEC-Address</th>
+      <th>Initial value</th>
+      <th>Option</th>
+      <th>Documentation</th>
+    </tr>
+    <tr *ngFor="let variable of variables">
+      <td>{{variable.number}}</td>
+      <td>{{variable.name}}</td>
+      <td>{{variable.class}}</td>
+      <td>{{variable.type}}</td>
+      <td>{{variable.iec}}</td>
+      <td>{{variable.init}}</td>
+      <td>{{variable.option}}</td>
+      <td>{{variable.documentation}}</td>
+    </tr>
+  </table>
+
+</div>

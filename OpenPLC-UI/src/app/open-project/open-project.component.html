@@ -1,0 +1,13 @@
+<div class="modalBox">
+
+  <form novalidate>
+    <h3>Select an existing PLC-Project</h3>
+    <label for="file">Project folder:</label>
+    <br><br>
+    <input id="file" name="file" type="file" (change)="selectedFolder($event)" required webkitdirectory multiple >
+    <br><br>
+    <a (click)="closeProjectModal()" class="actionButton">Back</a>
+    <a (click)="onSubmit()" routerLink="/editor" class="actionButton">Open</a>
+  </form>
+
+</div>

@@ -1,0 +1,467 @@
+[
+  {
+    "name": "Type conversion",
+    "blocks": [
+      {
+        "name": "*_TO_**",
+        "baseinputnumber": 1,
+        "inputs": "ANY",
+        "outputs": "ANY",
+        "comment": "Data type conversion",
+        "extensible": "no"
+      },
+      {
+        "name": "TRUNC",
+        "baseinputnumber": 1,
+        "inputs": "ANY_REAL",
+        "outputs": "ANY_INT",
+        "comment": "Rounding up/down",
+        "extensible": "no"
+      },
+      {
+        "name": "BCD_TO_**",
+        "baseinputnumber": 1,
+        "inputs": "ANY_BIT",
+        "outputs": "ANY_INT",
+        "comment": "Conversion from BCD",
+        "extensible": "no"
+      },
+      {
+        "name": "*_TO_BCD",
+        "baseinputnumber": 1,
+        "inputs": "ANY_INT",
+        "outputs": "ANY_BIT",
+        "comment": "Conversion to BCD",
+        "extensible": "no"
+      },
+      {
+        "name": "DATE_AND_TIME_TO_TIME_OF_DAY",
+        "baseinputnumber": 1,
+        "inputs": "DT",
+        "outputs": "TOD",
+        "comment": "Conversion to time of day",
+        "extensible": "no"
+      },
+      {
+        "name": "DATE_AND_TIME_TO_DATE",
+        "baseinputnumber": 1,
+        "inputs": "DT",
+        "outputs": "DATE",
+        "comment": "Conversion to date",
+        "extensible": "no"
+      }
+    ]
+  },
+  {
+    "name": "Numerical",
+    "blocks": [
+      {
+        "name": "ABS",
+        "baseinputnumber": 1,
+        "inputs": "ANY_NUM",
+        "outputs": "ANY_NUM",
+        "comment": "Absolute number",
+        "extensible": "no"
+      },
+      {
+        "name": "SQRT",
+        "baseinputnumber": 1,
+        "inputs": "ANY_REAL",
+        "outputs": "ANY_REAL",
+        "comment": "Square root",
+        "extensible": "no"
+      },
+      {
+        "name": "LN",
+        "baseinputnumber": 1,
+        "inputs": "ANY_REAL",
+        "outputs": "ANY_REAL",
+        "comment": "Natural logarithm",
+        "extensible": "no"
+      },
+      {
+        "name": "LOG",
+        "baseinputnumber": 1,
+        "inputs": "ANY_REAL",
+        "outputs": "ANY_REAL",
+        "comment": "Logarthm to base 10",
+        "extensible": "no"
+      },
+      {
+        "name": "EXP",
+        "baseinputnumber": 1,
+        "inputs": "ANY_REAL",
+        "outputs": "ANY_REAL",
+        "comment": "Exponentiation",
+        "extensible": "no"
+      },
+      {
+        "name": "SIN",
+        "baseinputnumber": 1,
+        "inputs": "ANY_REAL",
+        "outputs": "ANY_REAL",
+        "comment": "Sine",
+        "extensible": "no"
+      },
+      {
+        "name": "COS",
+        "baseinputnumber": 1,
+        "inputs": "ANY_REAL",
+        "outputs": "ANY_REAL",
+        "comment": "Cosine",
+        "extensible": "no"
+      },
+      {
+        "name": "TAN",
+        "baseinputnumber": 1,
+        "inputs": "ANY_REAL",
+        "outputs": "ANY_REAL",
+        "comment": "Tangent",
+        "extensible": "no"
+      },
+      {
+        "name": "ASIN",
+        "baseinputnumber": 1,
+        "inputs": "ANY_REAL",
+        "outputs": "ANY_REAL",
+        "comment": "Arc Sine",
+        "extensible": "no"
+      },
+      {
+        "name": "ACOS",
+        "baseinputnumber": 1,
+        "inputs": "ANY_REAL",
+        "outputs": "ANY_REAL",
+        "comment": "Arc Cosine",
+        "extensible": "no"
+      },
+      {
+        "name": "ATAN",
+        "baseinputnumber": 1,
+        "inputs": "ANY_REAL",
+        "outputs": "ANY_REAL",
+        "comment": "Arc Tangent",
+        "extensible": "no"
+      }
+    ]
+  },
+  {
+    "name": "Arithmetic",
+    "blocks": [
+      {
+        "name": "ADD",
+        "baseinputnumber": 1,
+        "inputs": "ANY_NUM, ANY_NUM",
+        "outputs": "ANY_NUM",
+        "comment": "Addition",
+        "extensible": "yes"
+      },
+      {
+        "name": "MUL",
+        "baseinputnumber": 1,
+        "inputs": "ANY_NUM, ANY_NUM",
+        "outputs": "ANY_NUM",
+        "comment": "Multiplication",
+        "extensible": "yes"
+      },{
+        "name": "SUB",
+        "baseinputnumber": 1,
+        "inputs": "ANY_NUM, ANY_NUM",
+        "outputs": "ANY_NUM",
+        "comment": "Subtraction",
+        "extensible": "no"
+      },{
+        "name": "DIV",
+        "baseinputnumber": 1,
+        "inputs": "ANY_NUM, ANY_NUM",
+        "outputs": "ANY_NUM",
+        "comment": "Division",
+        "extensible": "no"
+      },
+      {
+        "name": "MOD",
+        "baseinputnumber": 1,
+        "inputs": "ANY_INT, ANY_INT",
+        "outputs": "ANY_INT",
+        "comment": "Remainder (modulo)",
+        "extensible": "no"
+      },
+      {
+        "name": "EXPT",
+        "baseinputnumber": 1,
+        "inputs": "ANY_REAL, ANY_NUM",
+        "outputs": "ANY_REAL",
+        "comment": "Exponent",
+        "extensible": "no"
+      },
+      {
+        "name": "Move",
+        "baseinputnumber": 1,
+        "inputs": "ANY",
+        "outputs": "ANY",
+        "comment": "Assignment",
+        "extensible": "no"
+      }
+    ]
+  },
+  {"name": "Time",
+    "blocks": []
+  },
+  {
+    "name": "Bit-shift",
+    "blocks": [
+      {
+        "name": "SHL",
+        "baseinputnumber": 1,
+        "inputs": "ANY_BIT, N",
+        "outputs": "ANY_BIT",
+        "comment": "Shift left",
+        "extensible": "no"
+      },
+      {
+        "name": "SHR",
+        "baseinputnumber": 1,
+        "inputs": "ANY_BIT, N",
+        "outputs": "ANY_BIT",
+        "comment": "Shift right",
+        "extensible": "no"
+      },
+      {
+        "name": "ROL",
+        "baseinputnumber": 1,
+        "inputs": "ANY_NBIT, N",
+        "outputs": "ANY_NBIT",
+        "comment": "Rotate left",
+        "extensible": "no"
+      },
+      {
+        "name": "ROR",
+        "baseinputnumber": 1,
+        "inputs": "ANY_NBIT, N",
+        "outputs": "ANY_NBIT",
+        "comment": "Rotate right",
+        "extensible": "no"
+      }
+    ]
+  },
+  {
+    "name": "Bitwise",
+    "blocks": [
+      {
+        "name": "AND",
+        "baseinputnumber": 1,
+        "inputs": "ANY_BIT, ANY_BIT",
+        "outputs": "ANY_BIT",
+        "comment": "Bitwise AND",
+        "extensible": "yes"
+      },
+      {
+        "name": "OR",
+        "baseinputnumber": 1,
+        "inputs": "ANY_BIT, ANY_BIT",
+        "outputs": "ANY_BIT",
+        "comment": "Bitwise OR",
+        "extensible": "yes"
+      },
+      {
+        "name": "XOR",
+        "baseinputnumber": 1,
+        "inputs": "ANY_BIT, ANY_BIT",
+        "outputs": "ANY_BIT",
+        "comment": "Bitwise XOR",
+        "extensible": "yes"
+      },
+      {
+        "name": "NOT",
+        "baseinputnumber": 1,
+        "inputs": "ANY_BIT, ANY_BIT",
+        "outputs": "ANY_BIT",
+        "comment": "Bitwise inverting",
+        "extensible": "no"
+      }
+    ]
+  },
+  {
+    "name": "Selection",
+    "blocks": [
+      {
+        "name": "SEL",
+        "baseinputnumber": 0,
+        "inputs": "G, ANY, ANY",
+        "outputs": "ANY",
+        "comment": "Binary Selection (1 or 2)",
+        "extensible": "no"
+      },
+      {
+        "name": "MAX",
+        "baseinputnumber": 1,
+        "inputs": "ANY, ANY",
+        "outputs": "ANY",
+        "comment": "Maximum",
+        "extensible": "yes"
+      },
+      {
+        "name": "MIN",
+        "baseinputnumber": 1,
+        "inputs": "ANY, ANY",
+        "outputs": "ANY",
+        "comment": "Minimum",
+        "extensible": "yes"
+      },
+      {
+        "name": "LIMIT",
+        "baseinputnumber": 1,
+        "inputs": "MN, ANY, MX",
+        "outputs": "ANY",
+        "comment": "Limitation",
+        "extensible": "no"
+      },
+      {
+        "name": "MUX",
+        "baseinputnumber": 0,
+        "inputs": "K, ANY, ANY",
+        "outputs": "ANY",
+        "comment": "Multiplexer (select 1 or N)",
+        "extensible": "yes"
+      }
+    ]
+  },
+  {
+    "name": "Comparison",
+    "blocks": [
+      {
+        "name": "GT",
+        "baseinputnumber": 1,
+        "inputs": "ANY, ANY",
+        "outputs": "BOOL",
+        "comment": "Greater than",
+        "extensible": "yes"
+      },
+      {
+        "name": "GE",
+        "baseinputnumber": 1,
+        "inputs": "ANY, ANY",
+        "outputs": "BOOL",
+        "comment": "Greater than or equal to",
+        "extensible": "yes"
+      },
+      {
+        "name": "EQ",
+        "baseinputnumber": 1,
+        "inputs": "ANY, ANY",
+        "outputs": "BOOL",
+        "comment": "Equal to",
+        "extensible": "yes"
+      },
+      {
+        "name": "LT",
+        "baseinputnumber": 1,
+        "inputs": "ANY, ANY",
+        "outputs": "BOOL",
+        "comment": "Less than",
+        "extensible": "yes"
+      },
+      {
+        "name": "LE",
+        "baseinputnumber": 1,
+        "inputs": "ANY, ANY",
+        "outputs": "BOOL",
+        "comment": "Less than or equal to",
+        "extensible": "yes"
+      },
+      {
+        "name": "NE",
+        "baseinputnumber": 1,
+        "inputs": "ANY, ANY",
+        "outputs": "BOOL",
+        "comment": "Not equal to",
+        "extensible": "no"
+      }
+    ]
+  },
+  {
+    "name": "Character string",
+    "blocks": [
+      {
+        "name": "LEN",
+        "baseinputnumber": 1,
+        "inputs": "STRING",
+        "outputs": "INT",
+        "comment": "Length of string",
+        "extensible": "no"
+      },
+      {
+        "name": "LEFT",
+        "baseinputnumber": 1,
+        "inputs": "STRING, L",
+        "outputs": "STRING",
+        "comment": "String left of",
+        "extensible": "no"
+      },
+      {
+        "name": "RIGHT",
+        "baseinputnumber": 1,
+        "inputs": "STRING, L",
+        "outputs": "STRING",
+        "comment": "String sight of",
+        "extensible": "no"
+      },
+      {
+        "name": "MID",
+        "baseinputnumber": 1,
+        "inputs": "STRING, L, P",
+        "outputs": "STRING",
+        "comment": "String of the middle",
+        "extensible": "no"
+      },
+      {
+        "name": "CONCAT",
+        "baseinputnumber": 1,
+        "inputs": "STRING, STRING",
+        "outputs": "STRING",
+        "comment": "Concatenation",
+        "extensible": "yes"
+      },
+      {
+        "name": "CONCAT_DATE_TOD",
+        "baseinputnumber": 1,
+        "inputs": "DATE, TOD",
+        "outputs": "DT",
+        "comment": "Time concatenation",
+        "extensible": "no"
+      },
+      {
+        "name": "INSERT",
+        "baseinputnumber": 1,
+        "inputs": "STRING, STRING, P",
+        "outputs": "STRING",
+        "comment": "Insertion (into)",
+        "extensible": "no"
+      },
+      {
+        "name": "DELETE",
+        "baseinputnumber": 1,
+        "inputs": "STRING, L, P",
+        "outputs": "STRING",
+        "comment": "Deletion (within)",
+        "extensible": "no"
+      },
+      {
+        "name": "REPLACE",
+        "baseinputnumber": 1,
+        "inputs": "STRING, STRING, L, P",
+        "outputs": "STRING",
+        "comment": "Replacement (within)",
+        "extensible": "no"
+      },
+      {
+        "name": "FIND",
+        "baseinputnumber": 1,
+        "inputs": "STRING, STRING",
+        "outputs": "INT",
+        "comment": "Find position",
+        "extensible": "no"
+      }
+    ]
+  }
+]

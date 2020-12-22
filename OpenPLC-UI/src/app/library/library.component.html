@@ -1,0 +1,16 @@
+
+<div class="library">
+  <h3>Library</h3>
+  <div class="libraryList">
+    <details *ngFor="let library of libraryList">
+    <summary>
+      <strong>{{library.name}}</strong>
+    </summary>
+      <ul *ngFor="let fb of library.blocks">
+        <li>{{fb.name}}</li>
+      </ul>
+    </details>
+  </div>
+
+</div>
+
