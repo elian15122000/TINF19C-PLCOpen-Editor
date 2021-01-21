@@ -30,8 +30,8 @@ We want to develop a web version of the OpenPLC Editor to allow users to work on
 You can find more information about the project by visiting the wiki and reading the [CRS](https://github.com/elian15122000/TINF19C-PLCOpen-Editor/blob/master/PROJECT/CRS/TINF19C_CRS_Team_1_0v1.pdf), [SRS](https://github.com/elian15122000/TINF19C-PLCOpen-Editor/wiki/1-System-Requirements-Specification) and [SAS](https://github.com/elian15122000/TINF19C-PLCOpen-Editor/wiki/2-System-Architecture-Specification) documents.<br>
 
 **What technologies are we using to make the application?**<br>
-We want to use Angular 10 for the client code and Node.js for the backend.<br>
-We also need to use a file system to store user programs, but we having made a certain decision regarding this matter yet.<br>
+The Application runs is written in Angular 8 and runs solely as a front end application. There is no backedend envolved<br>
+<br>
 <br>
 **Do we have an icon yet?**<br>
 nope, but we will soon. :D<br>
