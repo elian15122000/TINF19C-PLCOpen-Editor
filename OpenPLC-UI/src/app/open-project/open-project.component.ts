@@ -7,7 +7,6 @@ import {ImportService} from '../import.service';
   styleUrls: ['./open-project.component.css']
 })
 export class OpenProjectComponent implements OnInit {
-  xmlFile = '';
 
   constructor(private importService: ImportService) { }
 
@@ -24,21 +23,6 @@ export class OpenProjectComponent implements OnInit {
   }
 
   fileUpload(event: Event): void {
-    // @ts-ignore
-    if (event.target.files[0] !== null) {
-      // @ts-ignore
-      const file = event.target.files[0];
-      if (!file) {
-        return;
-      }
-      const reader = new FileReader();
-      reader.onload = (evt) => {
-        this.xmlFile = (evt as any).target.result;
-        console.log(this.xmlFile);
-        this.importService.xmlfile = this.xmlFile;
-      };
-      reader.readAsText(file);
-    }
-
+    this.importService.fileUpload(event);
   }
 }

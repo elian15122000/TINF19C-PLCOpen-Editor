@@ -4,11 +4,25 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ImportService {
-  xmlfile = '';
+  xmlFile = '';
 
   constructor() { }
 
-  getXMLFile(): string {
-    return this.xmlfile;
+  fileUpload(event: Event): void {
+    // @ts-ignore
+    if (event.target.files[0] !== null) {
+      // @ts-ignore
+      const file = event.target.files[0];
+      if (!file) {
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        this.xmlFile = (evt as any).target.result;
+        console.log(this.xmlFile);
+      };
+      reader.readAsText(file);
+    }
+
   }
 }
