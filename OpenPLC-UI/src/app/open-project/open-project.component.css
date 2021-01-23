@@ -2,12 +2,17 @@
   position: absolute;
   top: 20%;
   left: 50%;
+  text-align: center;
   transform: translate(-50%,-50%);
   background-color: white;
   width: fit-content;
   height: fit-content;
   padding: 15px;
 }
+.uploadForm {
+  padding: 10px 30px;
+}
+
 .actionButton {
   background-color: black;
   border: none;

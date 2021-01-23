@@ -14,6 +14,8 @@ import { AngularResizedEventModule } from 'angular-resize-event';
 import { VariablesListComponent } from './variables-list/variables-list.component';
 import { ResizableModule } from 'angular-resizable-element';
 import { ProjectOverciewComponent } from './project-overciew/project-overciew.component';
+import { FunctionblockComponent } from './functionblock/functionblock.component';
+import { ImportService} from './import.service';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { ProjectOverciewComponent } from './project-overciew/project-overciew.co
     OpenProjectComponent,
     VariablesListComponent,
     ProjectOverciewComponent,
+    FunctionblockComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,7 @@ import { ProjectOverciewComponent } from './project-overciew/project-overciew.co
     AngularResizedEventModule,
     ResizableModule,
   ],
-  providers: [],
+  providers: [ImportService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

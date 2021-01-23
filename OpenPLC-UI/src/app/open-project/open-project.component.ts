@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {NgForm, NgModel} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {ImportService} from '../import.service';
 
 @Component({
   selector: 'app-open-project',
@@ -7,8 +7,9 @@ import {NgForm, NgModel} from '@angular/forms';
   styleUrls: ['./open-project.component.css']
 })
 export class OpenProjectComponent implements OnInit {
+  xmlFile = '';
 
-  constructor() { }
+  constructor(private importService: ImportService) { }
 
   ngOnInit(): void {
   }
@@ -22,12 +23,22 @@ export class OpenProjectComponent implements OnInit {
     this.closeProjectModal();
   }
 
-  selectedFolder(event: Event): void {
+  fileUpload(event: Event): void {
     // @ts-ignore
-    const files = event.target.files;
-    // tslint:disable-next-line:prefer-for-of
-    for (let i = 0;  i < files.length; i++){
-      console.log(files[i].webkitRelativePath);
+    if (event.target.files[0] !== null) {
+      // @ts-ignore
+      const file = event.target.files[0];
+      if (!file) {
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        this.xmlFile = (evt as any).target.result;
+        console.log(this.xmlFile);
+        this.importService.xmlfile = this.xmlFile;
+      };
+      reader.readAsText(file);
     }
+
   }
 }

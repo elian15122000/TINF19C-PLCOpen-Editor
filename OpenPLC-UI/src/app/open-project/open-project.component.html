@@ -1,13 +1,13 @@
 <div class="modalBox">
 
-  <form novalidate>
+  <form class="uploadForm" #uploadForm=ngForm (ngSubmit)="onSubmit()">
     <h3>Select an existing PLC-Project</h3>
-    <label for="file">Project folder:</label>
+    <label for="file">XML file: </label>
+
+    <input id="file" name="file" type="file" accept="text/xml" (change)="fileUpload($event)" ngModel>
     <br><br>
-    <input id="file" name="file" type="file" (change)="selectedFolder($event)" required webkitdirectory multiple >
-    <br><br>
-    <a (click)="closeProjectModal()" class="actionButton">Back</a>
-    <a (click)="onSubmit()" routerLink="/editor" class="actionButton">Open</a>
+    <input type="button" (click)="closeProjectModal()" class="actionButton" value="Close">
+    <input type="submit" routerLink="/editor" class="actionButton" value="Open">
   </form>
 
 </div>
