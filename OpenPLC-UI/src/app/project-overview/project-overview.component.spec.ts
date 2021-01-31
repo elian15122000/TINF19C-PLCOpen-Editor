@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProjectOverciewComponent } from './project-overciew.component';
+import { ProjectOverviewComponent } from './project-overview.component';
 
-describe('ProjectOverciewComponent', () => {
-  let component: ProjectOverciewComponent;
-  let fixture: ComponentFixture<ProjectOverciewComponent>;
+describe('ProjectOverviewComponent', () => {
+  let component: ProjectOverviewComponent;
+  let fixture: ComponentFixture<ProjectOverviewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProjectOverciewComponent ]
+      declarations: [ ProjectOverviewComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProjectOverciewComponent);
+    fixture = TestBed.createComponent(ProjectOverviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

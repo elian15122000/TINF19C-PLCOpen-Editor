@@ -7,7 +7,6 @@
   border: black solid 2px;
   padding-left: 10px;
   overflow: auto;
-  resize: vertical;
   margin: 5px;
 }
 table, th, td {
@@ -23,4 +22,11 @@ th {
 }
 .newVariable {
   margin: 10px 0 5px 2%;
+}
+input {
+  border: none;
+}
+
+select {
+  border: none;
 }

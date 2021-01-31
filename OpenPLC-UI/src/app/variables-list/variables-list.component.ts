@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Variable } from '../variable';
+import { Variable} from "../models/variable";
+import { ProjectService} from "../services/project.service";
 
 @Component({
   selector: 'app-variables-list',
@@ -9,25 +10,17 @@ import { Variable } from '../variable';
 export class VariablesListComponent implements OnInit {
 
   public variables: Variable[] = [];
-  private numberOfVariables = 0;
+  public variableList: any[] = [];
 
-  constructor() { }
+  constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
-    this.numberOfVariables++;
-    this.variables.push({number: 1,
-      name: 'test',
-      class: 'test',
-      type: 'test',
-      iec: 'test',
-      init: 'test',
-      option: 'test',
-      documentation: 'test'
-    });
+    this.variableList = this.projectService.program.interface[0].localVars;
+    console.log(this.variableList);
   }
+
   public newVariable(): void {
-    this.numberOfVariables++;
-    this.variables.push({number: this.numberOfVariables,
+    this.variables.push({
       name: '',
       class: '',
       type: '',

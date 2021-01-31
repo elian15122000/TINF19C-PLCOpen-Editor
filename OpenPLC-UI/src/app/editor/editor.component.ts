@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {ImportService} from '../import.service';
 
 @Component({
   selector: 'app-editor',
@@ -7,12 +6,10 @@ import {ImportService} from '../import.service';
   styleUrls: ['./editor.component.css']
 })
 export class EditorComponent implements OnInit {
-  upload = '';
 
-  constructor(private importService: ImportService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.upload = this.importService.xmlfile;
   }
 
 }

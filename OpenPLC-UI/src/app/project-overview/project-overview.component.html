@@ -1,0 +1,6 @@
+<h3>Project Overview</h3>
+<ul *ngFor="let pou of pous[0].pou">
+  <li>
+    <a (click)="selectProgram(pou)" routerLink="/editor">{{pou.$.name}}</a>
+  </li>
+</ul>

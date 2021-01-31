@@ -1,13 +1,12 @@
 <div class="modalBox">
 
-  <form class="uploadForm" #uploadForm=ngForm (ngSubmit)="onSubmit()">
+  <form class="uploadForm" (ngSubmit)="onSubmit()">
     <h3>Select an existing PLC-Project</h3>
     <label for="file">XML file: </label>
-
-    <input id="file" name="file" type="file" accept="text/xml" (change)="fileUpload($event)" ngModel>
+    <input id="file" name="file" type="file" accept="text/xml" (change)="fileUpload($event)" required>
     <br><br>
     <input type="button" (click)="closeProjectModal()" class="actionButton" value="Close">
-    <input type="submit" routerLink="/editor" class="actionButton" value="Open">
+    <input type="submit" routerLink="/projectOverview" class="actionButton" value="Open">
   </form>
 
 </div>

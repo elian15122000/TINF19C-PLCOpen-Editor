@@ -19,7 +19,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/OpenPLC-UI'),
+      dir: require('path').join(__dirname, './coverage/OpenPLC-Editor'),
       subdir: '.',
       reporters: [
         { type: 'html' },

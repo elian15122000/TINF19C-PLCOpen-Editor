@@ -3,7 +3,6 @@
   <button class="newVariable" (click)="newVariable()">New</button>
   <table>
     <tr>
-      <th>#</th>
       <th>Name</th>
       <th>Class</th>
       <th>Type</th>
@@ -12,15 +11,40 @@
       <th>Option</th>
       <th>Documentation</th>
     </tr>
+
     <tr *ngFor="let variable of variables">
-      <td>{{variable.number}}</td>
-      <td>{{variable.name}}</td>
-      <td>{{variable.class}}</td>
-      <td>{{variable.type}}</td>
-      <td>{{variable.iec}}</td>
-      <td>{{variable.init}}</td>
-      <td>{{variable.option}}</td>
-      <td>{{variable.documentation}}</td>
+      <td>
+        <input [(ngModel)]="variable.name">
+      </td>
+      <td>
+        <select [(ngModel)]="variable.class">
+          <option>Eingang</option>
+          <option>Ausgang</option>
+          <option>Ein- und Ausgang</option>
+          <option>External</option>
+          <option>Lokal</option>
+          <option>Temp</option>
+        </select>
+      </td>
+      <td>
+        <input [(ngModel)]="variable.type">
+      </td>
+      <td>
+        <input [(ngModel)]="variable.iec">
+      </td>
+      <td>
+        <input [(ngModel)]="variable.init">
+      </td>
+      <td>
+        <select [(ngModel)]="variable.option">
+          <option value="constant">Konstante</option>
+          <option value="retain">Retain</option>
+          <option value="non-retain">Non-Retain</option>
+        </select>
+      </td>
+      <td>
+        <input [(ngModel)]="variable.documentation">
+      </td>
     </tr>
   </table>
 

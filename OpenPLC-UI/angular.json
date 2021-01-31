@@ -3,13 +3,9 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "OpenPLC-UI": {
+    "OpenPLC-Editor": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:application": {
-          "strict": true
-        }
-      },
+      "schematics": {},
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -17,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/OpenPLC-UI",
+            "outputPath": "dist/OpenPLC-Editor",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -50,13 +46,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
                 }
               ]
             }
@@ -65,18 +61,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "OpenPLC-UI:build"
+            "browserTarget": "OpenPLC-Editor:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "OpenPLC-UI:build:production"
+              "browserTarget": "OpenPLC-Editor:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "OpenPLC-UI:build"
+            "browserTarget": "OpenPLC-Editor:build"
           }
         },
         "test": {
@@ -113,16 +109,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "OpenPLC-UI:serve"
+            "devServerTarget": "OpenPLC-Editor:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "OpenPLC-UI:serve:production"
+              "devServerTarget": "OpenPLC-Editor:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "OpenPLC-UI"
+  "defaultProject": "OpenPLC-Editor"
 }
