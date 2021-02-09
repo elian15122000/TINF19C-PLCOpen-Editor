@@ -43,6 +43,15 @@ export class VariablesListComponent implements OnInit {
     });
   }
 
+  deleteVariable(item: Variable): void {
+    this.variables = this.variables.filter(obj => obj !== item);
+    this.projectService.project.pous.forEach((pou) => {
+      if (pou.name === this.pouName) {
+        pou.variables = this.variables;
+      }
+    });
+  }
+
   onchange(): void{
     this.projectService.project.pous.forEach((pou) => {
       if (pou.name === this.pouName) {

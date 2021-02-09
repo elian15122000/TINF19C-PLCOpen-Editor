@@ -1,6 +1,6 @@
 <div class="variablesList">
 
-  <button class="newVariable" (click)="newVariable()">New</button>
+  <button class="newVariable" (click)="newVariable()">New Variable</button>
   <table>
     <tr>
       <th>Name</th>
@@ -10,6 +10,7 @@
       <th>Initial value</th>
       <th>Option</th>
       <th>Documentation</th>
+      <th></th>
     </tr>
 
     <tr *ngFor="let variable of variables">
@@ -46,6 +47,9 @@
       </td>
       <td>
         <input [(ngModel)]="variable.documentation" (change)="onchange()">
+      </td>
+      <td>
+        <button (click)="deleteVariable(variable)">Delete</button>
       </td>
     </tr>
   </table>
