@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {ProjectService} from "../services/project.service";
+import {ProjectService} from '../services/project.service';
+import {VariablesService} from '../services/variables.service';
+import {Pou} from '../models/pou';
 
 @Component({
   selector: 'app-project-overview',
@@ -7,18 +9,19 @@ import {ProjectService} from "../services/project.service";
   styleUrls: ['./project-overview.component.css']
 })
 export class ProjectOverviewComponent implements OnInit {
-  public pous: any[] = [];
+  public pous: Pou[] = [];
 
-  constructor(private projectService: ProjectService) { }
+  constructor(private projectService: ProjectService, private variablesService: VariablesService) { }
 
   ngOnInit(): void {
-    if (this.projectService.pous !== undefined) {
-      this.pous = this.projectService.pous;
+    if (this.projectService.project !== undefined) {
+      this.pous = this.projectService.project.pous;
     }
   }
 
-  selectProgram(program: any): void{
+  selectProgram(program: any): void {
     this.projectService.program = program;
+    this.variablesService.setVariables(program);
   }
 
 }

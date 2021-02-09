@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ImportService} from "../services/import.service";
+import {ImportService} from '../services/import.service';
 
 @Component({
   selector: 'app-open-project',

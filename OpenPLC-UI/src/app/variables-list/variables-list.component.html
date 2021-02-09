@@ -14,36 +14,38 @@
 
     <tr *ngFor="let variable of variables">
       <td>
-        <input [(ngModel)]="variable.name">
+        <input [(ngModel)]="variable.name" (change)="onchange()">
       </td>
       <td>
-        <select [(ngModel)]="variable.class">
-          <option>Eingang</option>
-          <option>Ausgang</option>
-          <option>Ein- und Ausgang</option>
-          <option>External</option>
-          <option>Lokal</option>
-          <option>Temp</option>
+        <select [(ngModel)]="variable.class" (change)="onchange()">
+          <option value="input">Input</option>
+          <option value="output">Output</option>
+          <option value="inOut">In-/Output</option>
+          <option value="external">External</option>
+          <option value="local">Local</option>
+          <option value="temp">Temp</option>
         </select>
       </td>
       <td>
-        <input [(ngModel)]="variable.type">
-      </td>
-      <td>
-        <input [(ngModel)]="variable.iec">
-      </td>
-      <td>
-        <input [(ngModel)]="variable.init">
-      </td>
-      <td>
-        <select [(ngModel)]="variable.option">
-          <option value="constant">Konstante</option>
-          <option value="retain">Retain</option>
-          <option value="non-retain">Non-Retain</option>
+        <select [(ngModel)]="variable.type" (change)="onchange()">
+          <option *ngFor="let type of types" value="{{type}}">{{type}}</option>
         </select>
       </td>
       <td>
-        <input [(ngModel)]="variable.documentation">
+        <input [(ngModel)]="variable.iec" (change)="onchange()">
+      </td>
+      <td>
+        <input [(ngModel)]="variable.init" (change)="onchange()">
+      </td>
+      <td>
+        <select [(ngModel)]="variable.option" (change)="onchange()">
+          <option value="constant">constant</option>
+          <option value="retain">retain</option>
+          <option value="non-retain">non-retain</option>
+        </select>
+      </td>
+      <td>
+        <input [(ngModel)]="variable.documentation" (change)="onchange()">
       </td>
     </tr>
   </table>

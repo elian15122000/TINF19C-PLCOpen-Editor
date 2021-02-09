@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import xml2js from 'xml2js';
 import {ProjectService} from './project.service';
+import {VariablesService} from './variables.service';
+import {Project} from '../models/project';
+import {Pou} from '../models/pou';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +12,7 @@ export class ImportService {
   xmlFile: any;
   public xmlItems: any;
 
-  constructor(private projectService: ProjectService) {
+  constructor(private projectService: ProjectService, private variableService: VariablesService) {
   }
 
   fileUpload(event: Event): void {
@@ -28,7 +31,7 @@ export class ImportService {
           .then((data) => {
             this.xmlItems = data[0];
             console.log(this.xmlItems);
-            this.setPOUs();
+            this.uploadProject();
           });
       };
       reader.readAsText(file);
@@ -43,7 +46,8 @@ export class ImportService {
             trim: true,
             explicitArray: true
           });
-      parser.parseString(data, function (err, result) {
+      // tslint:disable-next-line:only-arrow-functions typedef
+      parser.parseString(data, function(err, result) {
         const obj = result.project;
         arr.push({
           project: obj,
@@ -53,8 +57,21 @@ export class ImportService {
     });
   }
 
-  setPOUs(): void {
-    this.projectService.pous = this.xmlItems.project.types[0].pous;
-    console.log(this.projectService.pous);
+  uploadProject(): void {
+    try {
+      if (this.xmlItems.project.contentHeader[0] !== undefined){
+        this.projectService.project = new Project(this.xmlItems.project.contentHeader[0].$.name);
+
+        let numberOfPous = 0;
+        this.xmlItems.project.types[0].pous[0].pou.forEach((pou) => {
+          this.projectService.project.pous.push(new Pou(pou.$.name, pou.$.pouType));
+          this.projectService.project.pous[numberOfPous].variables = this.variableService.setVariables(pou);
+          console.log(this.projectService.project);
+          numberOfPous++;
+        });
+      }
+    } catch (e) {
+      console.log('FEHLER BEIM IMPORT');
+    }
   }
 }
