@@ -1,17 +1,22 @@
 import { Injectable } from '@angular/core';
-import {Variable} from '../models/variable';
 import {Project} from '../models/project';
+import {Pou} from '../models/pou';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
-  public pous: any[];
-  public program: any;
-  public project: Project;
-  public variables: Variable[] = [];
+  public project: Project = new Project('Unknown');
 
   constructor() { }
+
+  addPOU(name: string, type: string): void {
+    this.project.pous.push(new Pou(name, type));
+  }
+
+  deletePOU(deletItem: Pou): void {
+    this.project.pous = this.project.pous.filter(obj => obj !== deletItem);
+  }
 
 }
 

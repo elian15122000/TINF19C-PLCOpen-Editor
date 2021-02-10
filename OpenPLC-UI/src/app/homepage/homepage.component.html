@@ -1,16 +1,37 @@
 <h1>{{title}}</h1>
 
 <div class="selectionButtons">
-  <a class="button" routerLink="editor">New Project</a>
+  <a class="button" (click)="newProjectModal()">New Project</a>
   <br>
   <a class="button" (click)="openProjectModal()">Open Project</a>
   <br>
   <a class="button" routerLink="userManual">User Manual</a>
 </div>
 
-<div class="openProjectModal" id="openProjectModal">
+
+<div class="projectModal" id="openProjectModal">
   <div class="modalBox">
-    <app-open-project></app-open-project>
+    <form class="uploadForm" (ngSubmit)="closeProjectModal()">
+      <h3>Select an existing PLC-Project</h3>
+      <label for="file">XML file: </label>
+      <input id="file" name="file" type="file" accept="text/xml" (change)="fileUpload($event)" required>
+      <br><br>
+      <input type="button" (click)="closeProjectModal()" class="actionButton" value="Close">
+      <input type="submit" routerLink="/projectOverview" class="actionButton" value="Open">
+    </form>
+  </div>
+</div>
+
+<div class="projectModal" id="newProjectModal">
+  <div class="modalBox">
+    <form #newProject="ngForm" class="uploadForm">
+      <h3>Create a new Project:</h3>
+      <label for="projectName">Project name: </label>
+      <input id="projectName" name="projectName" type="text" required ngModel>
+      <br><br>
+      <input type="button" (click)="closeNewProject()" class="actionButton" value="Close">
+      <input type="submit" routerLink="/projectOverview" (click)="createProject(newProject.value)" class="actionButton" value="Open">
+    </form>
   </div>
 </div>
 

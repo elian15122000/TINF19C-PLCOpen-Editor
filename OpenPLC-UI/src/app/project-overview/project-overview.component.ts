@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {ProjectService} from '../services/project.service';
-import {VariablesService} from '../services/variables.service';
 import {Pou} from '../models/pou';
 
 @Component({
@@ -10,18 +9,37 @@ import {Pou} from '../models/pou';
 })
 export class ProjectOverviewComponent implements OnInit {
   public pous: Pou[] = [];
+  public projectName = this.projectService.project.name;
 
-  constructor(private projectService: ProjectService, private variablesService: VariablesService) { }
+  constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
+    this.loadPous();
+  }
+
+  loadPous(): void {
     if (this.projectService.project !== undefined) {
       this.pous = this.projectService.project.pous;
     }
   }
 
-  selectProgram(program: any): void {
-    this.projectService.program = program;
-    this.variablesService.setVariables(program);
+  openAddModal(): void {
+    document.getElementById('addPouModal').style.display = 'block';
+  }
+
+  closePouModal(): void {
+    document.getElementById('addPouModal').style.display = 'none';
+  }
+
+  addPou(data: any): void {
+    this.projectService.addPOU(data.name, data.type);
+    this.loadPous();
+    this.closePouModal();
+  }
+
+  deletePou(deleteItem: Pou): void {
+    this.projectService.deletePOU(deleteItem);
+    this.loadPous();
   }
 
 }
