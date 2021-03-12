@@ -1,11 +1,11 @@
 # PLCOpen-Editor
 
 
-
-<div align="center" style="border:black 1px">
+<kbd>
+<div align="center">
  <img style="margin-left: 30" src="https://github.com/elian15122000/TINF19C-PLCOpen-Editor/blob/master/Resources/PLC_Logo.png" width=300>
 </div>
-
+</kbd>
 
 Welcome to the repository of the Web PLCOpen-Editor!
 
