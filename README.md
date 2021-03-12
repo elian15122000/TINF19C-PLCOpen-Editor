@@ -24,7 +24,7 @@ Our team members are:<br>
 The goal of this project is to develop a web version of the [OpenPLC-Editor](https://www.openplcproject.com/plcopen-editor/) that supports the Sequential Function Chart (SFC) and Function Block Diagram (FBD) languages.
 It is supposed to be an easy tool to create PLC programs without needing to install the software.
 
-# FAQ <br>
+## FAQ <br>
 **What is PLC?**<br>
 PLC stands for Programable logic controllers.<br>
 A simple way to understand it would be to think of PLC as a small computer that performs a list of instructions.<br>
