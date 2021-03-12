@@ -2,9 +2,9 @@
 
 
 
-<p align="center">
+<div align="center">
  <img style="margin-left: 30" src="https://github.com/elian15122000/TINF19C-PLCOpen-Editor/blob/master/Resources/PLC_Logo.png" width=300>
-</p>
+</div>
 
 
 Welcome to the repository of the Web PLCOpen-Editor!
