@@ -1,7 +1,7 @@
 # PLCOpen-Editor
 <br>
 <div align="center" class="border">
-<img style="margin-left: 30" src="https://github.com/elian15122000/TINF19C-PLCOpen-Editor/blob/master/Resources/PLC_Logo.png" width=300>
+<img style="margin-left: 30" src="https://github.com/elian15122000/TINF19C-PLCOpen-Editor/blob/master/Resources/PLC_Logo.png">
 </div>
 
 <br>
