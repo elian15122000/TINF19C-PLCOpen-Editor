@@ -3,7 +3,7 @@
 Welcome to the repository of the Web PLCOpen-Editor!
 
 
-<img src="https://github.com/elian15122000/TINF19C-PLCOpen-Editor/blob/master/Resources/Logo.png" width=200>
+<img src="https://github.com/elian15122000/TINF19C-PLCOpen-Editor/blob/master/Resources/PLC_Logo.png" width=200>
 
 This is a student project developed at Baden-Wuerttemberg Cooperative State University (DHBW) Stuttgart and supervised by Markus Rentschler and Christian Holder.
 <br>
