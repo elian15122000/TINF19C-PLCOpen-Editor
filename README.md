@@ -2,7 +2,7 @@
 
 
 
-<div align="center">
+<div align="center" style="border:black 1px">
  <img style="margin-left: 30" src="https://github.com/elian15122000/TINF19C-PLCOpen-Editor/blob/master/Resources/PLC_Logo.png" width=300>
 </div>
 
