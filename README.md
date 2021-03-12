@@ -4,9 +4,6 @@
 <img style="margin-left: 30" src="https://github.com/elian15122000/TINF19C-PLCOpen-Editor/blob/master/Resources/PLC_Logo.png" width=300>
 </div>
 
-|![pictureAliasName](https://github.com/elian15122000/TINF19C-PLCOpen-Editor/blob/master/Resources/PLC_Logo.png)|
--
-
 <br>
 <br>
 <h2>Welcome to the repository of the Web PLCOpen-Editor!</h2>
