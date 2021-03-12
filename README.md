@@ -11,7 +11,7 @@
 
 <br>
 <br>
-Welcome to the repository of the Web PLCOpen-Editor!
+<h2>Welcome to the repository of the Web PLCOpen-Editor!</h2>
 
 This is a student project developed at Baden-Wuerttemberg Cooperative State University (DHBW) Stuttgart and supervised by Markus Rentschler and Christian Holder.
 <br>
