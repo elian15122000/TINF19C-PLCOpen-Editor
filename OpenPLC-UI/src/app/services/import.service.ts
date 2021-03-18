@@ -39,6 +39,7 @@ export class ImportService {
   }
 
   parseXML(data: string): any {
+    console.log(data);
     return new Promise(resolve => {
       const arr = [];
       const parser = new xml2js.Parser(
@@ -64,11 +65,12 @@ export class ImportService {
 
         let numberOfPous = 0;
         this.xmlItems.project.types[0].pous[0].pou.forEach((pou) => {
+          console.log(pou);
           this.projectService.project.pous.push(new Pou(pou.$.name, pou.$.pouType));
           this.projectService.project.pous[numberOfPous].variables = this.variableService.setVariables(pou);
-          console.log(this.projectService.project);
           numberOfPous++;
         });
+        console.log(this.projectService.project);
       }
     } catch (e) {
       console.log('FEHLER BEIM IMPORT');

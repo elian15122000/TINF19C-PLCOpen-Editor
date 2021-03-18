@@ -11,7 +11,10 @@ export class ProjectOverviewComponent implements OnInit {
   public pous: Pou[] = [];
   public projectName = this.projectService.project.name;
 
-  constructor(private projectService: ProjectService) { }
+  constructor(private projectService: ProjectService) {
+    console.log( this.projectService.project);
+
+  }
 
   ngOnInit(): void {
     this.loadPous();
