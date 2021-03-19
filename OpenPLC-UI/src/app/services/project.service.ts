@@ -26,6 +26,17 @@ export class ProjectService {
     return '';
   }
 
+  getPou(pouName: string): any {
+    let pou;
+    this.pouItems.forEach((item) => {
+      const check = (item.getAttribute('name') === pouName);
+      if (check) {
+        pou = item;
+        return pou;
+      }
+    });
+    return undefined;
+  }
 
   addPOU(name: string, type: string): void {
   }

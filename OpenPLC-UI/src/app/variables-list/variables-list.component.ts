@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Variable} from '../models/variable';
 import {ActivatedRoute} from '@angular/router';
 import {ProjectService} from '../services/project.service';
+import {VariablesService} from '../services/variables.service';
 
 @Component({
   selector: 'app-variables-list',
@@ -14,16 +15,15 @@ export class VariablesListComponent implements OnInit {
   public types = ['BOOL', 'SINT', 'INT', 'DINT', 'LINT', 'USINT', 'UINT', 'UDINT', 'ULINT',
     'REAL', 'LREAL', 'TIME', 'DATE', 'TOD', 'DT', 'STRING', 'BYTE', 'WORD', 'DWORD', 'LWORD'];
 
-  constructor(private projectService: ProjectService, private route: ActivatedRoute) {
+  constructor(private projectService: ProjectService, private route: ActivatedRoute, private variablesService: VariablesService) {
   }
 
   ngOnInit(): void {
     this.pouName = this.route.snapshot.params.pouName;
-    /*this.projectService.project.pous.forEach((pou) => {
-      if (pou.name === this.pouName) {
-        this.variables = pou.variables;
-      }
-    });*/
+    const pou = this.projectService.getPou(this.pouName);
+    if (pou !== undefined) {
+      this.variables = this.variablesService.getVariablesList(pou);
+    }
   }
 
   public newVariable(): void {
