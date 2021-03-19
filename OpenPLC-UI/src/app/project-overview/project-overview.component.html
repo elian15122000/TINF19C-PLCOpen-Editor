@@ -1,16 +1,17 @@
 <div class="projectOverview">
   <h2>Project Overview</h2>
+
   <h3>Project: {{projectName}}</h3>
 
   <div *ngFor="let pou of pous">
     <table>
       <tr class="dropdown">
         <td>
-          <a class="dropbtn" routerLink="/editor/{{pou.name}}">{{pou.name}}</a>
+          <a class="dropbtn" routerLink="/editor/{{pou}}">{{pou}}</a>
         </td>
         <td>
         <span class="dropdown-content">
-          <button class="actionButton" (click)="deletePou(pou)">Delete</button>
+          <button class="actionButton">Delete</button>
         </span>
         </td>
       </tr>
@@ -40,5 +41,5 @@
       <input type="submit" (click)="addPou(newPOU.value)" class="actionButton" value="Open">
     </form>
   </div>
+  -->
 </div>
-

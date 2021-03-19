@@ -1,22 +1,17 @@
 import { Injectable } from '@angular/core';
-import xml2js from 'xml2js';
 import {ProjectService} from './project.service';
-import {VariablesService} from './variables.service';
-import {Project} from '../models/project';
-import {Pou} from '../models/pou';
 
 @Injectable({
   providedIn: 'root'
 })
+// Liest die hochgeladene xml-Datei und speichert die Werte an der entsprechenden Variable des ProjectService
 export class ImportService {
   xmlFile: any;
-  public xmlItems: any;
 
-  constructor(private projectService: ProjectService, private variableService: VariablesService) {
+  constructor(private projectService: ProjectService) {
   }
 
   fileUpload(event: Event): void {
-    console.log(event);
     // @ts-ignore
     if (event.target.files[0] !== null) {
       // @ts-ignore
@@ -27,51 +22,30 @@ export class ImportService {
       const reader = new FileReader();
       reader.onload = (evt) => {
         this.xmlFile = (evt as any).target.result;
-        this.parseXML(this.xmlFile)
-          .then((data) => {
-            this.xmlItems = data[0];
-            console.log(this.xmlItems);
-            this.uploadProject();
-          });
+        this.uploadProject();
       };
       reader.readAsText(file);
     }
   }
 
-  parseXML(data: string): any {
-    console.log(data);
-    return new Promise(resolve => {
-      const arr = [];
-      const parser = new xml2js.Parser(
-          {
-            trim: true,
-            explicitArray: true
-          });
-      // tslint:disable-next-line:only-arrow-functions typedef
-      parser.parseString(data, function(err, result) {
-        const obj = result.project;
-        arr.push({
-          project: obj,
-        });
-        resolve(arr);
-      });
-    });
-  }
-
   uploadProject(): void {
     try {
-      if (this.xmlItems.project.contentHeader[0] !== undefined){
-        this.projectService.project = new Project(this.xmlItems.project.contentHeader[0].$.name);
-
-        let numberOfPous = 0;
-        this.xmlItems.project.types[0].pous[0].pou.forEach((pou) => {
-          console.log(pou);
-          this.projectService.project.pous.push(new Pou(pou.$.name, pou.$.pouType));
-          this.projectService.project.pous[numberOfPous].variables = this.variableService.setVariables(pou);
-          numberOfPous++;
-        });
-        console.log(this.projectService.project);
+      this.projectService.headerItems = [];
+      this.projectService.pouItems = [];
+      const parser = new DOMParser();
+      const dom = parser.parseFromString(this.xmlFile, 'application/xml');
+      const i = dom.documentElement.getElementsByTagName('pous')[0].childElementCount;
+      for (let j = 0; j < i; j++){
+        this.projectService.pouItems.push(dom.documentElement.getElementsByTagName('pou')[j]);
+        console.log(this.projectService.pouItems[j]);
       }
+
+      this.projectService.headerItems.push(dom.documentElement.getElementsByTagName('fileHeader')[0]);
+      this.projectService.headerItems.push(dom.documentElement.getElementsByTagName('contentHeader')[0]);
+      this.projectService.instanceItems = dom.documentElement.getElementsByTagName('instances')[0];
+      console.log(this.projectService.headerItems[0]);
+      console.log(this.projectService.headerItems[1]);
+      console.log(this.projectService.instanceItems);
     } catch (e) {
       console.log('FEHLER BEIM IMPORT');
     }

@@ -1,21 +1,36 @@
 import { Injectable } from '@angular/core';
-import {Project} from '../models/project';
-import {Pou} from '../models/pou';
 
 @Injectable({
   providedIn: 'root'
 })
+// In diesem Service sind alle Infomationen eines Projekts gespeichert
 export class ProjectService {
-  public project: Project = new Project('Unknown');
+  public pouItems: any[] = [];
+  public headerItems: any[] = [];
+  public instanceItems: any;
 
   constructor() { }
 
-  addPOU(name: string, type: string): void {
-    this.project.pous.push(new Pou(name, type));
+  getPouName(): string[] {
+    const pouNames = [];
+    this.pouItems.forEach((item) => {
+      pouNames.push(item.getAttribute('name'));
+    });
+    return pouNames;
   }
 
-  deletePOU(deletItem: Pou): void {
-    this.project.pous = this.project.pous.filter(obj => obj !== deletItem);
+  getProjectName(): string {
+    if ( this.headerItems[1].getAttribute('name') !== undefined) {
+      return this.headerItems[1].getAttribute('name');
+    }
+    return '';
+  }
+
+
+  addPOU(name: string, type: string): void {
+  }
+
+  deletePOU(deletItem: string): void {
   }
 
 }

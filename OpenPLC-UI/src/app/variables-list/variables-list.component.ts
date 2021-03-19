@@ -19,11 +19,11 @@ export class VariablesListComponent implements OnInit {
 
   ngOnInit(): void {
     this.pouName = this.route.snapshot.params.pouName;
-    this.projectService.project.pous.forEach((pou) => {
+    /*this.projectService.project.pous.forEach((pou) => {
       if (pou.name === this.pouName) {
         this.variables = pou.variables;
       }
-    });
+    });*/
   }
 
   public newVariable(): void {
@@ -36,27 +36,28 @@ export class VariablesListComponent implements OnInit {
       option: '',
       documentation: ''
     });
-    this.projectService.project.pous.forEach((pou) => {
+    /*this.projectService.project.pous.forEach((pou) => {
       if (pou.name === this.pouName) {
         pou.variables = this.variables;
       }
-    });
+    });*/
   }
 
   deleteVariable(item: Variable): void {
     this.variables = this.variables.filter(obj => obj !== item);
-    this.projectService.project.pous.forEach((pou) => {
+    /*this.projectService.project.pous.forEach((pou) => {
       if (pou.name === this.pouName) {
         pou.variables = this.variables;
       }
-    });
+    });*/
   }
 
   onchange(): void{
-    this.projectService.project.pous.forEach((pou) => {
+    /*this.projectService.project.pous.forEach((pou) => {
       if (pou.name === this.pouName) {
         pou.variables = this.variables;
       }
-    });  }
+    });*/
+  }
 
 }

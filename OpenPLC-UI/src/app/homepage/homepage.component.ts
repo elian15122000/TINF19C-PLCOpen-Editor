@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ImportService} from '../services/import.service';
 import {ProjectService} from '../services/project.service';
-import {Project} from '../models/project';
 
 @Component({
   selector: 'app-homepage',
@@ -39,7 +38,7 @@ export class HomepageComponent implements OnInit {
   }
 
   createProject(data: any): void {
-    this.projectService.project = new Project(data.projectName);
+    // this.projectService.project = new Project(data.projectName);
   }
 
 }

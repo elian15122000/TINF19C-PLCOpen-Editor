@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import {Variable} from '../models/variable';
+import { Variable} from '../models/variable';
 
 @Injectable({
   providedIn: 'root'
 })
+// Hier werden die Daten aus dem Interface-Tag gelesen, editiert oder gelöscht
 export class VariablesService {
   public variables: Variable[] = [];
 
