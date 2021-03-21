@@ -21,6 +21,7 @@ export class VariablesListComponent implements OnInit {
   ngOnInit(): void {
     this.pouName = this.route.snapshot.params.pouName;
     const pou = this.projectService.getPou(this.pouName);
+    console.log(pou);
     if (pou !== undefined) {
       this.variables = this.variablesService.getVariablesList(pou);
     }

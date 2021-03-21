@@ -28,13 +28,13 @@ export class ProjectService {
 
   getPou(pouName: string): any {
     let pou;
-    this.pouItems.forEach((item) => {
+    for (const item of this.pouItems) {
       const check = (item.getAttribute('name') === pouName);
       if (check) {
         pou = item;
         return pou;
       }
-    });
+    }
     return undefined;
   }
 
