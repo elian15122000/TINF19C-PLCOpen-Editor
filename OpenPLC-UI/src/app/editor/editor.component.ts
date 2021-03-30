@@ -1,19 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import {ProjectService} from '../services/project.service';
 import {ActivatedRoute} from '@angular/router';
-import {SfcStep} from '../models/sfcObjects/sfcStep';
-import {SfcJumpStep} from '../models/sfcObjects/sfcJumpStep';
-import {SfcTransition} from '../models/sfcObjects/sfcTransition';
-import {SfcSimultaneousDivergence} from '../models/sfcObjects/sfcSimultaneousDivergence';
-import {SfcSimultaneousConvergence} from '../models/sfcObjects/sfcSimultaneousConvergence';
-import {SfcSelectionDivergence} from '../models/sfcObjects/sfcSelectionDivergence';
-import {SfcSelectionConvergence} from '../models/sfcObjects/sfcSelectionConvergence';
-import {SfcMacroStep} from '../models/sfcObjects/sfcMacroStep';
-import {CommonComment} from '../models/commonObjects/commonComment';
-import {CommonError} from '../models/commonObjects/commonError';
-import {CommonActionBlock} from '../models/commonObjects/commonActionBlock';
-import {CommonVendorElement} from '../models/commonObjects/commonVendorElement';
-import {CommonContinuation} from '../models/commonObjects/commonContinuation';
+import { FbdInVariable} from '../models/fbdObjects/fbdInVariable';
+import {FbdOutVariable} from '../models/fbdObjects/fbdOutVariable';
+import {FbdInOutVariable} from '../models/fbdObjects/fbdInOutVariable';
+import {FbdJump} from '../models/fbdObjects/fbdJump';
+import {FbdLabel} from '../models/fbdObjects/fbdLabel';
+import {FbdReturn} from '../models/fbdObjects/fbdReturn';
+import {FbdBlock} from '../models/fbdObjects/fbdBlock';
+import {LdContact} from '../models/ldObjects/ldContact';
+import {LdCoil} from '../models/ldObjects/ldCoil';
+import {LdLeftPowerRail} from '../models/ldObjects/ldLeftPowerRail';
+import {LdRightPowerRail} from '../models/ldObjects/ldRightPowerRail';
 
 
 @Component({
@@ -24,70 +22,72 @@ import {CommonContinuation} from '../models/commonObjects/commonContinuation';
 export class EditorComponent implements OnInit {
   public pouName: string;
 
-  constructor(private projectService: ProjectService, private route: ActivatedRoute) { }
+  constructor(private projectService: ProjectService,
+              private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.pouName = this.route.snapshot.params.pouName;
     const pou = this.projectService.getPou(this.pouName);
+
     if (pou !== undefined) {
-      const sfcStepList = [];
-      for (const xmlStep of pou.getElementsByTagName('step')){
-        sfcStepList.push(new SfcStep(xmlStep));
-        }
-      const sfcJumpStepList = [];
-      for (const xmlJumpStep of pou.getElementsByTagName('jumpStep')){
-        sfcJumpStepList.push(new SfcJumpStep(xmlJumpStep));
+      const inVariableList: FbdInVariable[] = [];
+      const outVariableList: FbdOutVariable[] = [];
+      const inOutVariableList: FbdInOutVariable[] = [];
+      const jumpList: FbdJump[] = [];
+      const labelList: FbdLabel[] = [];
+      const returnList: FbdReturn[] = [];
+      const blockList: FbdBlock[] = [];
+      const contactList: LdContact[] = [];
+      const coilList: LdCoil[] = [];
+      const leftPowerRailList: LdLeftPowerRail[] = [];
+      const rightPowerRailList: LdRightPowerRail[] = [];
+
+      for (const inVariable of pou.getElementsByTagName('inVariable')){
+        inVariableList.push(new FbdInVariable(inVariable));
       }
-      const sfcTransitionList = [];
-      for (const xmlTransition of pou.getElementsByTagName('transition')){
-        sfcTransitionList.push(new SfcTransition(xmlTransition));
+      for (const outVariable of pou.getElementsByTagName('outVariable')){
+        outVariableList.push(new FbdOutVariable(outVariable));
       }
-      const sfcSimDivergenceList = [];
-      for (const xmlSimDivergence of pou.getElementsByTagName('simultaneousDivergence')){
-        sfcSimDivergenceList.push(new SfcSimultaneousDivergence(xmlSimDivergence));
+      for (const inOutVariable of pou.getElementsByTagName('inOutVariable')){
+        inOutVariableList.push(new FbdInOutVariable(inOutVariable));
       }
-      const sfcSimConvergenceList = [];
-      for (const xmlSimConvergence of pou.getElementsByTagName('simultaneousConvergence')){
-        sfcSimConvergenceList.push(new SfcSimultaneousConvergence(xmlSimConvergence));
+      for (const jump of pou.getElementsByTagName('jump')){
+        jumpList.push(new FbdJump(jump));
       }
-      const sfcSelDivergenceList = [];
-      for (const xmlSelDivergence of pou.getElementsByTagName('selectionDivergence')){
-        sfcSelDivergenceList.push(new SfcSelectionDivergence(xmlSelDivergence));
+      for (const label of pou.getElementsByTagName('label')){
+        labelList.push(new FbdLabel(label));
       }
-      const sfcSelConvergenceList = [];
-      for (const xmlSelConvergence of pou.getElementsByTagName('selectionConvergence')){
-        sfcSelConvergenceList.push(new SfcSelectionConvergence(xmlSelConvergence));
+      for (const returnItem of pou.getElementsByTagName('return')){
+        returnList.push(new FbdReturn(returnItem));
       }
-      const sfcMacroStepList = [];
-      for (const xmlMacroStep of pou.getElementsByTagName('macroStep')){
-        sfcMacroStepList.push(new SfcMacroStep(xmlMacroStep));
+      for (const block of pou.getElementsByTagName('block')){
+        blockList.push(new FbdBlock(block));
       }
-      const commonCommentList = [];
-      for (const xmlComment of pou.getElementsByTagName('comment')){
-        commonCommentList.push(new CommonComment(xmlComment));
+      for (const contact of pou.getElementsByTagName('contact')){
+        contactList.push(new LdContact(contact));
       }
-      const commonErrorList = [];
-      for (const xmlError of pou.getElementsByTagName('error')){
-        commonErrorList.push(new CommonError(xmlError));
+      for (const leftPowerRail of pou.getElementsByTagName('leftPowerRail')){
+        leftPowerRailList.push(new LdLeftPowerRail(leftPowerRail));
       }
-      const commonConnectorList = [];
-      for (const xmlConnector of pou.getElementsByTagName('connector')){
-        commonConnectorList.push(new CommonError(xmlConnector));
+      for (const rightPowerRail of pou.getElementsByTagName('rightPowerRail')){
+        rightPowerRailList.push(new LdRightPowerRail(rightPowerRail));
       }
-      const commonActionBlockList = [];
-      for (const xmlActionBlock of pou.getElementsByTagName('actionBlock')){
-        commonActionBlockList.push(new CommonActionBlock(xmlActionBlock));
-      }
-      const commonVendorElementList = [];
-      for (const xmlVendorElement of pou.getElementsByTagName('vendorElement')){
-        commonVendorElementList.push(new CommonVendorElement(xmlVendorElement));
-      }
-      const commonContinuationList = [];
-      for (const xmlContinuation of pou.getElementsByTagName('continuation')){
-        commonConnectorList.push(new CommonContinuation(xmlContinuation));
+      for (const coil of pou.getElementsByTagName('coil')){
+        coilList.push(new LdCoil(coil));
       }
 
-  }
+      console.log(inVariableList);
+      console.log(outVariableList);
+      console.log(inOutVariableList);
+      console.log(labelList);
+      console.log(returnList);
+      console.log(jumpList);
+      console.log(blockList);
+      console.log(contactList);
+      console.log(coilList);
+      console.log(leftPowerRailList);
+      console.log(rightPowerRailList);
+    }
   }
 
 }

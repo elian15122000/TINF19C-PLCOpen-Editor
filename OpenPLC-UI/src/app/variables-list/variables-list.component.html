@@ -13,45 +13,52 @@
       <th></th>
     </tr>
 
-    <tr *ngFor="let variable of variables">
-      <td>
-        <input [(ngModel)]="variable.name" (change)="onchange()">
-      </td>
-      <td>
-        <select [(ngModel)]="variable.class" (change)="onchange()">
-          <option value="input">Input</option>
-          <option value="output">Output</option>
-          <option value="inOut">In-/Output</option>
-          <option value="external">External</option>
-          <option value="local">Local</option>
-          <option value="temp">Temp</option>
-        </select>
-      </td>
-      <td>
-        <select [(ngModel)]="variable.type" (change)="onchange()">
-          <option *ngFor="let type of types" value="{{type}}">{{type}}</option>
-        </select>
-      </td>
-      <td>
-        <input [(ngModel)]="variable.iec" (change)="onchange()">
-      </td>
-      <td>
-        <input [(ngModel)]="variable.init" (change)="onchange()">
-      </td>
-      <td>
-        <select [(ngModel)]="variable.option" (change)="onchange()">
-          <option value="constant">constant</option>
-          <option value="retain">retain</option>
-          <option value="non-retain">non-retain</option>
-        </select>
-      </td>
-      <td>
-        <input [(ngModel)]="variable.documentation" (change)="onchange()">
-      </td>
-      <td>
-        <button (click)="deleteVariable(variable)">Delete</button>
-      </td>
-    </tr>
+    <tbody *ngFor="let variableClass of variables">
+      <tr *ngFor="let variable of variableClass.variables">
+        <td>
+          <label>
+            <input [(ngModel)]="variable.name" (change)="onchange()">
+          </label>
+        </td>
+        <td>
+          <label>
+            <select [(ngModel)]="variableClass.class" (change)="onchange()">
+              <option value="input">Input</option>
+              <option value="output">Output</option>
+              <option value="inOut">In-/Output</option>
+              <option value="external">External</option>
+              <option value="local">Local</option>
+              <option value="temp">Temp</option>
+            </select>
+          </label>
+        </td>
+        <td>
+          <select [(ngModel)]="variable.type" (change)="onchange()">
+            <option *ngFor="let type of types" value="{{type}}">{{type}}</option>
+          </select>
+        </td>
+        <td>
+          <input [(ngModel)]="variable.iec" (change)="onchange()">
+        </td>
+        <td>
+          <input [(ngModel)]="variable.init" (change)="onchange()">
+        </td>
+        <td>
+          <select [(ngModel)]="variableClass.option" (change)="onchange()">
+            <option value="constant">constant</option>
+            <option value="retain">retain</option>
+            <option value="non-retain">non-retain</option>
+          </select>
+        </td>
+        <td>
+          <input [(ngModel)]="variable.documentation" (change)="onchange()">
+        </td>
+        <td>
+          <button>Delete</button>
+        </td>
+      </tr>
+
+    </tbody>
   </table>
 
 </div>
