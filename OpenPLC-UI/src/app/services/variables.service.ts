@@ -11,7 +11,7 @@ export class VariablesService {
     'REAL', 'LREAL', 'TIME', 'DATE', 'TOD', 'DT', 'STRING', 'BYTE', 'WORD', 'DWORD', 'LWORD'];
 
   constructor() { }
-
+/*
   getVariablesList(pou: any): Variable[] {
     this.variables = [];
     const list = pou.getElementsByTagName('interface')[0];
@@ -134,5 +134,7 @@ export class VariablesService {
       return '';
     }
   }
+
+ */
 
 }
