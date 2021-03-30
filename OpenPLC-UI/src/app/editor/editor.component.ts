@@ -42,6 +42,7 @@ export class EditorComponent implements OnInit {
       const leftPowerRailList: LdLeftPowerRail[] = [];
       const rightPowerRailList: LdRightPowerRail[] = [];
 
+
       for (const inVariable of pou.getElementsByTagName('inVariable')){
         inVariableList.push(new FbdInVariable(inVariable));
       }
@@ -75,6 +76,7 @@ export class EditorComponent implements OnInit {
       for (const coil of pou.getElementsByTagName('coil')){
         coilList.push(new LdCoil(coil));
       }
+
 
       console.log(inVariableList);
       console.log(outVariableList);
