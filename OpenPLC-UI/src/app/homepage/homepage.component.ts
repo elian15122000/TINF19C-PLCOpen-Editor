@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ImportService} from '../services/import.service';
+import {ProjectService} from '../services/project.service';
 
 @Component({
   selector: 'app-homepage',
@@ -8,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class HomepageComponent implements OnInit {
   public title = 'PLCopen-Editor';
 
-  constructor() { }
+  constructor(private importService: ImportService, private projectService: ProjectService) { }
 
   ngOnInit(): void {
   }
@@ -18,10 +20,25 @@ export class HomepageComponent implements OnInit {
     document.getElementById('openProjectModal').style.display = 'block';
   }
 
+  public newProjectModal(): void {
+    document.getElementById('newProjectModal').style.display = 'block';
+  }
+
+  public closeNewProject(): void {
+    document.getElementById('newProjectModal').style.display = 'none';
+  }
+
   public closeProjectModal(): void {
     // @ts-ignore
     document.getElementById('openProjectModal').style.display = 'none';
   }
 
+  fileUpload(event: Event): void {
+    this.importService.fileUpload(event);
+  }
+
+  createProject(data: any): void {
+    // this.projectService.project = new Project(data.projectName);
+  }
 
 }
