@@ -39,7 +39,7 @@ export class ImportService {
         this.projectService.pouItems.push(dom.documentElement.getElementsByTagName('pou')[j]);
         console.log(this.projectService.pouItems[j]);
       }
-
+      console.log(this.xmlFile);
       this.projectService.headerItems.push(dom.documentElement.getElementsByTagName('fileHeader')[0]);
       this.projectService.headerItems.push(dom.documentElement.getElementsByTagName('contentHeader')[0]);
       this.projectService.instanceItems = dom.documentElement.getElementsByTagName('instances')[0];
