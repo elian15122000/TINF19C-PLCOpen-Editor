@@ -11,41 +11,45 @@ export class FbdBlock {
   public outputVariables: any[] = [];
 
   constructor(xmlBlock: any) {
-    this.xml = xmlBlock;
-    this.localId = xmlBlock.getAttribute('localId');
-    if (xmlBlock.getAttribute('width') !== undefined) {
-      this.width = xmlBlock.getAttribute('width');
-    }
-    if (xmlBlock.getAttribute('height') !== undefined) {
-      this.height = xmlBlock.getAttribute('height');
-    }
-    if (xmlBlock.getAttribute('typeName') !== undefined) {
-      this.typeName = xmlBlock.getAttribute('typeName');
-    }
-    if (xmlBlock.getAttribute('instanceName') !== undefined) {
-      this.instanceName = xmlBlock.getAttribute('instanceName');
-    }
-    if (xmlBlock.getElementsByTagName('position') !== undefined) {
-      const position = xmlBlock.getElementsByTagName('position')[0];
-      this.position = { x: position.getAttribute('x'), y: position.getAttribute('y')};
-    }
+    if (xmlBlock === ''){
+      this.createNewBlock();
+    } else {
+      this.xml = xmlBlock;
+      this.localId = xmlBlock.getAttribute('localId');
+      if (xmlBlock.getAttribute('width') !== undefined) {
+        this.width = xmlBlock.getAttribute('width');
+      }
+      if (xmlBlock.getAttribute('height') !== undefined) {
+        this.height = xmlBlock.getAttribute('height');
+      }
+      if (xmlBlock.getAttribute('typeName') !== undefined) {
+        this.typeName = xmlBlock.getAttribute('typeName');
+      }
+      if (xmlBlock.getAttribute('instanceName') !== undefined) {
+        this.instanceName = xmlBlock.getAttribute('instanceName');
+      }
+      if (xmlBlock.getElementsByTagName('position') !== undefined) {
+        const position = xmlBlock.getElementsByTagName('position')[0];
+        this.position = { x: position.getAttribute('x'), y: position.getAttribute('y')};
+      }
 
-    if (xmlBlock.getElementsByTagName('inputVariables') !== undefined) {
-      const inputVariables = xmlBlock.getElementsByTagName('inputVariables')[0];
-      for (const variable of inputVariables.getElementsByTagName('variable')) {
-        this.inputVariables.push(this.readInputVariable(variable));
+      if (xmlBlock.getElementsByTagName('inputVariables') !== undefined) {
+        const inputVariables = xmlBlock.getElementsByTagName('inputVariables')[0];
+        for (const variable of inputVariables.getElementsByTagName('variable')) {
+          this.inputVariables.push(this.readInputVariable(variable));
+        }
       }
-    }
-    if (xmlBlock.getElementsByTagName('outputVariables') !== undefined) {
-      const outputVariables = xmlBlock.getElementsByTagName('outputVariables')[0];
-      for (const variable of outputVariables.getElementsByTagName('variable')) {
-        this.outputVariables.push(this.readOutputVariable(variable));
+      if (xmlBlock.getElementsByTagName('outputVariables') !== undefined) {
+        const outputVariables = xmlBlock.getElementsByTagName('outputVariables')[0];
+        for (const variable of outputVariables.getElementsByTagName('variable')) {
+          this.outputVariables.push(this.readOutputVariable(variable));
+        }
       }
-    }
-    if (xmlBlock.getElementsByTagName('inOutVariables') !== undefined) {
-      const inOutVariables = xmlBlock.getElementsByTagName('inOutVariables')[0];
-      for (const variable of inOutVariables.getElementsByTagName('variable')) {
-        this.inOutVariables.push(this.readInOutVariable(variable));
+      if (xmlBlock.getElementsByTagName('inOutVariables') !== undefined) {
+        const inOutVariables = xmlBlock.getElementsByTagName('inOutVariables')[0];
+        for (const variable of inOutVariables.getElementsByTagName('variable')) {
+          this.inOutVariables.push(this.readInOutVariable(variable));
+        }
       }
     }
   }
@@ -122,5 +126,17 @@ export class FbdBlock {
       }
     }
     return variable;
+  }
+
+  createNewBlock(): void {
+    const xmlString = '<block localId="0" typeName="" instanceName="" height="50" width="30"> \n' +
+      '              <position x="0" y="0"/> \n' +
+      '              <inputVariables/> \n' +
+      '              <inOutVariables/> \n' +
+      '              <outputVariables/> \n' +
+      '            </block> ';
+    const parser = new DOMParser();
+    this.xml = parser.parseFromString(xmlString, 'application/xml');
+    this.xml = this.xml.getElementsByTagName('block')[0];
   }
 }

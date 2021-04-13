@@ -111,7 +111,7 @@ export class EditorComponent implements OnInit {
         commentList.push(new CommonComment(comment));
       }
       for (const connector of pou.getElementsByTagName('connector')){
-          connectorList.push(new CommonConnector(connector));
+        connectorList.push(new CommonConnector(connector));
       }
       for (const continuation of pou.getElementsByTagName('continuation')){
         continuationList.push(new CommonContinuation(continuation));
