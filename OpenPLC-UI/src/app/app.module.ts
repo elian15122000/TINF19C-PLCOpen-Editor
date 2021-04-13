@@ -10,6 +10,8 @@ import { FormsModule} from '@angular/forms';
 import { ProjectOverviewComponent } from './project-overview/project-overview.component';
 import { UserManualComponent } from './user-manual/user-manual.component';
 import { LibraryComponent } from './library/library.component';
+import { GraphComponent } from './graph/graph.component';
+import {NgxGraphModule} from "@swimlane/ngx-graph";
 
 @NgModule({
   declarations: [
@@ -20,8 +22,10 @@ import { LibraryComponent } from './library/library.component';
     ProjectOverviewComponent,
     UserManualComponent,
     LibraryComponent,
+    GraphComponent,
   ],
   imports: [
+    NgxGraphModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule

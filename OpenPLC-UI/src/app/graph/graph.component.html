@@ -1,0 +1,109 @@
+<button (click)="add_node()">Add new node</button>
+<button (click)="add_new_edge()">Add new Edge</button>
+<app-library></app-library>
+
+
+<!--https://stackoverflow.com/questions/54888126/how-to-create-tables-td-dynamically-in-angular-->
+<table>
+  <tbody>
+    <tr *ngFor="let node of nodes;" (click)="set_selected_node(node.id)">
+      <td> {{ node.id }}</td>
+      <td>{{ node.label }}</td>
+  </tbody>
+</table>
+
+<div *ngFor="let edge of selected_node_edges; let i = index">
+  source:
+  <select (change)="change_edge_source(edge.id, $event)">
+    <option disabled selected value> -- {{edge.source}} -- </option>
+    <option *ngFor="let node of nodes; let j = index" [value]="nodes[j].id">
+      {{node.label}} -- {{node.id}}
+    </option>
+  </select>
+  target:
+  <select (change)="change_edge_target(edge.id, $event)">
+    <option disabled selected value> -- {{edge.target}} -- </option>
+    <option *ngFor="let node of nodes; let j = index" [value]="nodes[j].id">
+      {{node.label}} -- {{node.id}}
+    </option>
+  </select>
+</div>
+
+
+
+
+
+<ngx-graph class="chart-container" [update$]="update$" [view]="[1024, 512]" [links]="edges" [nodes]="nodes"
+  [curve]="curve">
+  <ng-template #nodeTemplate let-node>
+    <svg:g (click)="set_selected_node(node.id)">
+
+      <!-- The down-Fork Template -->
+      <!-- The width of the strokes need to be made thiner -->
+      <svg:g class="node" *ngIf="node.type=='fork'">
+        <svg:rect [attr.width]="70" [attr.height]="5" [attr.fill]="'black'" />
+        <svg:rect [attr.x]="0" [attr.y]="5" [attr.width]="5" [attr.height]="20" [attr.fill]="'black'" />
+        <svg:rect [attr.x]="65" [attr.y]="5" [attr.width]="5" [attr.height]="20" [attr.fill]="'black'" />
+        <svg:rect [attr.x]="65/2" [attr.y]="-20" [attr.width]="5" [attr.height]="20" [attr.fill]="'black'" />
+      </svg:g>
+
+      <!-- The down-Fork Template -->
+      <!-- The width of the strokes need to be made thiner -->
+      <svg:g class="node" *ngIf="node.type=='down-fork'">
+        <svg:rect [attr.width]="70" [attr.height]="5" [attr.fill]="'black'" />
+        <svg:rect [attr.x]="0" [attr.y]="5" [attr.width]="5" [attr.height]="20" [attr.fill]="'black'" />
+        <svg:rect [attr.x]="65" [attr.y]="5" [attr.width]="5" [attr.height]="20" [attr.fill]="'black'" />
+        <svg:rect [attr.x]="65/2" [attr.y]="-20" [attr.width]="5" [attr.height]="20" [attr.fill]="'black'" />
+      </svg:g>
+
+      <!-- The Up-Fork Template -->
+      <!-- The width of the strokes need to be made thiner -->
+      <svg:g class="node" *ngIf="node.type=='up-fork'">
+        <svg:rect [attr.width]="70" [attr.height]="5" [attr.fill]="'black'" />
+        <svg:rect [attr.x]="0" [attr.y]="-20" [attr.width]="5" [attr.height]="20" [attr.fill]="'black'" />
+        <svg:rect [attr.x]="65" [attr.y]="-20" [attr.width]="5" [attr.height]="20" [attr.fill]="'black'" />
+        <svg:rect [attr.x]="65/2" [attr.y]="0" [attr.width]="5" [attr.height]="20" [attr.fill]="'black'" />
+      </svg:g>
+
+
+      <!-- The FBS Template -->
+      <!-- The Height ist 40 * number of related edges -->
+      <svg:g class="node" *ngIf="node.type=='fbs'">
+        <svg:rect [attr.width]="node.dimension.width" [attr.height]="40 * get_related_edges(node.id).length"
+          [attr.fill]="'white'" [attr.stroke]='"black"' />
+        <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height/2">
+          {{node.label}}
+        </svg:text>
+      </svg:g>
+
+      <!-- The Variable Template -->
+      <svg:g class="node" *ngIf="node.type=='var'">
+        <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height" [attr.fill]="'white'"
+          [attr.stroke]='"black"' />
+        <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height/2">
+          {{node.label}}
+        </svg:text>
+      </svg:g>
+
+      <svg:g class="node" *ngIf="node.type=='kaka'">
+        <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height"
+          [attr.fill]="node.data.color" />
+        <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height / 2">
+          {{node.label}}
+        </svg:text>
+      </svg:g>
+
+    </svg:g>
+  </ng-template>
+
+
+  <ng-template #linkTemplate let-link>
+    <svg:g class="edge">
+      <svg:path class="line" stroke-width="2"></svg:path>
+      <svg:text class="edge-label" text-anchor="middle">
+        <textPath class="text-path" [attr.href]="'#' + link.id" [style.dominant-baseline]="link.dominantBaseline">
+        </textPath>
+      </svg:text>
+    </svg:g>
+  </ng-template>
+</ngx-graph>
