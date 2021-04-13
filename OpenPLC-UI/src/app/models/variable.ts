@@ -1,13 +1,13 @@
 export class Variable {
   public class = '';
   public option = '';
-  public variables: {
+  public variables: Array<{
     name: string,
     type: string,
     iec: any,
     init: any
     documentation: string;
-  }[] = [];
+  }> = [];
 
   constructor(xmlVariable: any, varClass: string) {
     this.class = varClass;
@@ -37,7 +37,6 @@ export class Variable {
       if (item.getAttribute('name') !== undefined){
         variable.name = item.getAttribute('name');
       }
-
       if (item.getElementsByTagName('type') !== undefined) {
         if (item.getElementsByTagName('derived').length > 0){
           const derived = item.getElementsByTagName('derived')[0];

@@ -110,8 +110,9 @@ export class EditorComponent implements OnInit {
       for (const comment of pou.getElementsByTagName('comment')){
         commentList.push(new CommonComment(comment));
       }
+      simConvergenceList.push(new SfcSimultaneousConvergence(''));
       for (const connector of pou.getElementsByTagName('connector')){
-          connectorList.push(new CommonConnector(connector));
+        connectorList.push(new CommonConnector(connector));
       }
       for (const continuation of pou.getElementsByTagName('continuation')){
         continuationList.push(new CommonContinuation(continuation));

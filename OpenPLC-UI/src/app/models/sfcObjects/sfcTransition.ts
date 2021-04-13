@@ -3,9 +3,14 @@ export class SfcTransition {
   public localId: number;
   public height = 20;
   public width = 20;
-  public connectionPointIn: {x: 0, y: 0};
-  public connectionPointOut: {x: 0, y: 0};
+  public connectionPointIn: {x: 0, y: 0, refLocalId: 0, formalParameter: string};
+  public connectionPointOut: {x: 0, y: 0, refLocalId: 0, formalParameter: string};
   public position: {x: 0, y: 0};
+  public conditionReferenceName = '';
+  public conditionConnectionPointIn: {x: 0, y: 0, refLocalId: 0, formalParameter: string};
+  public conditionInlineName = '';
+
+
 
   constructor(xmlTransition: any) {
     this.xml = xmlTransition;
@@ -20,11 +25,22 @@ export class SfcTransition {
     }
     if (xmlTransition.getElementsByTagName('connectionPointIn') !== undefined) {
       for (const item of xmlTransition.getElementsByTagName('connectionPointIn')) {
-        const relPos = item.getElementsByTagName('relPosition');
-        if (relPos[0] !== undefined) {
-          const inX = relPos[0].getAttribute('x');
-          const inY = relPos[0].getAttribute('y');
-          this.connectionPointIn = {x: inX, y: inY};
+        if (item.parentNode.tagName !== 'condition'){
+          const relPos = item.getElementsByTagName('relPosition');
+          let inX: any;
+          let inY: any;
+          let refLocId: 0;
+          let formalParam: '';
+          if (relPos[0] !== undefined) {
+            inX = relPos[0].getAttribute('x');
+            inY = relPos[0].getAttribute('y');
+          }
+          const connection = item.getElementsByTagName('connection');
+          if (connection[0] !== undefined){
+            refLocId = connection[0].getAttribute('refLocalId');
+            formalParam = connection[0].getAttribute('formalParameter');
+          }
+          this.connectionPointIn = {x: inX, y: inY, refLocalId: refLocId, formalParameter: formalParam};
         }
       }
     }
@@ -34,7 +50,7 @@ export class SfcTransition {
         if (relPos[0] !== undefined) {
           const outX = relPos[0].getAttribute('x');
           const outY = relPos[0].getAttribute('y');
-          this.connectionPointOut = {x: outX, y: outY};
+          this.connectionPointOut = {x: outX, y: outY, refLocalId: 0, formalParameter: 'test'};
         }
       }
     }

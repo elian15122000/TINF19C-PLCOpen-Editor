@@ -69,4 +69,16 @@ export class CommonActionBlock{
 
     }
   }
+  createXML(): void{
+    const xmlString = '<comment localId="0" height="50" width="30"   >\n' +
+      '              <position x="0" y="0"/>\n' +
+      '              <content>\n' +
+      '<xhtml:p><![CDATA[Testkommentar]]>\n</xhtml:p>\n' +
+      '</content>\n' +
+      '              </comment>\n';
+    const parser = new DOMParser();
+    this.xml = parser.parseFromString(xmlString, 'application/xml');
+    const temp = this.xml.getElementsByTagName('parsererror')[0];
+    temp.parentNode.removeChild(temp);
+  }
 }
