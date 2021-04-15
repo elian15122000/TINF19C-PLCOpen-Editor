@@ -190,7 +190,8 @@ export class GraphComponent implements OnInit {
     var newNode = {
       id: id,
       label: label,
-      type: "default"
+      type: "default",
+      pins: {}
     };
     this.nodes.push(newNode);
     this.updateChart();
