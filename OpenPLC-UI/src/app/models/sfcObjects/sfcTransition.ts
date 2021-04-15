@@ -9,6 +9,7 @@ export class SfcTransition {
   public conditionReferenceName = '';
   public conditionConnectionPointIn: {x: 0, y: 0, refLocalId: 0, formalParameter: string};
   public conditionInlineName = '';
+  public conditionNegated = false;
 
 
 
@@ -46,17 +47,48 @@ export class SfcTransition {
     }
     if (xmlTransition.getElementsByTagName('connectionPointOut') !== undefined) {
       for (const item of xmlTransition.getElementsByTagName('connectionPointOut')) {
-        const relPos = item.getElementsByTagName('relPosition');
-        if (relPos[0] !== undefined) {
-          const outX = relPos[0].getAttribute('x');
-          const outY = relPos[0].getAttribute('y');
-          this.connectionPointOut = {x: outX, y: outY, refLocalId: 0, formalParameter: 'test'};
+        if (item.parentNode.tagName !== 'condition'){
+          const relPos = item.getElementsByTagName('relPosition');
+          let outX: any;
+          let outY: any;
+          let refLocId: 0;
+          let formalParam: '';
+          if (relPos[0] !== undefined) {
+            outX = relPos[0].getAttribute('x');
+            outY = relPos[0].getAttribute('y');
+          }
+          const connection = item.getElementsByTagName('connection');
+          if (connection[0] !== undefined){
+            refLocId = connection[0].getAttribute('refLocalId');
+            formalParam = connection[0].getAttribute('formalParameter');
+          }
+          this.connectionPointOut = {x: outX, y: outY, refLocalId: refLocId, formalParameter: formalParam};
         }
       }
     }
     if (xmlTransition.getElementsByTagName('position') !== undefined){
       const position = xmlTransition.getElementsByTagName('position')[0];
       this.position = {x: position.getAttribute('x'), y: position.getAttribute('y')};
+    }
+
+    if (xmlTransition.getElementsByTagName('condition') !== undefined){
+      for (const item of xmlTransition.getElementsByTagName('connectionPointIn')) {
+        const relPos = item.getElementsByTagName('relPosition');
+        let inX: any;
+        let inY: any;
+        let refLocId: 0;
+        let formalParam: '';
+        if (relPos[0] !== undefined) {
+          inX = relPos[0].getAttribute('x');
+          inY = relPos[0].getAttribute('y');
+        }
+        const connection = item.getElementsByTagName('connection');
+        if (connection[0] !== undefined) {
+          refLocId = connection[0].getAttribute('refLocalId');
+          formalParam = connection[0].getAttribute('formalParameter');
+        }
+        this.conditionConnectionPointIn = {x: inX, y: inY, refLocalId: refLocId, formalParameter: formalParam};
+      }
     }
   }
 }

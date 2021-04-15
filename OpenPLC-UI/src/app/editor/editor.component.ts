@@ -74,6 +74,7 @@ export class EditorComponent implements OnInit {
       for (const inVariable of pou.getElementsByTagName('inVariable')){
         inVariableList.push(new FbdInVariable(inVariable));
       }
+
       for (const outVariable of pou.getElementsByTagName('outVariable')){
         outVariableList.push(new FbdOutVariable(outVariable));
       }
@@ -110,7 +111,6 @@ export class EditorComponent implements OnInit {
       for (const comment of pou.getElementsByTagName('comment')){
         commentList.push(new CommonComment(comment));
       }
-      simConvergenceList.push(new SfcSimultaneousConvergence(''));
       for (const connector of pou.getElementsByTagName('connector')){
         connectorList.push(new CommonConnector(connector));
       }
