@@ -43,9 +43,9 @@ export class FbdInOutVariable {
           this.connectionPointIn.x = position.getAttribute('x');
           this.connectionPointIn.y = position.getAttribute('y');
         }
-        if (connectionPointIn.getElementsByTagName('connection') !== undefined) {
+        if (connectionPointIn.getElementsByTagName('connection')[0] !== undefined) {
           const connection = connectionPointIn.getElementsByTagName('connection')[0];
-          this.connectionPointIn.refLocalID = connection.getAttribute('refLocalID');
+          this.connectionPointIn.refLocalID = connection.getAttribute('refLocalId');
         }
       }
       if ( xmlInOutVariable.getElementsByTagName('connectionPointOut')[0]  !== undefined) {
@@ -55,9 +55,9 @@ export class FbdInOutVariable {
           this.connectionPointOut.x = position.getAttribute('x');
           this.connectionPointOut.y = position.getAttribute('y');
         }
-        if (connectionPointOut.getElementsByTagName('connection') !== undefined) {
+        if (connectionPointOut.getElementsByTagName('connection')[0] !== undefined) {
           const connection = connectionPointOut.getElementsByTagName('connection')[0];
-          this.connectionPointOut.refLocalID = connection.getAttribute('refLocalID');
+          this.connectionPointOut.refLocalID = connection.getAttribute('refLocalId');
         }
       }
     }

@@ -51,9 +51,9 @@ export class LdContact {
           this.connectionPointOut.x = position.getAttribute('x');
           this.connectionPointOut.y = position.getAttribute('y');
         }
-        if (connectionPointOut.getElementsByTagName('connection') !== undefined) {
+        if (connectionPointOut.getElementsByTagName('connection')[0] !== undefined) {
           const connection = connectionPointOut.getElementsByTagName('connection')[0];
-          this.connectionPointOut.refLocalID = connection.getAttribute('refLocalID');
+          this.connectionPointOut.refLocalID = connection.getAttribute('refLocalId');
         }
       }
     }

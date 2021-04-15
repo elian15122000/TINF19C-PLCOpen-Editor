@@ -41,7 +41,7 @@ export class LdCoil {
         }
         if (connectionPointIn.getElementsByTagName('connection') !== undefined) {
           const connection = connectionPointIn.getElementsByTagName('connection')[0];
-          this.connectionPointIn.refLocalID = connection.getAttribute('refLocalID');
+          this.connectionPointIn.refLocalID = connection.getAttribute('refLocalId');
         }
       }
       if ( xmlCoil.getElementsByTagName('connectionPointOut')[0]  !== undefined) {
@@ -51,9 +51,9 @@ export class LdCoil {
           this.connectionPointOut.x = position.getAttribute('x');
           this.connectionPointOut.y = position.getAttribute('y');
         }
-        if (connectionPointOut.getElementsByTagName('connection') !== undefined) {
+        if (connectionPointOut.getElementsByTagName('connection')[0] !== undefined) {
           const connection = connectionPointOut.getElementsByTagName('connection')[0];
-          this.connectionPointOut.refLocalID = connection.getAttribute('refLocalID');
+          this.connectionPointOut.refLocalID = connection.getAttribute('refLocalId');
         }
       }
     }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Node, Edge } from "@swimlane/ngx-graph";
-import * as shape from "d3-shape";
-import {Subject} from "rxjs";
+import { Node, Edge } from '@swimlane/ngx-graph';
+import * as shape from 'd3-shape';
+import {Subject} from 'rxjs';
 
 
 @Component({
@@ -11,90 +11,91 @@ import {Subject} from "rxjs";
 })
 export class GraphComponent implements OnInit {
 
-
-   nodes: Node[];
-   edges: Edge[];
-   curve: any = shape.curveStepAfter;
-   selected_node: string;
-   selected_node_edges: Edge[];
-
    constructor() {
- 
+
     this.nodes = [
       {
-        id: "n_0",
-        label: "Node 0",
-        type: "fbs",
+        id: 'n_0',
+        label: 'Node 0',
+        type: 'fbs',
       },
       {
-        id: "n_1",
-        label: "Node 1",
-        type: "fork",
+        id: 'n_1',
+        label: 'Node 1',
+        type: 'fork',
       },
       {
-        id: "n_2",
-        label: "Node 1",
-        type: "kaka",
+        id: 'n_2',
+        label: 'Node 1',
+        type: 'kaka',
       }
     ];
 
     this.edges = [
       {
-        id: "e_0",
-        source: "n_0",
-        target: "n_1"
+        id: 'e_0',
+        source: 'n_0',
+        target: 'n_1'
       },
       {
-        id: "e_1",
-        source: "n_0",
-        target: "n_2"
+        id: 'e_1',
+        source: 'n_0',
+        target: 'n_2'
       },
 
-    ]
+    ];
   }
 
-  
+
+   nodes: Node[];
+   edges: Edge[];
+   curve: any = shape.curveStepAfter;
+  // tslint:disable-next-line:variable-name
+   selected_node: string;
+  // tslint:disable-next-line:variable-name
+   selected_node_edges: Edge[];
+
+
+  update$: Subject<any> = new Subject();
+
+
   public change_edge_source(edgeId, event){
-    var newSource = event.target.value;
+    const newSource = event.target.value;
     this.edges.forEach(e => {
-      if (e.id == edgeId){
-        e.source = newSource
-
+      if (e.id === edgeId){
+        e.source = newSource;
       }
-    })
-    this.updateChart()
+    });
+    this.updateChart();
   }
-  public change_edge_target(edgeId, event){
-    var newTarget = event.target.value;
+  public change_edge_target(edgeId, event): void{
+    const newTarget = event.target.value;
     this.edges.forEach(e => {
-      if (e.id == edgeId){
-        e.target = newTarget
-        this.updateChart()
-        return
+      if (e.id === edgeId){
+        e.target = newTarget;
+        this.updateChart();
+        return;
       }
-    })
+    });
   }
-  set_selected_node(nodeId){
-    this.selected_node = nodeId
-    this.selected_node_edges = this.get_related_edges(nodeId)
+  set_selected_node(nodeId): void{
+    this.selected_node = nodeId;
+    this.selected_node_edges = this.get_related_edges(nodeId);
   }
-  public get_nodes(){
+  public get_nodes(): any{
     return this.nodes;
 }
-  public set_nodes(newNodes: Node[]){
+  public set_nodes(newNodes: Node[]): any{
     this.nodes = newNodes;
     this.updateChart();
 }
-  public get_edges(){
+  public get_edges(): any{
     return this.edges;
   }
 
-  public set_edges(newEdges: Edge[]){
-    this.edges = newEdges
+  public set_edges(newEdges: Edge[]): any{
+    this.edges = newEdges;
   }
-
-  
-  update$: Subject<any> = new Subject();
 
 
 
@@ -102,15 +103,15 @@ export class GraphComponent implements OnInit {
   /**
    * add_node() : adds new nodes to the nodes list and calls updateChart()
    */
-  
+
   public add_node() {
     // setup node
-    var id = "n_" + this.nodes.length;
-    var label = "Node " + this.nodes.length;
-    var newNode = {
-      id: id,
-      label: label,
-      type: "default"
+    let id = 'n_' + this.nodes.length;
+    let label = 'Node ' + this.nodes.length;
+    let newNode = {
+      id,
+      label,
+      type: 'default'
     };
     this.nodes.push(newNode);
     this.updateChart();
@@ -120,9 +121,9 @@ export class GraphComponent implements OnInit {
    * add_edge
    */
   public add_edge(sourceId, targetId) {
-    var id = "e_" + this.edges.length;
-    var newEdge = {
-      id: id,
+    let id = 'e_' + this.edges.length;
+    let newEdge = {
+      id,
       source: sourceId,
       target: targetId,
     };
@@ -141,19 +142,19 @@ export class GraphComponent implements OnInit {
    * get_related_edges
    */
   public get_related_edges(nodeId) {
-    var related_edges : Edge[] = []
+    let related_edges: Edge[] = [];
     this.edges.forEach(edge => {
       if (edge.source == nodeId || edge.target == nodeId){
-          related_edges.push(edge)
+          related_edges.push(edge);
       }
     });
-    return related_edges
+    return related_edges;
   }
 
   /**
    * update_chart()
    * Source: https://stackoverflow.com/questions/54516376/reload-ngx-graph-with-new-data
-   * 
+   *
    * Always call after changing the graph
    */
   updateChart(){
