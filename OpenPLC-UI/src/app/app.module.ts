@@ -11,7 +11,7 @@ import { ProjectOverviewComponent } from './project-overview/project-overview.co
 import { UserManualComponent } from './user-manual/user-manual.component';
 import { LibraryComponent } from './library/library.component';
 import { GraphComponent } from './graph/graph.component';
-import {NgxGraphModule} from "@swimlane/ngx-graph";
+import {NgxGraphModule} from '@swimlane/ngx-graph';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,7 @@ import {NgxGraphModule} from "@swimlane/ngx-graph";
     NgxGraphModule,
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
