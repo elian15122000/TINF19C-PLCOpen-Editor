@@ -14,43 +14,123 @@ export class GraphComponent implements OnInit {
 
    nodes: Node[];
    edges: Edge[];
+   edges_id_counter : number;
    curve: any = shape.curveStepAfter;
    selected_node: string;
    selected_node_edges: Edge[];
 
    constructor() {
- 
+    this.edges_id_counter = 2;
     this.nodes = [
       {
         id: "n_0",
-        label: "Node 0",
+        label: "SR-0",
         type: "fbs",
+        pins: {
+          "S": {type: "IN", edge: "e_0"},
+          "R": {type: "IN", edge: null},
+          "Q": {type: "OUT", edge: "e_1"}
+        }
       },
       {
         id: "n_1",
-        label: "Node 1",
-        type: "fork",
+        label: "INPUT_Var-0",
+        type: "var",
+        pins: {
+          "IN": {type: "IN", edge: "e_1"}
+        }
       },
       {
         id: "n_2",
-        label: "Node 1",
-        type: "kaka",
+        label: "OUTPUT_Var-1",
+        type: "var",
+        pins: {
+          "OUT": {type: "OUT", edge: "e_0"}
+        }
       }
     ];
 
     this.edges = [
       {
         id: "e_0",
-        source: "n_0",
-        target: "n_1"
+        source: "n_2",
+        target: "n_0"
       },
       {
         id: "e_1",
         source: "n_0",
-        target: "n_2"
+        target: "n_1"
       },
 
     ]
+  }
+    /*
+    connect_pins(Node1_id, Node2_id, P1_id, P2_id)
+
+    Param: Take two nodes and two pins
+
+    Return: None
+
+    Does: adds an edge between the two nodes and registers the connction id in the pins
+          if an edge already exists when registering, the old edge is removed
+    */
+  public connect_pins(Node1_id, Node2_id, P1_key, P2_key){
+    // get the entities
+    var Node1;
+    var Node2;
+    this.nodes.forEach( n => {
+      if (n.id == Node1_id) {
+        Node1 = n
+        return
+      }
+    });
+    this.nodes.forEach( n => {
+      if (n.id == Node2_id) {
+        Node2 = n
+        return
+      }
+    });
+
+    var P1 = Node1.pins[P1_key]
+    var P2 = Node2.pins[P2_key]
+    
+    // check if connection is possible
+    if (P1.type==P2.type){
+      alert("Can't connect two pins of the same type")
+      return
+    }
+
+
+    //check if a connection already exists
+    if (P1.edge != null){
+      this.remove_edge(P1.edge)
+      P1.edge = null
+    }
+    if (P2.edge != null){
+      this.remove_edge(P2.edge)
+      P1.edge = null
+    }
+
+
+    // call the add_edge function
+    P1.edge = "e_" + this.edges_id_counter;
+    P2.edge = "e_" + this.edges_id_counter;
+    this.add_edge(Node1_id, Node2_id)
+  }
+  /**
+   * remove_edge(edgeId)
+   * @param edgeId : edgeId to be deleted 
+   * @returns : none
+   * @does : removes the given edge from this.edges
+   */
+  public remove_edge(edgeId){
+    for (let index = 0; index < this.edges.length; index++) {
+      var edge = this.edges[index];
+      if(edge.id == edgeId){
+        this.edges.splice(index, 1)
+        return
+      }
+    }
   }
 
   
@@ -120,12 +200,14 @@ export class GraphComponent implements OnInit {
    * add_edge
    */
   public add_edge(sourceId, targetId) {
-    var id = "e_" + this.edges.length;
+    
+    var id = "e_" + this.edges_id_counter;
     var newEdge = {
       id: id,
       source: sourceId,
       target: targetId,
     };
+    this.edges_id_counter++;
     this.edges.push(newEdge);
     this.updateChart();
   }
