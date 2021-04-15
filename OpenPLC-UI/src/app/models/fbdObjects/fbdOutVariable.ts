@@ -39,9 +39,9 @@ export class FbdOutVariable {
           this.connectionPointIn.x = position.getAttribute('x');
           this.connectionPointIn.y = position.getAttribute('y');
         }
-        if (connectionPointIn.getElementsByTagName('connection') !== undefined) {
+        if (connectionPointIn.getElementsByTagName('connection')[0] !== undefined) {
           const connection = connectionPointIn.getElementsByTagName('connection')[0];
-          this.connectionPointIn.refLocalID = connection.getAttribute('refLocalID');
+          this.connectionPointIn.refLocalID = connection.getAttribute('refLocalId');
         }
       }
     }
