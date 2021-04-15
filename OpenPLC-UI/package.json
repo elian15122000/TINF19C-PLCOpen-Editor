@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "~11.0.1",
     "@angular/router": "~11.0.1",
     "@swimlane/ngx-graph": "^7.2.0",
+    "bootstrap": "^4.6.0",
     "readable-stream": "^3.6.0",
     "rxjs": "~6.6.0",
     "timers": "^0.1.1",

@@ -1,38 +1,208 @@
-<h1>{{title}}</h1>
+<!-- <h1>{{title}}</h1> -->
 
-<div class="selectionButtons">
+<!-- <div class="selectionButtons">
   <a class="button" (click)="newProjectModal()">New Project</a>
   <br>
   <a class="button" (click)="openProjectModal()">Open Project</a>
   <br>
   <a class="button" routerLink="userManual">User Manual</a>
+</div> -->
+
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-0 bg-white border-bottom box-shadow">
+  <h5 class="my-0 mr-md-auto font-weight-normal">Get started</h5>
+  <nav class="my-2 my-md-0 mr-md-3">
+    <a class="p-2 text-dark" href="#">Features</a>
+    <a class="p-2 text-dark" href="#">Enterprise</a>
+    <a class="p-2 text-dark" href="#">Support</a>
+    <a class="p-2 text-dark" href="#">Pricing</a>
+  </nav>
+  <a class="btn btn-outline-primary" href="#">Sign up</a>
+</div>
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <h1 class="display-4">Welcome to PLCopen-Editor</h1>
+  <p class="lead">PLCopen is an organization in the field of industrial control technology.<br>This can be developed
+    using our web editor with the help of building blocks and both imported and exported in XML format.</p>
 </div>
 
 
-<div class="projectModal" id="openProjectModal">
-  <div class="modalBox">
-    <form class="uploadForm" (ngSubmit)="closeProjectModal()">
-      <h3>Select an existing PLC-Project</h3>
-      <label for="file">XML file: </label>
-      <input id="file" name="file" type="file" accept="text/xml" (change)="fileUpload($event)" required>
-      <br><br>
-      <input type="button" (click)="closeProjectModal()" class="actionButton" value="Close">
-      <input type="submit" routerLink="/projectOverview" class="actionButton" value="Open">
-    </form>
+<div class="container">
+  <div class="card-deck mb-3 text-center">
+    <div class="card mb-4 box-shadow">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">New Project</h4>
+      </div>
+      <div class="card-body">
+        <p>Get started with a new project. <br>It's completely free!</p><br>
+        <button class="btn btn-lg btn-block btn-outline-dark" data-toggle="modal" data-target="#newprojectmodal">Create
+          new project!</button>
+      </div>
+    </div>
+    <div class="card mb-4 box-shadow">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">Open Project</h4>
+      </div>
+      <div class="card-body">
+        <p>Open your existing XML project and continue working <br>It's completely free!</p>
+        <button class="btn btn-lg btn-block btn-outline-dark" data-toggle="modal" data-target="#openprojectmodal">Open
+          project!</button>
+
+      </div>
+    </div>
+    <div class="card mb-4 box-shadow">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">User Manual</h4>
+      </div>
+      <div class="card-body">
+        <p>Read our user manual if you don't know further. <br>We'll help you!</p>
+        <button type="button" routerLink="userManual" class="btn btn-lg btn-block btn-outline-dark">To the user
+          manual</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="pt-4 my-md-5 pt-md-5 border-top">
+    <div class="row">
+      <div class="col-12 col-md">
+        <img class="mb-2" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="24"
+          height="24">
+        <small class="d-block mb-3 text-muted">&copy; 2017-2018</small>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Features</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="text-muted" href="#">Cool stuff</a></li>
+          <li><a class="text-muted" href="#">Random feature</a></li>
+          <li><a class="text-muted" href="#">Team feature</a></li>
+          <li><a class="text-muted" href="#">Stuff for developers</a></li>
+          <li><a class="text-muted" href="#">Another one</a></li>
+          <li><a class="text-muted" href="#">Last time</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Resources</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="text-muted" href="#">Resource</a></li>
+          <li><a class="text-muted" href="#">Resource name</a></li>
+          <li><a class="text-muted" href="#">Another resource</a></li>
+          <li><a class="text-muted" href="#">Final resource</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>About</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="text-muted" href="#">Team</a></li>
+          <li><a class="text-muted" href="#">Locations</a></li>
+          <li><a class="text-muted" href="#">Privacy</a></li>
+          <li><a class="text-muted" href="#">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</div>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+<script src="../../assets/js/vendor/popper.min.js"></script>
+<script src="../../dist/js/bootstrap.min.js"></script>
+<script src="../../assets/js/vendor/holder.min.js"></script>
+<script>
+  Holder.addTheme('thumb', {
+    bg: '#55595c',
+    fg: '#eceeef',
+    text: 'Thumbnail'
+  });
+</script>
+
+
+
+
+
+<!-- Modals für Öffnen / Neu Projekt -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade" id="newprojectmodal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="projectModal" id="newProjectModal">
+          <div class="modalBox">
+            <form #newProject="ngForm" class="uploadForm">
+              <h3>Create a new Project:</h3>
+              <label for="projectName">Project name: </label>
+              <input id="projectName" name="projectName" type="text" required ngModel>
+              <br><br>
+              <input type="button" (click)="closeNewProject()" class="actionButton" value="Close">
+              <input type="submit" routerLink="/projectOverview" (click)="createProject(newProject.value)"
+                class="actionButton" value="Open">
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close" data-dismiss="modal">Schließen</button>
+      </div>
+
+    </div>
   </div>
 </div>
 
-<div class="projectModal" id="newProjectModal">
-  <div class="modalBox">
-    <form #newProject="ngForm" class="uploadForm">
-      <h3>Create a new Project:</h3>
-      <label for="projectName">Project name: </label>
-      <input id="projectName" name="projectName" type="text" required ngModel>
-      <br><br>
-      <input type="button" (click)="closeNewProject()" class="actionButton" value="Close">
-      <input type="submit" routerLink="/projectOverview" (click)="createProject(newProject.value)" class="actionButton" value="Open">
-    </form>
+
+<div class="modal fade" id="openprojectmodal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Open existing PLC project</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="projectModal" id="openProjectModal">
+          <div class="modalBox">
+            <form class="uploadForm" (ngSubmit)="closeProjectModal()">
+              <label for="file">XML file: </label>
+              <input id="file" name="file" type="file" accept="text/xml" (change)="fileUpload($event)" required>
+              <br><br>
+              <input type="submit" id="open" routerLink="/projectOverview" class="actionButton" value="Open">
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close" data-dismiss="modal">Schließen</button>
+      </div>
+    </div>
   </div>
 </div>
 
 
+
+<script>
+  $("#open").click(function () {
+    alert("Handler for .click() called.");
+  });
+</script>

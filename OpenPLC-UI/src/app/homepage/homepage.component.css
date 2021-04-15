@@ -1,4 +1,4 @@
-h1 {
+/* h1 {
   font-style: normal;
   text-align: center;
   margin: 50px 5px 30px 5px;
@@ -53,9 +53,9 @@ a:active {
 }
 
 .projectModal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  display: none;
+  position: fixed; 
+  z-index: 1; 
   left: 0;
   top: 0;
   width: 100%;
@@ -93,4 +93,19 @@ a:active {
   border-radius: 16px;
   font-size: small;
 }
+ */
 
+
+ .card {
+   height: 20%;
+   transition: all .3s ease-in-out;
+ }
+
+ .card:hover {
+  transform: scale(1.1);
+ }
+
+ .modal-backdrop {
+  /* bug fix - no overlay */    
+  display: block;    
+}
