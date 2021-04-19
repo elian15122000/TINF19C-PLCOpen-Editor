@@ -31,13 +31,15 @@ export class ProjectOverviewComponent implements OnInit {
   }
 
   addPou(data: any): void {
-    this.projectService.addPOU(data.name, data.type);
+    console.log(this.projectService.pouItems);
+    this.projectService.addPou(data.name, data.type, data.lang);
+    console.log(this.projectService.pouItems);
     this.loadPous();
     this.closePouModal();
   }
 
   deletePou(deleteItem: string): void {
-    this.projectService.deletePOU(deleteItem);
+    this.projectService.deletePou(deleteItem);
     this.loadPous();
   }
 

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {DatePipe} from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -38,10 +39,63 @@ export class ProjectService {
     return undefined;
   }
 
-  addPOU(name: string, type: string): void {
+  deletePou(pouName: string): void {
+    this.pouItems = this.pouItems.filter( (pou) =>
+      pou.getAttribute('name') !== pouName);
   }
 
-  deletePOU(deletItem: string): void {
+  addPou(pouName: string, pouType: string, lang: string): void {
+    const pouStr = '<pou name="' + pouName + '" pouType="' + pouType + '">\n' +
+      '        <interface/>' +
+      '        <body>\n' +
+      '          <' + lang + '/>\n' +
+      '        </body>\n' +
+      '      </pou>';
+
+    const parser = new DOMParser();
+    this.pouItems.push(parser.parseFromString(pouStr, 'application/xml').getElementsByTagName('pou')[0]);
+  }
+
+  createNewProject(projectName: string): void {
+    this.headerItems = [];
+    const datePipe = new DatePipe('en-US');
+    const date = datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm:ss');
+    if (projectName === '') {
+      projectName = 'Unbenannt';
+    }
+
+    // xml string of the fileHeader-Tag
+    const fileHeaderStr = '<fileHeader companyName="Unbekannt" productName="Unbenannt" ' +
+      'productVersion="1" creationDateTime="' + date + '"/>';
+
+    // xml string of the conentHeader-Tag
+    const contentHeaderStr = '<contentHeader name="' + projectName + '" modificationDateTime="' + date + '">\n' +
+      '    <coordinateInfo>\n' +
+      '      <fbd>\n' +
+      '        <scaling x="10" y="10"/>\n' +
+      '      </fbd>\n' +
+      '      <ld>\n' +
+      '        <scaling x="10" y="10"/>\n' +
+      '      </ld>\n' +
+      '      <sfc>\n' +
+      '        <scaling x="10" y="10"/>\n' +
+      '      </sfc>\n' +
+      '    </coordinateInfo>\n' +
+      '  </contentHeader>';
+
+    // xml string of the default instances-Tag
+    const instanceStr = '<instances>\n' +
+      '    <configurations>\n' +
+      '      <configuration name="Config0">\n' +
+      '        <resource name="Res0"/>\n' +
+      '      </configuration>\n' +
+      '    </configurations>\n' +
+      '  </instances>';
+
+    const parser = new DOMParser();
+    this.headerItems.push(parser.parseFromString(fileHeaderStr, 'application/xml').getElementsByTagName('fileHeader')[0]);
+    this.headerItems.push(parser.parseFromString(contentHeaderStr, 'application/xml').getElementsByTagName('contentHeader')[0]);
+    this.instanceItems = parser.parseFromString(instanceStr, 'application/xml').getElementsByTagName('instances')[0];
   }
 
 }

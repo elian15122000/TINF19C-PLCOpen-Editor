@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ImportService} from '../services/import.service';
 import {ProjectService} from '../services/project.service';
+import {isCombinedNodeFlagSet} from "tslint";
 
 @Component({
   selector: 'app-homepage',
@@ -38,7 +39,7 @@ export class HomepageComponent implements OnInit {
   }
 
   createProject(data: any): void {
-    // this.projectService.project = new Project(data.projectName);
+    this.projectService.createNewProject(data.projectName);
   }
 
 
