@@ -4,8 +4,8 @@ export class SfcSelectionConvergence{
   public globalId: number;
   public height = 20;
   public width = 20;
-  public connectionPointIn: {x: 0, y: 0};
-  public connectionPointOut: {x: 0, y: 0};
+  public connectionPointIn: {x: 0, y: 0, refLocalId: '', formalParameter: ''};
+  public connectionPointOut: {x: 0, y: 0, refLocalId: '', formalParameter: ''};
   public position: {x: 0, y: 0};
 
   constructor(xmlSelConvergence: any) {
@@ -26,24 +26,32 @@ export class SfcSelectionConvergence{
         this.width = xmlSelConvergence.getAttribute('width');
       }
       if (xmlSelConvergence.getElementsByTagName('connectionPointIn') !== undefined) {
-        for (const item of xmlSelConvergence.getElementsByTagName('connectionPointIn')) {
-          const relPos = item.getElementsByTagName('relPosition');
-          if (relPos[0] !== undefined) {
-            const inX = relPos[0].getAttribute('x');
-            const inY = relPos[0].getAttribute('y');
-            this.connectionPointIn = {x: inX, y: inY};
-          }
+        const connectionPointIn = xmlSelConvergence.getElementsByTagName('connectionPointIn')[0];
+        if (connectionPointIn.getElementsByTagName('relPosition') !== undefined) {
+          const position = connectionPointIn.getElementsByTagName('relPosition')[0];
+          this.connectionPointIn.x = position.getAttribute('x');
+          this.connectionPointIn.y = position.getAttribute('y');
         }
+        if (connectionPointIn.getElementsByTagName('connection')[0] !== undefined) {
+          const connection = connectionPointIn.getElementsByTagName('connection')[0];
+          this.connectionPointIn.refLocalId = connection.getAttribute('refLocalId');
+          this.connectionPointIn.formalParameter = connection.getAttribute('formalParameter');
+        }
+        console.log(this.connectionPointIn);
       }
       if (xmlSelConvergence.getElementsByTagName('connectionPointOut') !== undefined) {
-        for (const item of xmlSelConvergence.getElementsByTagName('connectionPointOut')) {
-          const relPos = item.getElementsByTagName('relPosition');
-          if (relPos[0] !== undefined) {
-            const outX = relPos[0].getAttribute('x');
-            const outY = relPos[0].getAttribute('y');
-            this.connectionPointOut = {x: outX, y: outY};
-          }
+        const connectionPointOut = xmlSelConvergence.getElementsByTagName('connectionPointIn')[0];
+        if (connectionPointOut.getElementsByTagName('relPosition') !== undefined) {
+          const position = connectionPointOut.getElementsByTagName('relPosition')[0];
+          this.connectionPointOut.x = position.getAttribute('x');
+          this.connectionPointOut.y = position.getAttribute('y');
         }
+        if (connectionPointOut.getElementsByTagName('connection')[0] !== undefined) {
+          const connection = connectionPointOut.getElementsByTagName('connection')[0];
+          this.connectionPointOut.refLocalId = connection.getAttribute('refLocalId');
+          this.connectionPointOut.formalParameter = connection.getAttribute('formalParameter');
+        }
+        console.log(this.connectionPointOut);
       }
       if (xmlSelConvergence.getElementsByTagName('position') !== undefined) {
         const position = xmlSelConvergence.getElementsByTagName('position')[0];

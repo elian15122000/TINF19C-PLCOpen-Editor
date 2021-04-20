@@ -70,7 +70,6 @@ export class EditorComponent implements OnInit {
       const stepList: SfcStep[] = [];
       const transitionList: SfcTransition[] = [];
 
-
       for (const inVariable of pou.getElementsByTagName('inVariable')){
         inVariableList.push(new FbdInVariable(inVariable));
       }

@@ -14,71 +14,81 @@ export class CommonActionBlock{
   public actionWidth = 20;
   public actionDuration = '';
   public actionIndicator = '';
-  public connectionPointIn: {x: 0, y: 0};
+  public connectionPointIn: {x: 0, y: 0, refLocalId: '', formalParameter: ''};
 
   constructor(xmlCommonActionBlock: any) {
-    this.xml = xmlCommonActionBlock;
-    if (xmlCommonActionBlock.getAttribute('localId') !== undefined){
-      this.localId = xmlCommonActionBlock.getAttribute('localId');
-    }
-    if (xmlCommonActionBlock.getAttribute('height') !== undefined){
-      this.height = xmlCommonActionBlock.getAttribute('height');
-    }
-    if (xmlCommonActionBlock.getAttribute('width') !== undefined){
-      this.width = xmlCommonActionBlock.getAttribute('width');
-    }
-    if (xmlCommonActionBlock.getAttribute('negated') !== undefined){
-      this.negated = xmlCommonActionBlock.getAttribute('negated');
-    }
-    if (xmlCommonActionBlock.getElementsByTagName('position') !== undefined) {
-      const position = xmlCommonActionBlock.getElementsByTagName('position')[0];
-      this.position = {x: position.getAttribute('x'), y: position.getAttribute('y')};
-    }
-    if (xmlCommonActionBlock.getElementsByTagName('connectionPointIn') !== undefined) {
-      for (const item of xmlCommonActionBlock.getElementsByTagName('connectionPointIn')) {
-        const relPos = item.getElementsByTagName('relPosition');
-        if (relPos[0] !== undefined) {
-          const inX = relPos[0].getAttribute('x');
-          const inY = relPos[0].getAttribute('y');
-          this.connectionPointIn = {x: inX, y: inY};
+    if (xmlCommonActionBlock === ''){
+      this.createXML();
+    } else {
+      this.xml = xmlCommonActionBlock;
+      if (xmlCommonActionBlock.getAttribute('localId') !== undefined) {
+        this.localId = xmlCommonActionBlock.getAttribute('localId');
+      }
+      if (xmlCommonActionBlock.getAttribute('height') !== undefined) {
+        this.height = xmlCommonActionBlock.getAttribute('height');
+      }
+      if (xmlCommonActionBlock.getAttribute('width') !== undefined) {
+        this.width = xmlCommonActionBlock.getAttribute('width');
+      }
+      if (xmlCommonActionBlock.getAttribute('negated') !== undefined) {
+        this.negated = xmlCommonActionBlock.getAttribute('negated');
+      }
+      if (xmlCommonActionBlock.getElementsByTagName('position') !== undefined) {
+        const position = xmlCommonActionBlock.getElementsByTagName('position')[0];
+        this.position = {x: position.getAttribute('x'), y: position.getAttribute('y')};
+      }
+      if (xmlCommonActionBlock.getElementsByTagName('connectionPointIn') !== undefined) {
+        for (const item of xmlCommonActionBlock.getElementsByTagName('connectionPointIn')) {
+          const relPos = item.getElementsByTagName('relPosition');
+          if (relPos[0] !== undefined) {
+            const inX = relPos[0].getAttribute('x');
+            const inY = relPos[0].getAttribute('y');
+            // this.connectionPointIn = {x: inX, y: inY};
+          }
         }
       }
-    }
-    if (xmlCommonActionBlock.getElementsByTagName('action') !== undefined) {
-      for (const item of xmlCommonActionBlock.getElementsByTagName('action')) {
-        let i = 0;
-        const relPos = item.getElementsByTagName('relPosition');
-        if (relPos[0] !== undefined) {
-          const inX = relPos[0].getAttribute('x');
-          const inY = relPos[0].getAttribute('y');
-          this.actionRelPosition = {x: inX, y: inY};
+      if (xmlCommonActionBlock.getElementsByTagName('action') !== undefined) {
+        for (const item of xmlCommonActionBlock.getElementsByTagName('action')) {
+          let i = 0;
+          const relPos = item.getElementsByTagName('relPosition');
+          if (relPos[0] !== undefined) {
+            const inX = relPos[0].getAttribute('x');
+            const inY = relPos[0].getAttribute('y');
+            this.actionRelPosition = {x: inX, y: inY};
+          }
+          const ref = item.getElementsByTagName('reference');
+          if (ref[0] !== undefined) {
+            this.actionReferenceName = ref[0].getAttribute('name');
+          }
+          const action = xmlCommonActionBlock.getElementsByTagName('action');
+          this.actionQualifier = action[i].getAttribute('qualifier');
+          this.actionHeight = action[i].getAttribute('height');
+          this.actionWidth = action[i].getAttribute('width');
+          this.actionLocalId = action[i].getAttribute('localId');
+          this.actionDuration = action[i].getAttribute('duration');
+          this.actionIndicator = action[i].getAttribute('indicator');
+          i += 1;
         }
-        const ref = item.getElementsByTagName('reference');
-        if (ref[0] !== undefined){
-          this.actionReferenceName = ref[0].getAttribute('name');
-        }
-        const action = xmlCommonActionBlock.getElementsByTagName('action');
-        this.actionQualifier = action[i].getAttribute('qualifier');
-        this.actionHeight = action[i].getAttribute('height');
-        this.actionWidth = action[i].getAttribute('width');
-        this.actionLocalId = action[i].getAttribute('localId');
-        this.actionDuration = action[i].getAttribute('duration');
-        this.actionIndicator = action[i].getAttribute('indicator');
-        i += 1;
-      }
 
+      }
     }
   }
   createXML(): void{
-    const xmlString = '<comment localId="0" height="50" width="30"   >\n' +
+    const xmlString = '<actionBlock localId="0" height="50" width="30" negated="false"   >\n' +
       '              <position x="0" y="0"/>\n' +
-      '              <content>\n' +
-      '<xhtml:p><![CDATA[Testkommentar]]>\n</xhtml:p>\n' +
-      '</content>\n' +
-      '              </comment>\n';
+      '   <connectionPointIn>\n' +
+      '<action localId="0" qualifier="" width="30" height="30" duration="" indicator="">' +
+      ' <relPosition x="0" y="0"/>\n' +
+        '<reference name="">' +
+        '</reference>' +
+        '<connectionPointOut>\n' +
+        '<relPosition x="0" y="0"/>\n' +
+        '</connectionPointOut>\n' +
+      '</action>' +
+      ' <relPosition x="0" y="0"/>\n' +
+      '</connectionPointIn>\n' +
+      '              </actionBlock>\n';
     const parser = new DOMParser();
-    this.xml = parser.parseFromString(xmlString, 'application/xml');
-    const temp = this.xml.getElementsByTagName('parsererror')[0];
-    temp.parentNode.removeChild(temp);
+    this.xml = parser.parseFromString(xmlString, 'application/xml').getElementsByTagName('actionBlock')[0];
   }
 }

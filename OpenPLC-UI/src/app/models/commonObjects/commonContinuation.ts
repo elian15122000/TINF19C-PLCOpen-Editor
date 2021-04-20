@@ -3,7 +3,7 @@ export class CommonContinuation{
   public localId: number;
   public height = 20;
   public width = 20;
-  public connectionPointOut: {x: 0, y: 0};
+  public connectionPointOut: {x: 0, y: 0, refLocalId: '', formalParameter: ''};
   public position: {x: 0, y: 0};
 
   constructor(xmlCommonContinuation: any) {
@@ -24,9 +24,18 @@ export class CommonContinuation{
         const position = xmlCommonContinuation.getElementsByTagName('position')[0];
         this.position = {x: position.getAttribute('x'), y: position.getAttribute('y')};
       }
-      if (xmlCommonContinuation.getElementsByTagName('relPosition') !== undefined){
-        const position = xmlCommonContinuation.getElementsByTagName('relPosition')[0];
-        this.connectionPointOut = {x: position.getAttribute('x'), y: position.getAttribute('y')};
+      if ( xmlCommonContinuation.getElementsByTagName('connectionPointOut')  !== undefined) {
+        const connectionPointOut = xmlCommonContinuation.getElementsByTagName('connectionPointOut')[0];
+        if (connectionPointOut.getElementsByTagName('relPosition') !== undefined) {
+          const position = connectionPointOut.getElementsByTagName('relPosition')[0];
+          this.connectionPointOut.x = position.getAttribute('x');
+          this.connectionPointOut.y = position.getAttribute('y');
+        }
+        if (connectionPointOut.getElementsByTagName('connection')[0] !== undefined) {
+          const connection = connectionPointOut.getElementsByTagName('connection')[0];
+          this.connectionPointOut.refLocalId = connection.getAttribute('refLocalId');
+          this.connectionPointOut.formalParameter = connection.getAttribute('formalParameter');
+        }
       }
     }
   }
@@ -40,6 +49,6 @@ export class CommonContinuation{
       '              </continuation>\n';
     const parser = new DOMParser();
     this.xml = parser.parseFromString(xmlString, 'application/xml').getElementsByTagName('continuation')[0];
-    console.log(this.xml);
+    this.xml = this.xml.getElementsByTagName('continuation')[0];
   }
 }

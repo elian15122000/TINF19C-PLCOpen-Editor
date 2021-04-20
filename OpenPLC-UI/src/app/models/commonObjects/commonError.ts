@@ -41,6 +41,5 @@ export class CommonError{
     const temp = this.xml.getElementsByTagName('parsererror')[0];
     temp.parentNode.removeChild(temp);
     this.xml = this.xml.getElementsByTagName('error')[0];
-    console.log(this.xml);
   }
 }

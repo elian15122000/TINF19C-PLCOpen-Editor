@@ -4,7 +4,7 @@ export class CommonConnector{
   public height = 20;
   public width = 20;
   public name = '';
-  public connectionPointIn: {x: 0, y: 0};
+  public connectionPointIn: {x: 0, y: 0, refLocalId: '', formalParameter: ''};
   public position: {x: 0, y: 0};
 
   constructor(xmlCommonConnector: any) {
@@ -28,9 +28,18 @@ export class CommonConnector{
         const position = xmlCommonConnector.getElementsByTagName('position')[0];
         this.position = {x: position.getAttribute('x'), y: position.getAttribute('y')};
       }
-      if (xmlCommonConnector.getElementsByTagName('relPosition') !== undefined){
-        const position = xmlCommonConnector.getElementsByTagName('relPosition')[0];
-        this.connectionPointIn = {x: position.getAttribute('x'), y: position.getAttribute('y')};
+      if ( xmlCommonConnector.getElementsByTagName('connectionPointIn')  !== undefined) {
+        const connectionPointIn = xmlCommonConnector.getElementsByTagName('connectionPointIn')[0];
+        if (connectionPointIn.getElementsByTagName('relPosition') !== undefined) {
+          const position = connectionPointIn.getElementsByTagName('relPosition')[0];
+          this.connectionPointIn.x = position.getAttribute('x');
+          this.connectionPointIn.y = position.getAttribute('y');
+        }
+        if (connectionPointIn.getElementsByTagName('connection')[0] !== undefined) {
+          const connection = connectionPointIn.getElementsByTagName('connection')[0];
+          this.connectionPointIn.refLocalId = connection.getAttribute('refLocalId');
+          this.connectionPointIn.formalParameter = connection.getAttribute('formalParameter');
+        }
       }
     }
   }

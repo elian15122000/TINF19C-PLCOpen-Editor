@@ -4,7 +4,7 @@ export class SfcJumpStep {
   public height = 20;
   public width = 20;
   public targetName = '';
-  public connectionPointIn: {x: 0, y: 0};
+  public connectionPointIn: {x: 0, y: 0, refLocalId: 0, formalParameter: string};
   public position: {x: 0, y: 0};
 
 constructor(xmlJumpStep: any) {
@@ -24,9 +24,18 @@ constructor(xmlJumpStep: any) {
     if (xmlJumpStep.getAttribute('targetName') !== undefined) {
       this.targetName = xmlJumpStep.getAttribute('targetName');
     }
-    if (xmlJumpStep.getElementsByTagName('relPosition') !== undefined) {
-      const position = xmlJumpStep.getElementsByTagName('relPosition')[0];
-      this.connectionPointIn = {x: position.getAttribute('x'), y: position.getAttribute('y')};
+    if ( xmlJumpStep.getElementsByTagName('connectionPointIn')  !== undefined) {
+      const connectionPointIn = xmlJumpStep.getElementsByTagName('connectionPointIn')[0];
+      if (connectionPointIn.getElementsByTagName('relPosition') !== undefined) {
+        const position = connectionPointIn.getElementsByTagName('relPosition')[0];
+        this.connectionPointIn.x = position.getAttribute('x');
+        this.connectionPointIn.y = position.getAttribute('y');
+      }
+      if (connectionPointIn.getElementsByTagName('connection')[0] !== undefined) {
+        const connection = connectionPointIn.getElementsByTagName('connection')[0];
+        this.connectionPointIn.refLocalId = connection.getAttribute('refLocalId');
+        this.connectionPointIn.formalParameter = connection.getAttribute('formalParameter');
+      }
     }
     if (xmlJumpStep.getElementsByTagName('position') !== undefined) {
       const position = xmlJumpStep.getElementsByTagName('position')[0];

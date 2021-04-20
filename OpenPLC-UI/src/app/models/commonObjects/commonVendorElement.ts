@@ -116,4 +116,19 @@ export class CommonVendorElement{
         }
         return variable;
       }
+
+  createXML(): void{
+    const xmlString = '<vendorElement localId="0" height="50" width="30" >\n' +
+      '<position x="0" y="0"/>\n' +
+      '              <content>\n' +
+      '<xhtml:p><![CDATA[Kommentar]]>\n</xhtml:p>\n' +
+      '</content>\n' +
+      '              </vendorElement>\n';
+    const parser = new DOMParser();
+    this.xml = parser.parseFromString(xmlString, 'application/xml');
+    const temp = this.xml.getElementsByTagName('parsererror')[0];
+    temp.parentNode.removeChild(temp);
+    this.xml = this.xml.getElementsByTagName('error')[0];
+    console.log(this.xml);
+  }
 }
