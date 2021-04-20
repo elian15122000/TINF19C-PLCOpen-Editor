@@ -6,3 +6,7 @@
     /* bug fix - no overlay */    
     display: none;    
   }
+
+  html {
+    scroll-behavior: smooth;
+  }

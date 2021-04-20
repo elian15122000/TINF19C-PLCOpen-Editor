@@ -25,9 +25,9 @@
   font-size: 18px;
 }
 
-.dropdown-content {
+/* .dropdown-content {
   display: none;
-}
+} */
 
 .dropdown:hover .dropdown-content {
   display: block;

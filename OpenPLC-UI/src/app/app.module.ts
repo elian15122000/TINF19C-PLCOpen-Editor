@@ -12,6 +12,8 @@ import { UserManualComponent } from './user-manual/user-manual.component';
 import { LibraryComponent } from './library/library.component';
 import { GraphComponent } from './graph/graph.component';
 import {NgxGraphModule} from '@swimlane/ngx-graph';
+import { NavigationComponent } from './navigation/navigation.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import {NgxGraphModule} from '@swimlane/ngx-graph';
     UserManualComponent,
     LibraryComponent,
     GraphComponent,
+    NavigationComponent,
+    FooterComponent,
   ],
   imports: [
     NgxGraphModule,
