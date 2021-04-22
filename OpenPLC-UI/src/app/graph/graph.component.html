@@ -3,13 +3,13 @@
 <button (click)="test(this.inVariableList.length)">Get Lenght</button>
 
 <!--https://stackoverflow.com/questions/54888126/how-to-create-tables-td-dynamically-in-angular-->
-<table>
+<!-- <table>
   <tbody>
     <tr *ngFor="let node of nodes;" (click)="set_selected_node(node.id)">
       <td> {{ node.id }}</td>
       <td>{{ node.label }}</td>
   </tbody>
-</table>
+</table> -->
 
 <div *ngFor="let edge of selectedNodeEdges; let i = index">
   source:
@@ -31,8 +31,7 @@
 
 
 
-
-<ngx-graph class="chart-container" [update$]="update$" [view]="[1024, 512]" [links]="edges" [nodes]="nodes"
+  <ngx-graph class="chart-container" [update$]="update$" [view]="[1024, 512]" [links]="edges" [nodes]="nodes"
   [curve]="curve">
   <ng-template #nodeTemplate let-node>
     <svg:g (click)="set_selected_node(node.id)">
