@@ -1,10 +1,14 @@
+import {Node} from '@swimlane/ngx-graph';
+
 export class LdRightPowerRail {
   public xml: any;
-  public localId: number;
+  public localId: string;
   public height = 20;
   public width = 20;
   public position: { x: number, y: number } = {x: 0, y: 0};
-  public connectionPointIn: { x: number, y: number, refLocalID: number} = {x: 0, y: 0, refLocalID: 0};
+  public connectionPointIn: { x: number, y: number, refLocalID: string} = {x: 0, y: 0, refLocalID: null};
+  public node: Node = {id: null, label: null, type: null, pins: null};
+  public edges: string[] = [];
 
   constructor(xmlRightPowerRail: any) {
     if (xmlRightPowerRail === '') {
@@ -19,13 +23,13 @@ export class LdRightPowerRail {
       if (xmlRightPowerRail.getAttribute('height') !== undefined) {
         this.height = xmlRightPowerRail.getAttribute('height');
       }
-      if (xmlRightPowerRail.getElementsByTagName('position') !== undefined) {
+      if (xmlRightPowerRail.getElementsByTagName('position')[0] !== undefined) {
         const position = xmlRightPowerRail.getElementsByTagName('position')[0];
         this.position = { x: position.getAttribute('x'), y: position.getAttribute('y')};
       }
-      if ( xmlRightPowerRail.getElementsByTagName('connectionPointIn')  !== undefined) {
+      if ( xmlRightPowerRail.getElementsByTagName('connectionPointIn')[0]  !== undefined) {
         const connectionPointIn = xmlRightPowerRail.getElementsByTagName('connectionPointIn')[0];
-        if (connectionPointIn.getElementsByTagName('relPosition') !== undefined) {
+        if (connectionPointIn.getElementsByTagName('relPosition')[0] !== undefined) {
           const position = connectionPointIn.getElementsByTagName('relPosition')[0];
           this.connectionPointIn.x = position.getAttribute('x');
           this.connectionPointIn.y = position.getAttribute('y');
@@ -35,6 +39,14 @@ export class LdRightPowerRail {
           this.connectionPointIn.refLocalID = connection.getAttribute('refLocalId');
         }
       }
+    }
+    this.node.id = this.localId;
+    this.node.type = 'RPR';
+    this.node.pins = {
+      IN: {type: 'IN', edge: null}
+    };
+    if (this.connectionPointIn.refLocalID != null){
+      this.edges.push(this.connectionPointIn.refLocalID);
     }
   }
 

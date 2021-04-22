@@ -1,4 +1,4 @@
-import { Node, Edge} from '@swimlane/ngx-graph';
+import { Node } from '@swimlane/ngx-graph';
 
 export class FbdInVariable {
   public xml: any;
@@ -31,7 +31,7 @@ export class FbdInVariable {
       if (xmlInVariable.getAttribute('negated') === true) {
         this.negated = xmlInVariable.getAttribute('negated');
       }
-      if (xmlInVariable.getElementsByTagName('position') !== undefined) {
+      if (xmlInVariable.getElementsByTagName('position')[0] !== undefined) {
         const position = xmlInVariable.getElementsByTagName('position')[0];
         this.position = { x: position.getAttribute('x'), y: position.getAttribute('y')};
       }
@@ -53,6 +53,7 @@ export class FbdInVariable {
       this.node.pins = {
         OUT: {type: 'OUT', edge: null}
       };
+      this.node.position = this.position;
       if (this.connectionPointOut.refLocalID != null){
         this.edges.push(this.connectionPointOut.refLocalID);
       }

@@ -37,6 +37,12 @@ import {SfcTransition} from '../models/sfcObjects/sfcTransition';
   styleUrls: ['./graph.component.css']
 })
 export class GraphComponent implements OnInit {
+
+   constructor(private projectService: ProjectService,
+               private route: ActivatedRoute) {
+
+
+  }
   // Importierte Variablen
    inVariableList: FbdInVariable[] = [];
    outVariableList: FbdOutVariable[] = [];
@@ -68,16 +74,13 @@ export class GraphComponent implements OnInit {
    pouName: string;
    nodes: Node[] = [];
    edges: Edge[] = [];
-   edges_id_counter : number;
+   edgesIdCounter: number;
    curve: any = shape.curveStepAfter;
-   selected_node: string;
-   selected_node_edges: Edge[];
+   selectedNode: string;
+   selectedNodeEdges: Edge[];
 
-   constructor(private projectService: ProjectService,
-               private route: ActivatedRoute) {
+  update$: Subject<any> = new Subject();
 
-
-  }
     /*
     connect_pins(Node1_id, Node2_id, P1_id, P2_id)
 
@@ -88,25 +91,25 @@ export class GraphComponent implements OnInit {
     Does: adds an edge between the two nodes and registers the connction id in the pins
           if an edge already exists when registering, the old edge is removed
     */
-  public connect_pins(Node1_id, Node2_id, P1_key, P2_key){
+  public connect_pins(Node1ID, Node2ID, P1Key, P2Key): void{
     // get the entities
-    var Node1;
-    var Node2;
+    let Node1;
+    let Node2;
     this.nodes.forEach( n => {
-      if (n.id === Node1_id) {
+      if (n.id === Node1ID) {
         Node1 = n;
         return;
       }
     });
     this.nodes.forEach( n => {
-      if (n.id === Node2_id) {
+      if (n.id === Node2ID) {
         Node2 = n;
         return;
       }
     });
 
-    var P1 = Node1.pins[P1_key];
-    var P2 = Node2.pins[P2_key];
+    const P1 = Node1.pins[P1Key];
+    const P2 = Node2.pins[P2Key];
 
     // check if connection is possible
     if (P1.type === P2.type){
@@ -115,7 +118,7 @@ export class GraphComponent implements OnInit {
     }
 
 
-    //check if a connection already exists
+    // check if a connection already exists
     if (P1.edge != null){
       this.remove_edge(P1.edge);
       P1.edge = null;
@@ -127,9 +130,9 @@ export class GraphComponent implements OnInit {
 
 
     // call the add_edge function
-    P1.edge = 'e_' + this.edges_id_counter;
-    P2.edge = 'e_' + this.edges_id_counter;
-    this.add_edge(Node1_id, Node2_id);
+    P1.edge = 'e_' + this.edgesIdCounter;
+    P2.edge = 'e_' + this.edgesIdCounter;
+    this.add_edge(Node1ID, Node2ID);
   }
   /**
    * remove_edge(edgeId)
@@ -137,10 +140,10 @@ export class GraphComponent implements OnInit {
    * @returns : none
    * @does : removes the given edge from this.edges
    */
-  public remove_edge(edgeId){
+  public remove_edge(edgeId): void{
     for (let index = 0; index < this.edges.length; index++) {
-      var edge = this.edges[index];
-      if(edge.id === edgeId){
+      const edge = this.edges[index];
+      if (edge.id === edgeId){
         this.edges.splice(index, 1);
         return;
       }
@@ -148,18 +151,18 @@ export class GraphComponent implements OnInit {
   }
 
 
-  public change_edge_source(edgeId, event){
-    var newSource = event.target.value;
+  public change_edge_source(edgeId, event): void{
+    const newSource = event.target.value;
     this.edges.forEach(e => {
       if (e.id === edgeId){
         e.source = newSource;
 
       }
-    })
-    this.updateChart()
+    });
+    this.updateChart();
   }
-  public change_edge_target(edgeId, event){
-    var newTarget = event.target.value;
+  public change_edge_target(edgeId, event): void{
+    const newTarget = event.target.value;
     this.edges.forEach(e => {
       if (e.id === edgeId){
         e.target = newTarget;
@@ -168,27 +171,24 @@ export class GraphComponent implements OnInit {
       }
     });
   }
-  set_selected_node(nodeId){
-    this.selected_node = nodeId;
-    this.selected_node_edges = this.get_related_edges(nodeId);
+  set_selected_node(nodeId): void{
+    this.selectedNode = nodeId;
+    this.selectedNodeEdges = this.get_related_edges(nodeId);
   }
-  public get_nodes(){
+  public get_nodes(): any{
     return this.nodes;
 }
-  public set_nodes(newNodes: Node[]){
+  public set_nodes(newNodes: Node[]): void{
     this.nodes = newNodes;
     this.updateChart();
 }
-  public get_edges(){
+  public get_edges(): any{
     return this.edges;
   }
 
-  public set_edges(newEdges: Edge[]){
+  public set_edges(newEdges: Edge[]): void{
     this.edges = newEdges;
   }
-
-
-  update$: Subject<any> = new Subject();
 
 
 
@@ -219,15 +219,15 @@ export class GraphComponent implements OnInit {
   /**
    * add_edge
    */
-  public add_edge(sourceId, targetId, mode?) {
+  public add_edge(sourceId, targetId, mode?): void {
 
-    var id = 'e_' + this.edges_id_counter;
-    var newEdge = {
-      id: id,
+    const id1 = 'e_' + this.edgesIdCounter;
+    const newEdge = {
+      id: id1,
       source: sourceId,
       target: targetId,
     };
-    this.edges_id_counter++;
+    this.edgesIdCounter++;
     this.edges.push(newEdge);
     this.updateChart();
   }
@@ -235,21 +235,21 @@ export class GraphComponent implements OnInit {
   /**
    * add_new_edge
    */
-  public add_new_edge() {
-    this.add_edge(this.selected_node, this.selected_node);
+  public add_new_edge(): void {
+    this.add_edge(this.selectedNode, this.selectedNode);
   }
 
   /**
    * get_related_edges
    */
-  public get_related_edges(nodeId) {
-    var related_edges : Edge[] = []
+  public get_related_edges(nodeId): any {
+    const relatedEdges: Edge[] = [];
     this.edges.forEach(edge => {
-      if (edge.source == nodeId || edge.target == nodeId){
-          related_edges.push(edge)
+      if (edge.source === nodeId || edge.target === nodeId){
+          relatedEdges.push(edge);
       }
     });
-    return related_edges
+    return relatedEdges;
   }
 
   /**
@@ -258,7 +258,7 @@ export class GraphComponent implements OnInit {
    *
    * Always call after changing the graph
    */
-  updateChart(){
+  updateChart(): void{
       this.update$.next(true);
   }
 
@@ -295,28 +295,68 @@ export class GraphComponent implements OnInit {
         });
       }
       for (const jump of pou.getElementsByTagName('jump')) {
-        this.jumpList.push(new FbdJump(jump));
+        const fbdJump = new FbdJump(jump);
+        this.jumpList.push(fbdJump);
+        this.nodes.push(fbdJump.node);
+        fbdJump.edges.forEach(i => {
+          this.add_edge(fbdJump.localId, i);
+        });
       }
       for (const label of pou.getElementsByTagName('label')) {
-        this.labelList.push(new FbdLabel(label));
+        const fbdLabel = new FbdLabel(label);
+        this.labelList.push(fbdLabel);
+        this.nodes.push(fbdLabel.node);
+        fbdLabel.edges.forEach(i => {
+          this.add_edge(fbdLabel.localId, i);
+        });
       }
       for (const returnItem of pou.getElementsByTagName('return')) {
-        this.returnList.push(new FbdReturn(returnItem));
+        const fbdReturn = new FbdReturn(returnItem);
+        this.returnList.push(fbdReturn);
+        this.nodes.push(fbdReturn.node);
+        fbdReturn.edges.forEach(i => {
+          this.add_edge(fbdReturn.localId, i);
+        });
       }
       for (const block of pou.getElementsByTagName('block')) {
-        this.blockList.push(new FbdBlock(block));
+        const fbdBlock = new FbdBlock(block);
+        this.blockList.push(fbdBlock);
+        this.nodes.push(fbdBlock.node);
+        fbdBlock.edges.forEach(i => {
+          this.add_edge(fbdBlock.localId, i);
+        });
       }
       for (const contact of pou.getElementsByTagName('contact')) {
-        this.contactList.push(new LdContact(contact));
+        const ldContact = new LdContact(contact);
+        this.contactList.push(ldContact);
+        this.nodes.push(ldContact.node);
+        ldContact.edges.forEach(i => {
+          this.add_edge(ldContact.localId, i);
+        });
       }
       for (const leftPowerRail of pou.getElementsByTagName('leftPowerRail')) {
-        this.leftPowerRailList.push(new LdLeftPowerRail(leftPowerRail));
+        const ldLPR = new LdLeftPowerRail(leftPowerRail);
+        this.leftPowerRailList.push(ldLPR);
+        this.nodes.push(ldLPR.node);
+        ldLPR.edges.forEach(i => {
+          this.add_edge(ldLPR.localId, i);
+        });
       }
       for (const rightPowerRail of pou.getElementsByTagName('rightPowerRail')) {
-        this.rightPowerRailList.push(new LdRightPowerRail(rightPowerRail));
+        const ldRPR = new LdRightPowerRail(rightPowerRail);
+        this.rightPowerRailList.push(ldRPR);
+        this.nodes.push(ldRPR.node);
+        ldRPR.edges.forEach(i => {
+          this.add_edge(ldRPR.localId, i);
+        });
       }
       for (const coil of pou.getElementsByTagName('coil')) {
-        this.coilList.push(new LdCoil(coil));
+        const ldCoil = new LdCoil(coil);
+        this.coilList.push(ldCoil);
+        this.nodes.push(ldCoil.node);
+        ldCoil.edges.forEach(i => {
+          this.add_edge(ldCoil.localId, i);
+        });
       }
       for (const actionBlock of pou.getElementsByTagName('actionBlock')) {
         this.actionBlockList.push(new CommonActionBlock(actionBlock));
@@ -364,7 +404,7 @@ export class GraphComponent implements OnInit {
 
     this.updateChart();
 
-    this.edges_id_counter = 2;
+    this.edgesIdCounter = 2;
     /*
 this.nodes = [
   {
@@ -410,7 +450,7 @@ this.edges = [
 */
   }
 
-  public test(a){
+  public test(a): void{
     alert(a);
     console.log(a);
   }

@@ -18,7 +18,7 @@ export class FbdOutVariable {
     }
     else {
       this.xml = xmlOutVariable;
-      if (xmlOutVariable.getElementsByTagName('expression') !== undefined) {
+      if (xmlOutVariable.getElementsByTagName('expression')[0] !== undefined) {
         this.name = xmlOutVariable.getElementsByTagName('expression')[0].innerHTML;
       }
       this.localId = xmlOutVariable.getAttribute('localId');
@@ -31,13 +31,13 @@ export class FbdOutVariable {
       if (xmlOutVariable.getAttribute('negated') === true) {
         this.negated = xmlOutVariable.getAttribute('negated');
       }
-      if (xmlOutVariable.getElementsByTagName('position') !== undefined) {
+      if (xmlOutVariable.getElementsByTagName('position')[0] !== undefined) {
         const posistion = xmlOutVariable.getElementsByTagName('position')[0];
         this.position = { x: posistion.getAttribute('x'), y: posistion.getAttribute('y')};
       }
-      if ( xmlOutVariable.getElementsByTagName('connectionPointIn')  !== undefined) {
+      if ( xmlOutVariable.getElementsByTagName('connectionPointIn')[0]  !== undefined) {
         const connectionPointIn = xmlOutVariable.getElementsByTagName('connectionPointIn')[0];
-        if (connectionPointIn.getElementsByTagName('relPosition') !== undefined) {
+        if (connectionPointIn.getElementsByTagName('relPosition')[0] !== undefined) {
           const position = connectionPointIn.getElementsByTagName('relPosition')[0];
           this.connectionPointIn.x = position.getAttribute('x');
           this.connectionPointIn.y = position.getAttribute('y');
@@ -53,6 +53,8 @@ export class FbdOutVariable {
       this.node.pins = {
         IN: {type: 'IN', edge: null}
       };
+      this.node.position = this.position;
+
       if (this.connectionPointIn.refLocalID != null){
         this.edges.push(this.connectionPointIn.refLocalID);
       }

@@ -11,7 +11,7 @@
   </tbody>
 </table>
 
-<div *ngFor="let edge of selected_node_edges; let i = index">
+<div *ngFor="let edge of selectedNodeEdges; let i = index">
   source:
   <select (change)="change_edge_source(edge.id, $event)">
     <option disabled selected value> -- {{edge.source}} -- </option>

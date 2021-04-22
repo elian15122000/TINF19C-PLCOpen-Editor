@@ -1,14 +1,18 @@
+import {Node} from '@swimlane/ngx-graph';
+
 export class FbdBlock {
   public xml: any;
   public typeName: string;
   public instanceName: string;
-  public localId: number;
+  public localId: string;
   public width = 30;
   public height = 50;
   public position: {x: number, y: number} = {x: 0, y: 0};
   public inputVariables: any[] = [];
   public inOutVariables: any[] = [];
   public outputVariables: any[] = [];
+  public node: Node = {id: null, label: null, type: null, pins: null};
+  public edges: string[] = [];
 
   constructor(xmlBlock: any) {
     if (xmlBlock === ''){
@@ -28,37 +32,42 @@ export class FbdBlock {
       if (xmlBlock.getAttribute('instanceName') !== undefined) {
         this.instanceName = xmlBlock.getAttribute('instanceName');
       }
-      if (xmlBlock.getElementsByTagName('position') !== undefined) {
+      if (xmlBlock.getElementsByTagName('position')[0] !== undefined) {
         const position = xmlBlock.getElementsByTagName('position')[0];
-        this.position = { x: position.getAttribute('x'), y: position.getAttribute('y')};
+        this.position = { x: Number(position.getAttribute('x')), y: Number(position.getAttribute('y'))};
       }
 
-      if (xmlBlock.getElementsByTagName('inputVariables') !== undefined) {
+      if (xmlBlock.getElementsByTagName('inputVariables')[0] !== undefined) {
         const inputVariables = xmlBlock.getElementsByTagName('inputVariables')[0];
         for (const variable of inputVariables.getElementsByTagName('variable')) {
           this.inputVariables.push(this.readInputVariable(variable));
         }
       }
-      if (xmlBlock.getElementsByTagName('outputVariables') !== undefined) {
+      if (xmlBlock.getElementsByTagName('outputVariables')[0] !== undefined) {
         const outputVariables = xmlBlock.getElementsByTagName('outputVariables')[0];
         for (const variable of outputVariables.getElementsByTagName('variable')) {
           this.outputVariables.push(this.readOutputVariable(variable));
         }
       }
-      if (xmlBlock.getElementsByTagName('inOutVariables') !== undefined) {
+      if (xmlBlock.getElementsByTagName('inOutVariables')[0] !== undefined) {
         const inOutVariables = xmlBlock.getElementsByTagName('inOutVariables')[0];
         for (const variable of inOutVariables.getElementsByTagName('variable')) {
           this.inOutVariables.push(this.readInOutVariable(variable));
         }
       }
     }
+    this.node.id = this.localId;
+    this.node.type = 'fbs';
+    this.node.label = this.typeName;
+    this.node.position = {x: 300, y: 600};
+    console.log(this.node.position);
   }
 
   readInputVariable(xmlVariable: any): any {
     const variable = {
       formalParameter: '',
       negated: false,
-      connectionPointIn: {x: 0, y: 0}
+      connectionPointIn: {x: 0, y: 0, refLocalID: null}
     };
     if (xmlVariable.getAttribute('formalParameter') !== undefined){
       variable.formalParameter = xmlVariable.getAttribute('formalParameter');
@@ -68,9 +77,15 @@ export class FbdBlock {
     }
     if ( xmlVariable.getElementsByTagName('connectionPointIn')[0]  !== undefined) {
       const connectionPointIn = xmlVariable.getElementsByTagName('connectionPointIn')[0];
-      if (connectionPointIn.getElementsByTagName('relPosition') !== undefined) {
+      if (connectionPointIn.getElementsByTagName('relPosition')[0] !== undefined) {
         const posistion = connectionPointIn.getElementsByTagName('relPosition')[0];
-        variable.connectionPointIn = { x: posistion.getAttribute('x'), y: posistion.getAttribute('y')};
+        variable.connectionPointIn.x = posistion.getAttribute('x');
+        variable.connectionPointIn.y = posistion.getAttribute('y');
+      }
+      if (connectionPointIn.getElementsByTagName('connection')[0] !== undefined) {
+        const connection = connectionPointIn.getElementsByTagName('connection')[0];
+        variable.connectionPointIn.refLocalID = connection.getAttribute('refLocalId');
+        this.edges.push(variable.connectionPointIn.refLocalID);
       }
     }
     return variable;
@@ -80,7 +95,7 @@ export class FbdBlock {
     const variable = {
       formalParameter: '',
       negated: false,
-      connectionPointOut: {x: 0, y: 0}
+      connectionPointOut: {x: 0, y: 0, refLocalID: null}
     };
     if (xmlVariable.getAttribute('formalParameter') !== undefined){
       variable.formalParameter = xmlVariable.getAttribute('formalParameter');
@@ -90,9 +105,15 @@ export class FbdBlock {
     }
     if ( xmlVariable.getElementsByTagName('connectionPointOut')[0]  !== undefined) {
       const connectionPointOut = xmlVariable.getElementsByTagName('connectionPointOut')[0];
-      if (connectionPointOut.getElementsByTagName('relPosition') !== undefined) {
+      if (connectionPointOut.getElementsByTagName('relPosition')[0] !== undefined) {
         const posistion = connectionPointOut.getElementsByTagName('relPosition')[0];
-        variable.connectionPointOut = { x: posistion.getAttribute('x'), y: posistion.getAttribute('y')};
+        variable.connectionPointOut.x = posistion.getAttribute('x');
+        variable.connectionPointOut.y = posistion.getAttribute('y');
+      }
+      if (connectionPointOut.getElementsByTagName('connection')[0] !== undefined) {
+        const connection = connectionPointOut.getElementsByTagName('connection')[0];
+        variable.connectionPointOut.refLocalID = connection.getAttribute('refLocalId');
+        this.edges.push(variable.connectionPointOut.refLocalID);
       }
     }
     return variable;
@@ -102,8 +123,8 @@ export class FbdBlock {
     const variable = {
       formalParameter: '',
       negated: false,
-      connectionPointIn: {x: 0, y: 0},
-      connectionPointOut: {x: 0, y: 0}
+      connectionPointIn: {x: 0, y: 0, refLocalID: null},
+      connectionPointOut: {x: 0, y: 0, refLocalID: null}
     };
     if (xmlVariable.getAttribute('formalParameter') !== undefined){
       variable.formalParameter = xmlVariable.getAttribute('formalParameter');
@@ -113,16 +134,28 @@ export class FbdBlock {
     }
     if ( xmlVariable.getElementsByTagName('connectionPointIn')[0]  !== undefined) {
       const connectionPointIn = xmlVariable.getElementsByTagName('connectionPointIn')[0];
-      if (connectionPointIn.getElementsByTagName('relPosition') !== undefined) {
+      if (connectionPointIn.getElementsByTagName('relPosition')[0] !== undefined) {
         const posistion = connectionPointIn.getElementsByTagName('relPosition')[0];
-        variable.connectionPointIn = { x: posistion.getAttribute('x'), y: posistion.getAttribute('y')};
+        variable.connectionPointIn.x = posistion.getAttribute('x');
+        variable.connectionPointIn.y = posistion.getAttribute('y');
+      }
+      if (connectionPointIn.getElementsByTagName('connection')[0] !== undefined) {
+        const connection = connectionPointIn.getElementsByTagName('connection')[0];
+        variable.connectionPointIn.refLocalID = connection.getAttribute('refLocalId');
+        this.edges.push(variable.connectionPointIn.refLocalID);
       }
     }
     if ( xmlVariable.getElementsByTagName('connectionPointOut')[0]  !== undefined) {
       const connectionPointOut = xmlVariable.getElementsByTagName('connectionPointOut')[0];
-      if (connectionPointOut.getElementsByTagName('relPosition') !== undefined) {
+      if (connectionPointOut.getElementsByTagName('relPosition')[0] !== undefined) {
         const posistion = connectionPointOut.getElementsByTagName('relPosition')[0];
-        variable.connectionPointOut = { x: posistion.getAttribute('x'), y: posistion.getAttribute('y')};
+        variable.connectionPointOut.x = posistion.getAttribute('x');
+        variable.connectionPointOut.y = posistion.getAttribute('y');
+      }
+      if (connectionPointOut.getElementsByTagName('connection')[0] !== undefined) {
+        const connection = connectionPointOut.getElementsByTagName('connection')[0];
+        variable.connectionPointOut.refLocalID = connection.getAttribute('refLocalId');
+        this.edges.push(variable.connectionPointOut.refLocalID);
       }
     }
     return variable;

@@ -1,10 +1,14 @@
+import {Node} from '@swimlane/ngx-graph';
+
 export class FbdReturn {
   public xml: any;
-  public localId: number;
+  public localId: string;
   public height = 20;
   public width = 20;
   public position: {x: number, y: number};
-  public connectionPointIn: { x: number, y: number, refLocalID: number} = {x: 0, y: 0, refLocalID: 0};
+  public connectionPointIn: { x: number, y: number, refLocalID: string} = {x: 0, y: 0, refLocalID: null};
+  public node: Node = {id: null, label: null, type: null, pins: null};
+  public edges: string[] = [];
 
   constructor(xmlReturn: any) {
     if (xmlReturn === '') {
@@ -19,11 +23,11 @@ export class FbdReturn {
       if (xmlReturn.getAttribute('height') !== undefined) {
         this.height = xmlReturn.getAttribute('height');
       }
-      if (xmlReturn.getElementsByTagName('position') !== undefined) {
+      if (xmlReturn.getElementsByTagName('position')[0] !== undefined) {
         const position = xmlReturn.getElementsByTagName('position')[0];
         this.position = { x: position.getAttribute('x'), y: position.getAttribute('y')};
       }
-      if ( xmlReturn.getElementsByTagName('connectionPointIn')  !== undefined) {
+      if ( xmlReturn.getElementsByTagName('connectionPointIn')[0] !== undefined) {
         const connectionPointIn = xmlReturn.getElementsByTagName('connectionPointIn')[0];
         if (connectionPointIn.getElementsByTagName('relPosition') !== undefined) {
           const position = connectionPointIn.getElementsByTagName('relPosition')[0];
@@ -35,6 +39,14 @@ export class FbdReturn {
           this.connectionPointIn.refLocalID = connection.getAttribute('refLocalId');
         }
       }
+    }
+    this.node.id = this.localId;
+    this.node.type = 'return';
+    this.node.pins = {
+      IN: {type: 'IN', edge: null}
+    };
+    if (this.connectionPointIn.refLocalID != null){
+      this.edges.push(this.connectionPointIn.refLocalID);
     }
   }
 

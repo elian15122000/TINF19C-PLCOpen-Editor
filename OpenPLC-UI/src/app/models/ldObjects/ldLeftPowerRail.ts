@@ -1,10 +1,14 @@
+import {Node} from '@swimlane/ngx-graph';
+
 export class LdLeftPowerRail {
   public xml: any;
-  public localId: number;
+  public localId: string;
   public height = 20;
   public width = 20;
   public position: { x: number, y: number } = {x: 0, y: 0};
-  public connectionPointOut: {x: number, y: number, refLocalID: number} = {x: 0, y: 0, refLocalID: 0};
+  public connectionPointOut: {x: number, y: number, refLocalID: string} = {x: 0, y: 0, refLocalID: null};
+  public node: Node = {id: null, label: null, type: null, pins: null};
+  public edges: string[] = [];
 
   constructor(xmlLeftPowerRail: any) {
     if (xmlLeftPowerRail === '') {
@@ -19,7 +23,7 @@ export class LdLeftPowerRail {
       if (xmlLeftPowerRail.getAttribute('height') !== undefined) {
         this.height = xmlLeftPowerRail.getAttribute('height');
       }
-      if (xmlLeftPowerRail.getElementsByTagName('position') !== undefined) {
+      if (xmlLeftPowerRail.getElementsByTagName('position')[0] !== undefined) {
         const position = xmlLeftPowerRail.getElementsByTagName('position')[0];
         this.position = { x: position.getAttribute('x'), y: position.getAttribute('y')};
       }
@@ -35,6 +39,14 @@ export class LdLeftPowerRail {
           this.connectionPointOut.refLocalID = connection.getAttribute('refLocalId');
         }
       }
+    }
+    this.node.id = this.localId;
+    this.node.type = 'LPR';
+    this.node.pins = {
+      OUT: {type: 'OUT', edge: null},
+    };
+    if (this.connectionPointOut.refLocalID != null){
+      this.edges.push(this.connectionPointOut.refLocalID);
     }
   }
 

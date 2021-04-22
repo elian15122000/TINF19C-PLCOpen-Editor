@@ -36,11 +36,11 @@ export class FbdInOutVariable {
       if (xmlInOutVariable.getAttribute('negatedOut') === true) {
         this.negatedIn = true;
       }
-      if (xmlInOutVariable.getElementsByTagName('position') !== undefined) {
+      if (xmlInOutVariable.getElementsByTagName('position')[0] !== undefined) {
         const position = xmlInOutVariable.getElementsByTagName('position')[0];
         this.position = { x: position.getAttribute('x'), y: position.getAttribute('y')};
       }
-      if ( xmlInOutVariable.getElementsByTagName('connectionPointIn')  !== undefined) {
+      if ( xmlInOutVariable.getElementsByTagName('connectionPointIn')[0]  !== undefined) {
         const connectionPointIn = xmlInOutVariable.getElementsByTagName('connectionPointIn')[0];
         if (connectionPointIn.getElementsByTagName('relPosition') !== undefined) {
           const position = connectionPointIn.getElementsByTagName('relPosition')[0];
@@ -71,6 +71,7 @@ export class FbdInOutVariable {
         OUT: {type: 'OUT', edge: null},
         IN: {type: 'IN', edge: null}
       };
+      this.node.position = this.position;
       if (this.connectionPointOut.refLocalID != null){
         this.edges.push(this.connectionPointOut.refLocalID);
       }

@@ -1,10 +1,14 @@
+import {Node} from '@swimlane/ngx-graph';
+
 export class FbdLabel {
   public xml: any;
-  public localId: number;
+  public localId: string;
   public height = 20;
   public width = 20;
   public label = '';
   public position: {x: number, y: number} = {x: 0, y: 0};
+  public node: Node = {id: null, label: null, type: null, pins: null};
+  public edges: string[] = [];
 
   constructor(xmlLabel: any) {
     if (xmlLabel === '') {
@@ -22,11 +26,14 @@ export class FbdLabel {
       if (xmlLabel.getAttribute('label') !== undefined) {
         this.label = xmlLabel.getAttribute('label');
       }
-      if (xmlLabel.getElementsByTagName('position') !== undefined) {
+      if (xmlLabel.getElementsByTagName('position')[0] !== undefined) {
         const position = xmlLabel.getElementsByTagName('position')[0];
         this.position = { x: position.getAttribute('x'), y: position.getAttribute('y')};
       }
     }
+    this.node.id = this.localId;
+    this.node.label = this.label;
+    this.node.type = 'label';
   }
 
   createNewLabel(): void {
