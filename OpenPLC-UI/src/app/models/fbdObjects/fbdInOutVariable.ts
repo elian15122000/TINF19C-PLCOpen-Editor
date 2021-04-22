@@ -71,7 +71,6 @@ export class FbdInOutVariable {
         OUT: {type: 'OUT', edge: null},
         IN: {type: 'IN', edge: null}
       };
-      this.node.position = this.position;
       if (this.connectionPointOut.refLocalID != null){
         this.edges.push(this.connectionPointOut.refLocalID);
       }
