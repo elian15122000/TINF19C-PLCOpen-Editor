@@ -1,11 +1,14 @@
+import {Node} from '@swimlane/ngx-graph';
+
 export class SfcJumpStep {
   public xml: any;
-  public localId: number;
+  public localId: string;
   public height = 20;
   public width = 20;
   public targetName = '';
   public connectionPointIn: {x: 0, y: 0, refLocalId: 0, formalParameter: string};
   public position: {x: 0, y: 0};
+  public node: Node = {id: null, label: null, type: null, pins: null};
 
 constructor(xmlJumpStep: any) {
   if (xmlJumpStep === '') {
@@ -41,6 +44,14 @@ constructor(xmlJumpStep: any) {
       const position = xmlJumpStep.getElementsByTagName('position')[0];
       this.position = {x: position.getAttribute('x'), y: position.getAttribute('y')};
     }
+  }
+  this.node.id = this.localId;
+  this.node.type = 'default';
+  this.node.pins = {
+    IN: {type: 'IN', refId: null, edge: null}
+  };
+  if (this.connectionPointIn.refLocalId != null){
+    this.node.pins.IN.refId = this.connectionPointIn.refLocalId;
   }
 }
 

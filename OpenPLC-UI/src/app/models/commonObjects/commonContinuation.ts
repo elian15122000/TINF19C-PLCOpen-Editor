@@ -1,10 +1,13 @@
+import {Node} from '@swimlane/ngx-graph';
+
 export class CommonContinuation{
   public xml: any;
-  public localId: number;
+  public localId: string;
   public height = 20;
   public width = 20;
   public connectionPointOut: {x: 0, y: 0, refLocalId: '', formalParameter: ''};
   public position: {x: 0, y: 0};
+  public node: Node = {id: null, label: null, type: null, pins: null};
 
   constructor(xmlCommonContinuation: any) {
     if (xmlCommonContinuation === ''){
@@ -37,6 +40,14 @@ export class CommonContinuation{
           this.connectionPointOut.formalParameter = connection.getAttribute('formalParameter');
         }
       }
+    }
+    this.node.id = this.localId;
+    this.node.type = 'default';
+    this.node.pins = {
+      OUT: {type: 'OUT', refId: null, edge: null}
+    };
+    if (this.connectionPointOut.refLocalId != null){
+      this.node.pins.IN.refId = this.connectionPointOut.refLocalId;
     }
   }
 

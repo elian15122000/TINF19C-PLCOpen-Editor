@@ -1,10 +1,13 @@
+import {Node} from '@swimlane/ngx-graph';
+
 export class CommonComment{
   public xml: any;
-  public localId: number;
-  public height = 20; // TODO: als String
-  public width = 20;
+  public localId: string;
+  public height = '20'; // TODO: als String
+  public width = '20';
   public content = '';
-  public position: {x: 0, y: 0};
+  public position: {x: number, y: number} = {x: 0, y: 0};
+  public node: Node = {id: null, label: null, type: null, pins: null};
 
   constructor(xmlCommonComment: any) {
     if (xmlCommonComment === ''){
@@ -28,6 +31,9 @@ export class CommonComment{
         this.position = {x: position.getAttribute('x'), y: position.getAttribute('y')};
       }
     }
+    this.node.id = this.localId;
+    this.node.label = this.content;
+    this.node.type = 'var';
 
   }
   createXML(): void{

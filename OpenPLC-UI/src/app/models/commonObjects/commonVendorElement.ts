@@ -1,12 +1,15 @@
+import {Node} from '@swimlane/ngx-graph';
+
 export class CommonVendorElement{
   public xml: any;
-  public localId: number;
+  public localId: string;
   public height = 20;
   public width = 20;
   public position: {x: 0, y: 0};
   public inputVariables: any[] = [];
   public inOutVariables: any[] = [];
   public outputVariables: any[] = [];
+  public node: Node = {id: null, label: null, type: null, pins: null};
 
   constructor(xmlCommonVendorElement: any) {
     this.xml = xmlCommonVendorElement;
@@ -41,6 +44,9 @@ export class CommonVendorElement{
         this.inOutVariables.push(this.readInOutVariable(variable));
       }
     }
+    this.node.id = this.localId;
+    this.node.label = '';
+    this.node.type = 'default';
   }
 
       readInputVariable(xmlVariable: any): any {

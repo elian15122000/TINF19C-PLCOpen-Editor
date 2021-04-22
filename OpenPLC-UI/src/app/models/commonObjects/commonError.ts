@@ -1,10 +1,13 @@
+import {Node} from '@swimlane/ngx-graph';
+
 export class CommonError{
   public xml: any;
-  public localId: number;
+  public localId: string;
   public height = 20;
   public width = 20;
   public content = '';
   public position: {x: 0, y: 0};
+  public node: Node = {id: null, label: null, type: null, pins: null};
 
   constructor(xmlCommonError: any) {
     if (xmlCommonError === '') {
@@ -28,6 +31,8 @@ export class CommonError{
         this.position = {x: position.getAttribute('x'), y: position.getAttribute('y')};
       }
     }
+    this.node.id = this.localId;
+    this.node.type = 'default';
   }
   createXML(): void{
     const xmlString = '<error localId="0" height="50" width="30" >\n' +

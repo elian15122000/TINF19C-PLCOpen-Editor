@@ -40,7 +40,7 @@ export class SfcSelectionConvergence{
         console.log(this.connectionPointIn);
       }
       if (xmlSelConvergence.getElementsByTagName('connectionPointOut') !== undefined) {
-        const connectionPointOut = xmlSelConvergence.getElementsByTagName('connectionPointIn')[0];
+        const connectionPointOut = xmlSelConvergence.getElementsByTagName('connectionPointOut')[0];
         if (connectionPointOut.getElementsByTagName('relPosition') !== undefined) {
           const position = connectionPointOut.getElementsByTagName('relPosition')[0];
           this.connectionPointOut.x = position.getAttribute('x');
@@ -51,6 +51,7 @@ export class SfcSelectionConvergence{
           this.connectionPointOut.refLocalId = connection.getAttribute('refLocalId');
           this.connectionPointOut.formalParameter = connection.getAttribute('formalParameter');
         }
+        console.log('out');
         console.log(this.connectionPointOut);
       }
       if (xmlSelConvergence.getElementsByTagName('position') !== undefined) {

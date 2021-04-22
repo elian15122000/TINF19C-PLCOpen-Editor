@@ -1,6 +1,8 @@
+import {Node} from '@swimlane/ngx-graph';
+
 export class CommonActionBlock{
   public xml: any;
-  public localId: number;
+  public localId: string;
   public height = 20;
   public width = 20;
   public negated = false;
@@ -15,6 +17,7 @@ export class CommonActionBlock{
   public actionDuration = '';
   public actionIndicator = '';
   public connectionPointIn: {x: 0, y: 0, refLocalId: '', formalParameter: ''};
+  public node: Node = {id: null, label: null, type: null, pins: null};
 
   constructor(xmlCommonActionBlock: any) {
     if (xmlCommonActionBlock === ''){
@@ -40,11 +43,21 @@ export class CommonActionBlock{
       if (xmlCommonActionBlock.getElementsByTagName('connectionPointIn') !== undefined) {
         for (const item of xmlCommonActionBlock.getElementsByTagName('connectionPointIn')) {
           const relPos = item.getElementsByTagName('relPosition');
+          let inX: number;
+          let inY: number;
+          let refId = '';
+          let formalParam = '';
+
           if (relPos[0] !== undefined) {
-            const inX = relPos[0].getAttribute('x');
-            const inY = relPos[0].getAttribute('y');
-            // this.connectionPointIn = {x: inX, y: inY};
+            inX = relPos[0].getAttribute('x');
+            inY = relPos[0].getAttribute('y');
           }
+          if (item.getElementsByTagName('connection')[0] !== undefined) {
+            const connection = item.getElementsByTagName('connection')[0];
+            refId = connection.getAttribute('refLocalId');
+            formalParam = connection.getAttribute('formalParameter');
+          }
+          // this.connectionPointIn = {x: inX, y: inY, }
         }
       }
       if (xmlCommonActionBlock.getElementsByTagName('action') !== undefined) {
@@ -71,6 +84,15 @@ export class CommonActionBlock{
         }
 
       }
+    }
+    this.node.id = this.localId;
+    this.node.label = '';
+    this.node.type = 'default';
+    this.node.pins = {
+      IN: {type: 'IN', refId: null, edge: null}
+    };
+    if (this.connectionPointIn.refLocalId != null){
+      this.node.pins.IN.refId = this.connectionPointIn.refLocalId;
     }
   }
   createXML(): void{
