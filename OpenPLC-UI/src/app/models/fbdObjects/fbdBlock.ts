@@ -60,7 +60,6 @@ export class FbdBlock {
     this.node.type = 'fbs';
     this.node.label = this.typeName;
     this.node.position = {x: 300, y: 600};
-    console.log(this.node.position);
   }
 
   readInputVariable(xmlVariable: any): any {

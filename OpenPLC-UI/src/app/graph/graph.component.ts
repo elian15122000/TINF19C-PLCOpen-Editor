@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Type } from '@angular/core';
 import { Node, Edge } from '@swimlane/ngx-graph';
 import * as shape from 'd3-shape';
 import {Subject} from 'rxjs';
@@ -29,6 +29,7 @@ import {SfcSimultaneousConvergence} from '../models/sfcObjects/sfcSimultaneousCo
 import {SfcSimultaneousDivergence} from '../models/sfcObjects/sfcSimultaneousDivergence';
 import {SfcStep} from '../models/sfcObjects/sfcStep';
 import {SfcTransition} from '../models/sfcObjects/sfcTransition';
+import { pipeline } from 'stream';
 
 
 @Component({
@@ -69,6 +70,7 @@ export class GraphComponent implements OnInit {
    simDivergenceList: SfcSimultaneousDivergence[] = [];
    stepList: SfcStep[] = [];
    transitionList: SfcTransition[] = [];
+   all_elements: any[] = [];
 
 //
    pouName: string;
@@ -91,25 +93,26 @@ export class GraphComponent implements OnInit {
     Does: adds an edge between the two nodes and registers the connction id in the pins
           if an edge already exists when registering, the old edge is removed
     */
-  public connect_pins(Node1ID, Node2ID, P1Key, P2Key): void{
-    // get the entities
-    let Node1;
-    let Node2;
+  public connect_pins(sourceNodeId, targetNodeId, sourcePin, targetPin): void{
+    // get the nodes
+    let sourceNode;
+    let targetNode;
     this.nodes.forEach( n => {
-      if (n.id === Node1ID) {
-        Node1 = n;
+      if (n.id === sourceNodeId) {
+        sourceNode = n;
         return;
       }
     });
     this.nodes.forEach( n => {
-      if (n.id === Node2ID) {
-        Node2 = n;
+      if (n.id === targetNodeId) {
+        targetNode = n;
         return;
       }
     });
 
-    const P1 = Node1.pins[P1Key];
-    const P2 = Node2.pins[P2Key];
+    // get the keys
+    const P1 = sourceNode.pins[sourcePin];
+    const P2 = targetNode.pins[targetPin];
 
     // check if connection is possible
     if (P1.type === P2.type){
@@ -118,7 +121,7 @@ export class GraphComponent implements OnInit {
     }
 
 
-    // check if a connection already exists
+    // check if a connection already exists and remove it
     if (P1.edge != null){
       this.remove_edge(P1.edge);
       P1.edge = null;
@@ -132,7 +135,15 @@ export class GraphComponent implements OnInit {
     // call the add_edge function
     P1.edge = 'e_' + this.edgesIdCounter;
     P2.edge = 'e_' + this.edgesIdCounter;
-    this.add_edge(Node1ID, Node2ID);
+    const edgeId = 'e_' + this.edgesIdCounter;
+    const newEdge = {
+      id: edgeId,
+      source: sourceNodeId,
+      target: targetNodeId,
+    };
+    this.edgesIdCounter++;
+    this.edges.push(newEdge);
+    this.updateChart();
   }
   /**
    * remove_edge(edgeId)
@@ -221,15 +232,7 @@ export class GraphComponent implements OnInit {
    */
   public add_edge(sourceId, targetId, mode?): void {
 
-    const id1 = 'e_' + this.edgesIdCounter;
-    const newEdge = {
-      id: id1,
-      source: sourceId,
-      target: targetId,
-    };
-    this.edgesIdCounter++;
-    this.edges.push(newEdge);
-    this.updateChart();
+
   }
 
   /**
@@ -262,6 +265,9 @@ export class GraphComponent implements OnInit {
       this.update$.next(true);
   }
 
+  /**
+   * process_elements
+   */
 
   ngOnInit(): void {
     this.pouName = this.route.snapshot.params.pouName;
@@ -273,26 +279,20 @@ export class GraphComponent implements OnInit {
         const fbdInVariable = new FbdInVariable(inVariable);
         this.inVariableList.push(fbdInVariable);
         this.nodes.push(fbdInVariable.node);
-        fbdInVariable.edges.forEach(i => {
-          this.add_edge(fbdInVariable.localId, i);
-        });
+
       }
 
       for (const outVariable of pou.getElementsByTagName('outVariable')) {
         const fbdOutVariable = new FbdOutVariable(outVariable);
         this.outVariableList.push(fbdOutVariable);
         this.nodes.push(fbdOutVariable.node);
-        fbdOutVariable.edges.forEach(i => {
-          this.add_edge(fbdOutVariable.localId, i);
-        });
+
       }
       for (const inOutVariable of pou.getElementsByTagName('inOutVariable')) {
         const fbdInOutVariable = new FbdInOutVariable(inOutVariable);
         this.inOutVariableList.push(fbdInOutVariable);
         this.nodes.push(fbdInOutVariable.node);
-        fbdInOutVariable.edges.forEach(i => {
-          this.add_edge(fbdInOutVariable.localId, i);
-        });
+
       }
       for (const jump of pou.getElementsByTagName('jump')) {
         const fbdJump = new FbdJump(jump);
@@ -400,6 +400,15 @@ export class GraphComponent implements OnInit {
       for (const transition of pou.getElementsByTagName('transition')) {
         this.transitionList.push(new SfcTransition(transition));
       }
+    }
+
+    for (const node of this.nodes) {
+    
+        if (node.type === "fbs"){
+          continue;
+        }
+        console.log(node)
+       
     }
 
     this.updateChart();

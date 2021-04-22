@@ -51,12 +51,12 @@ export class FbdOutVariable {
       this.node.label = this.name;
       this.node.type = 'var';
       this.node.pins = {
-        IN: {type: 'IN', edge: null}
+        IN: {type: 'IN', refId: 1, edge: null}
       };
       this.node.position = this.position;
 
       if (this.connectionPointIn.refLocalID != null){
-        this.edges.push(this.connectionPointIn.refLocalID);
+        this.node.pins.IN.refId = this.connectionPointIn.refLocalID;
       }
     }
   }
