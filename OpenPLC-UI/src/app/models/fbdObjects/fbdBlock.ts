@@ -59,6 +59,11 @@ export class FbdBlock {
     this.node.id = this.localId;
     this.node.type = 'fbs';
     this.node.label = this.typeName;
+    this.node.pins = {
+      OUT: {type: 'OUT', edge: null},
+      IN1: {type: 'IN', edge: null},
+      IN2: {type: 'IN', edge: null}
+    };
   }
 
   readInputVariable(xmlVariable: any): any {
