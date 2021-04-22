@@ -1,6 +1,10 @@
-<button (click)="connect_pins('n_1', 'n_2', 'IN', 'OUT')">test connect_pins</button>
-<app-library></app-library>
-<button (click)="test(this.inVariableList.length)">Get Lenght</button>
+<div style="margin-top: 10px; margin-bottom: 5px;">
+  <button class="btn btn-outline-primary" (click)="connect_pins('n_1', 'n_2', 'IN', 'OUT')">test connect_pins</button>
+  <!-- <app-library></app-library> -->
+  <button class="btn btn-outline-primary" (click)="test(this.inVariableList.length)">Get Lenght</button>
+</div>
+
+
 
 <!--https://stackoverflow.com/questions/54888126/how-to-create-tables-td-dynamically-in-angular-->
 <!-- <table>
@@ -30,8 +34,8 @@
 
 
 
-
-  <ngx-graph class="chart-container" [update$]="update$" [view]="[1024, 512]" [links]="edges" [nodes]="nodes"
+<div>
+  <ngx-graph class="chart-container" [update$]="update$" [view]="[2000, 800]" [links]="edges" [nodes]="nodes"
   [curve]="curve">
   <ng-template #nodeTemplate let-node>
     <svg:g (click)="set_selected_node(node.id)">
@@ -105,3 +109,5 @@
     </svg:g>
   </ng-template>
 </ngx-graph>
+</div>
+  

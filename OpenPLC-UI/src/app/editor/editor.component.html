@@ -1,6 +1,20 @@
-<div>
-    <app-variables-list></app-variables-list>
-</div>
-<div style="margin-top: 10%;">
+<!-- <div style="margin-top: 10%; border: 1px solid black;">
     <app-graph></app-graph>
+</div> -->
+
+<div class="row">
+    
+    <div class="col-sm-9">
+        <div class="variablesList" style="border: 1px solid gray;">
+            <app-variables-list></app-variables-list>
+        </div>
+        <div class="graph text-center no-float">
+            <app-graph></app-graph>            
+        </div>
+    </div>
+    <div class="col-sm-3 library no-float" style="border: 1px solid gray">
+        <app-library></app-library>
+    </div>
+    
+    
 </div>

@@ -109,15 +109,14 @@
               <label for="projectName">Project name: </label>
               <input id="projectName" name="projectName" type="text" required ngModel>
               <br><br>
-              <input type="button" (click)="closeNewProject()" class="actionButton" value="Close">
               <input type="submit" routerLink="/projectOverview" (click)="createProject(newProject.value)"
-                class="actionButton" value="Open">
+                class="btn btn-outline-primary" value="Open" style="margin-right: 5px;">              
             </form>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
 
     </div>
@@ -138,16 +137,16 @@
         <div class="projectModal" id="openProjectModal">
           <div class="modalBox">
             <form class="uploadForm" (ngSubmit)="closeProjectModal()">
-              <label for="file">XML file: </label>
+              <label for="file" style="margin-right: 5px;">XML file: </label>
               <input id="file" name="file" type="file" accept="text/xml" (change)="fileUpload($event)" required>
               <br><br>
-              <input type="submit" id="open" routerLink="/projectOverview" class="actionButton" value="Open">
+              <input type="submit" id="open" routerLink="/projectOverview" class="btn btn-outline-primary" value="Open">
             </form>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

@@ -1,0 +1,13 @@
+.variablesList {
+    height: 280px;
+    overflow: auto;
+  }
+
+.library {
+    background-color: white;
+    z-index: 100;
+}
+.graph {
+    height: 1000px;
+    z-index: 1;
+}
