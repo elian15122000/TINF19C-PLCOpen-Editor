@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {DatePipe} from '@angular/common';
+import { saveAs } from 'file-saver';
 
 @Injectable({
   providedIn: 'root'
@@ -96,6 +97,31 @@ export class ProjectService {
     this.headerItems.push(parser.parseFromString(fileHeaderStr, 'application/xml').getElementsByTagName('fileHeader')[0]);
     this.headerItems.push(parser.parseFromString(contentHeaderStr, 'application/xml').getElementsByTagName('contentHeader')[0]);
     this.instanceItems = parser.parseFromString(instanceStr, 'application/xml').getElementsByTagName('instances')[0];
+  }
+
+  exportProject(): void {
+    const xmlString =
+      '<?xml version=\'1.0\' encoding=\'utf-8\'?>\n' +
+      '<project xmlns:ns1="http://www.plcopen.org/xml/tc6_0201" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.plcopen.org/xml/tc6_0201"/>';
+    const parser = new DOMParser();
+    const projectXML = parser.parseFromString(xmlString, 'application/xml');
+    projectXML.getElementsByTagName('project')[0].appendChild(this.headerItems[0]);
+    projectXML.getElementsByTagName('project')[0].appendChild(this.headerItems[1]);
+    const xmlString2 =
+      '<types>\n' +
+      '    <dataTypes/>\n' +
+      '    <pous/>\n' +
+      '</types>';
+    const typesXML = parser.parseFromString(xmlString2, 'application/xml');
+    this.pouItems.forEach((item) => {
+      typesXML.getElementsByTagName('pous')[0].appendChild(item);
+    });
+    projectXML.getElementsByTagName('project')[0].appendChild(typesXML.getElementsByTagName('types')[0]);
+    projectXML.getElementsByTagName('project')[0].appendChild(this.instanceItems);
+    const fullStr =
+      '<?xml version=\'1.0\' encoding=\'utf-8\'?>\n' + projectXML.getElementsByTagName('project')[0].outerHTML;
+    const blob = new Blob([fullStr], {type: 'text/xml;charset=utf-8'});
+    saveAs(blob, 'plc.xml');
   }
 
 }

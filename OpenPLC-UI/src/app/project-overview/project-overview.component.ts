@@ -43,4 +43,8 @@ export class ProjectOverviewComponent implements OnInit {
     this.loadPous();
   }
 
+  exportProject(): void {
+    this.projectService.exportProject();
+  }
+
 }
