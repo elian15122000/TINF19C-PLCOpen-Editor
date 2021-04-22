@@ -9,7 +9,7 @@
 
 
       <div class="projectOverview">
-        <h2>Project Overview</h2>
+        <h2 style="margin-bottom: 3%">Project Overview</h2>
 
         <h3>Project: {{projectName}}</h3>
 
@@ -31,13 +31,13 @@
 
         <div *ngFor="let pou of pous">
           <table>
-            <tr class="dropdown">
+            <tr class="dropdown" style="line-height: 40px;">
               <td>
-                <a class="dropbtn" routerLink="/editor/{{pou}}">{{pou}}</a>
+                <a class="dropbtn" routerLink="/editor/{{pou}}" style="margin-left: 90px;">{{pou}}</a>
               </td>
               <td>
-                <span class="dropdown-content" style="position: absolute; right: 0px;">
-                  <button class="actionButton" (click)="deletePou(pou)">Delete</button>
+                <span class="dropdown-content" style="position: absolute; right: 100px; margin-top: -4%;">
+                  <button class="btn btn-outline-danger btn-sm" (click)="deletePou(pou)">Delete</button>
                 </span>
               </td>
             </tr>
@@ -52,7 +52,7 @@
           </ul> -->
         
 
-        <button class="actionButton" (click)="openAddModal()">Add</button>
+        <button class="btn btn-outline-primary" (click)="openAddModal()" style="margin-top: 5%">Add</button>
       </div>
 
       <div class="projectModal" id="addPouModal">

@@ -28,18 +28,34 @@ import {SfcStep} from '../models/sfcObjects/sfcStep';
 import {SfcTransition} from '../models/sfcObjects/sfcTransition';
 
 
+
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.css']
 })
+
+
 export class EditorComponent implements OnInit {
+
+
   public pouName: string;
 
   constructor(private projectService: ProjectService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) { 
+
+              }
+
+              
 
   ngOnInit(): void {
+
+    window.addEventListener("beforeunload", (event) => {
+      event.preventDefault();
+      event.returnValue = "Unsaved modifications";
+      return event;
+   });
+
     this.pouName = this.route.snapshot.params.pouName;
     const pou = this.projectService.getPou(this.pouName);
 
