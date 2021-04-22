@@ -33,9 +33,7 @@
 </div>
 
 
-
-<div>
-  <ngx-graph class="chart-container" [update$]="update$" [view]="[2000, 800]" [links]="edges" [nodes]="nodes"
+<ngx-graph class="chart-container" [update$]="update$" [view]="[2000, 800]" [links]="edges" [nodes]="nodes"
   [curve]="curve">
   <ng-template #nodeTemplate let-node>
     <svg:g (click)="set_selected_node(node.id)">
@@ -109,5 +107,3 @@
     </svg:g>
   </ng-template>
 </ngx-graph>
-</div>
-  
