@@ -4,8 +4,8 @@ export class SfcSelectionConvergence{
   public globalId: number;
   public height = 20;
   public width = 20;
-  public connectionPointIn: {x: 0, y: 0, refLocalId: '', formalParameter: ''};
-  public connectionPointOut: {x: 0, y: 0, refLocalId: '', formalParameter: ''};
+  public connectionPointIn: {x: number, y: number, refLocalId: string, formalParameter: string} = {x: 0, y: 0, refLocalId: '', formalParameter: ''}; //TODO: List
+  public connectionPointOut: {x: number, y: number, refLocalId: string, formalParameter: string} = {x: 0, y: 0, refLocalId: '', formalParameter: ''};
   public position: {x: 0, y: 0};
 
   constructor(xmlSelConvergence: any) {
@@ -37,7 +37,6 @@ export class SfcSelectionConvergence{
           this.connectionPointIn.refLocalId = connection.getAttribute('refLocalId');
           this.connectionPointIn.formalParameter = connection.getAttribute('formalParameter');
         }
-        console.log(this.connectionPointIn);
       }
       if (xmlSelConvergence.getElementsByTagName('connectionPointOut') !== undefined) {
         const connectionPointOut = xmlSelConvergence.getElementsByTagName('connectionPointOut')[0];
@@ -51,8 +50,6 @@ export class SfcSelectionConvergence{
           this.connectionPointOut.refLocalId = connection.getAttribute('refLocalId');
           this.connectionPointOut.formalParameter = connection.getAttribute('formalParameter');
         }
-        console.log('out');
-        console.log(this.connectionPointOut);
       }
       if (xmlSelConvergence.getElementsByTagName('position') !== undefined) {
         const position = xmlSelConvergence.getElementsByTagName('position')[0];

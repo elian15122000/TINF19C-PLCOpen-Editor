@@ -6,7 +6,7 @@ export class SfcJumpStep {
   public height = 20;
   public width = 20;
   public targetName = '';
-  public connectionPointIn: {x: 0, y: 0, refLocalId: 0, formalParameter: string};
+  public connectionPointIn: {x: number, y: number, refLocalId: string, formalParameter: string} = {x: 0, y: 0, refLocalId: '', formalParameter: ''};
   public position: {x: 0, y: 0};
   public node: Node = {id: null, label: null, type: null, pins: null};
 

@@ -16,7 +16,7 @@ export class CommonActionBlock{
   public actionWidth = 20;
   public actionDuration = '';
   public actionIndicator = '';
-  public connectionPointIn: {x: 0, y: 0, refLocalId: '', formalParameter: ''};
+  public connectionPointIn: {x: number, y: number, refLocalId: string, formalParameter: string};
   public node: Node = {id: null, label: null, type: null, pins: null};
 
   constructor(xmlCommonActionBlock: any) {
@@ -57,7 +57,7 @@ export class CommonActionBlock{
             refId = connection.getAttribute('refLocalId');
             formalParam = connection.getAttribute('formalParameter');
           }
-          // this.connectionPointIn = {x: inX, y: inY, }
+          this.connectionPointIn = {x: inX, y: inY, refLocalId: refId, formalParameter: formalParam};
         }
       }
       if (xmlCommonActionBlock.getElementsByTagName('action') !== undefined) {

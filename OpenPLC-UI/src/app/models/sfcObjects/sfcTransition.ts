@@ -78,11 +78,15 @@ export class SfcTransition {
         this.conditionNegated = condition[0].getAttribute('negated');
         if (condition[0].getElementsByTagName('inline') !== undefined) {
           const inline = condition[0].getElementsByTagName('inline');
-          this.conditionInlineName = inline[0].getAttribute('name');
+          if (inline[0] !== undefined) {
+            this.conditionInlineName = inline[0].getAttribute('name');
+          }
         }
         if (condition[0].getElementsByTagName('reference') !== undefined) {
-          const inline = condition[0].getElementsByTagName('reference');
-          this.conditionReferenceName = inline[0].getAttribute('name');
+          const reference = condition[0].getElementsByTagName('reference');
+          if (reference[0] !== undefined) {
+            this.conditionReferenceName = reference[0].getAttribute('name');
+          }
         }
         for (const item of condition[0].getElementsByTagName('connectionPointIn')) {
           const relPos = item.getElementsByTagName('relPosition');
