@@ -10,7 +10,7 @@ export class FbdOutVariable {
   public position: {x: 0, y: 0} = {x: 0, y: 0};
   public connectionPointIn: { x: number, y: number, refLocalID: string} = {x: 0, y: 0, refLocalID: null};
   public node: Node = {id: null, label: null, type: null, pins: null};
-
+  public edges: string[] = [];
 
   constructor(xmlOutVariable: any) {
     if (xmlOutVariable === '') {

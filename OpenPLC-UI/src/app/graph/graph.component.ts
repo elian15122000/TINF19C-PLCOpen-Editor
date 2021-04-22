@@ -190,6 +190,24 @@ export class GraphComponent implements OnInit {
     this.edges = newEdges;
   }
 
+  public add_variable(name){
+    if (name === "fbdInVaribale"){
+      const fbdInVariable = new FbdInVariable("");
+      this.inVariableList.push(fbdInVariable);
+      this.nodes.push(fbdInVariable.node);
+    }
+    else if (name === "fbdOutVaribale"){
+      const fbdOutVariable = new FbdOutVariable("");
+      this.outVariableList.push(fbdOutVariable);
+      this.nodes.push(fbdOutVariable.node);
+    }
+    else if (name === "fbdInOutVaribale"){
+      const fbdInOutVariable = new FbdInOutVariable("");
+      this.inOutVariableList.push(fbdInOutVariable);
+      this.nodes.push(fbdInOutVariable.node);
+    }
+    this.updateChart()
+  }
 
 
 
