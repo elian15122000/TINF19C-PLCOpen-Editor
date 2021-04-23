@@ -1,4 +1,5 @@
 import {Node} from '@swimlane/ngx-graph';
+import { PLCNode } from '../PLCNode';
 
 export class FbdBlock {
   public xml: any;
@@ -11,7 +12,7 @@ export class FbdBlock {
   public inputVariables: any[] = [];
   public inOutVariables: any[] = [];
   public outputVariables: any[] = [];
-  public node: Node = {id: null, label: null, type: null, pins: null};
+  public node: PLCNode = {id: null, label: null, type: null, connectionPoints: []};
   public edges: string[] = [];
 
   constructor(xmlBlock: any) {
