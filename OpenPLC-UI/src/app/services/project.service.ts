@@ -100,26 +100,23 @@ export class ProjectService {
   }
 
   exportProject(): void {
-    const xmlString =
-      '<?xml version=\'1.0\' encoding=\'utf-8\'?>\n' +
-      '<project xmlns:ns1="http://www.plcopen.org/xml/tc6_0201" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.plcopen.org/xml/tc6_0201"/>';
-    const parser = new DOMParser();
-    const projectXML = parser.parseFromString(xmlString, 'application/xml');
-    projectXML.getElementsByTagName('project')[0].appendChild(this.headerItems[0]);
-    projectXML.getElementsByTagName('project')[0].appendChild(this.headerItems[1]);
+    let pouString = '';
+    this.pouItems.forEach((item) => {
+      pouString = pouString + item.outerHTML + '\n';
+      while (pouString.includes('xmlns:xhtml="http://www.w3.org/1999/xhtml"')) {
+        pouString = pouString.replace(' xmlns:xhtml="http://www.w3.org/1999/xhtml"', '');
+      }
+    });
     const xmlString2 =
       '<types>\n' +
       '    <dataTypes/>\n' +
-      '    <pous/>\n' +
-      '</types>';
-    const typesXML = parser.parseFromString(xmlString2, 'application/xml');
-    this.pouItems.forEach((item) => {
-      typesXML.getElementsByTagName('pous')[0].appendChild(item);
-    });
-    projectXML.getElementsByTagName('project')[0].appendChild(typesXML.getElementsByTagName('types')[0]);
-    projectXML.getElementsByTagName('project')[0].appendChild(this.instanceItems);
+      '    <pous>\n' + pouString +
+      '    </pous>\n' +
+      '</types>\n';
     const fullStr =
-      '<?xml version=\'1.0\' encoding=\'utf-8\'?>\n' + projectXML.getElementsByTagName('project')[0].outerHTML;
+      '<?xml version=\'1.0\' encoding=\'utf-8\'?>\n' +
+      '<project xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.plcopen.org/xml/tc6_0201">\n' +
+      this.headerItems[0].outerHTML + '\n' + this.headerItems[1].outerHTML + '\n' + xmlString2 + this.instanceItems.outerHTML + '\n</project>';
     const blob = new Blob([fullStr], {type: 'text/xml;charset=utf-8'});
     saveAs(blob, 'plc.xml');
   }
