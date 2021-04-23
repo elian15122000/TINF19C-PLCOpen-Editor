@@ -1,0 +1,14 @@
+import { NgModule } from '@angular/core';
+import { ChartCommonModule } from '../common/chart-common.module';
+import { BubbleChartComponent } from './bubble-chart.component';
+import { BubbleSeriesComponent } from './bubble-series.component';
+export class BubbleChartModule {
+}
+BubbleChartModule.decorators = [
+    { type: NgModule, args: [{
+                imports: [ChartCommonModule],
+                declarations: [BubbleChartComponent, BubbleSeriesComponent],
+                exports: [BubbleChartComponent, BubbleSeriesComponent]
+            },] }
+];
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYnViYmxlLWNoYXJ0Lm1vZHVsZS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uL3Byb2plY3RzL3N3aW1sYW5lL25neC1jaGFydHMvc3JjL2xpYi9idWJibGUtY2hhcnQvYnViYmxlLWNoYXJ0Lm1vZHVsZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsUUFBUSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ3pDLE9BQU8sRUFBRSxpQkFBaUIsRUFBRSxNQUFNLCtCQUErQixDQUFDO0FBQ2xFLE9BQU8sRUFBRSxvQkFBb0IsRUFBRSxNQUFNLDBCQUEwQixDQUFDO0FBQ2hFLE9BQU8sRUFBRSxxQkFBcUIsRUFBRSxNQUFNLDJCQUEyQixDQUFDO0FBT2xFLE1BQU0sT0FBTyxpQkFBaUI7OztZQUw3QixRQUFRLFNBQUM7Z0JBQ1IsT0FBTyxFQUFFLENBQUMsaUJBQWlCLENBQUM7Z0JBQzVCLFlBQVksRUFBRSxDQUFDLG9CQUFvQixFQUFFLHFCQUFxQixDQUFDO2dCQUMzRCxPQUFPLEVBQUUsQ0FBQyxvQkFBb0IsRUFBRSxxQkFBcUIsQ0FBQzthQUN2RCIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IE5nTW9kdWxlIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBDaGFydENvbW1vbk1vZHVsZSB9IGZyb20gJy4uL2NvbW1vbi9jaGFydC1jb21tb24ubW9kdWxlJztcbmltcG9ydCB7IEJ1YmJsZUNoYXJ0Q29tcG9uZW50IH0gZnJvbSAnLi9idWJibGUtY2hhcnQuY29tcG9uZW50JztcbmltcG9ydCB7IEJ1YmJsZVNlcmllc0NvbXBvbmVudCB9IGZyb20gJy4vYnViYmxlLXNlcmllcy5jb21wb25lbnQnO1xuXG5ATmdNb2R1bGUoe1xuICBpbXBvcnRzOiBbQ2hhcnRDb21tb25Nb2R1bGVdLFxuICBkZWNsYXJhdGlvbnM6IFtCdWJibGVDaGFydENvbXBvbmVudCwgQnViYmxlU2VyaWVzQ29tcG9uZW50XSxcbiAgZXhwb3J0czogW0J1YmJsZUNoYXJ0Q29tcG9uZW50LCBCdWJibGVTZXJpZXNDb21wb25lbnRdXG59KVxuZXhwb3J0IGNsYXNzIEJ1YmJsZUNoYXJ0TW9kdWxlIHt9XG4iXX0=

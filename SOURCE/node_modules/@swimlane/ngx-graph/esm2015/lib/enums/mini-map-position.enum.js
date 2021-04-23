@@ -1,0 +1,6 @@
+export var MiniMapPosition;
+(function (MiniMapPosition) {
+    MiniMapPosition["UpperLeft"] = "UpperLeft";
+    MiniMapPosition["UpperRight"] = "UpperRight";
+})(MiniMapPosition || (MiniMapPosition = {}));
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibWluaS1tYXAtcG9zaXRpb24uZW51bS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uL3N3aW1sYW5lL25neC1ncmFwaC9zcmMvbGliL2VudW1zL21pbmktbWFwLXBvc2l0aW9uLmVudW0udHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsTUFBTSxDQUFOLElBQVksZUFHWDtBQUhELFdBQVksZUFBZTtJQUN6QiwwQ0FBdUIsQ0FBQTtJQUN2Qiw0Q0FBeUIsQ0FBQTtBQUMzQixDQUFDLEVBSFcsZUFBZSxLQUFmLGVBQWUsUUFHMUIiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgZW51bSBNaW5pTWFwUG9zaXRpb24ge1xuICBVcHBlckxlZnQgPSAnVXBwZXJMZWZ0JyxcbiAgVXBwZXJSaWdodCA9ICdVcHBlclJpZ2h0J1xufVxuIl19
