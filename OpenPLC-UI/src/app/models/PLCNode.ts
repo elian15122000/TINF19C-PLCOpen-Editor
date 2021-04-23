@@ -2,8 +2,11 @@ import { Node } from '@swimlane/ngx-graph';
 
 export interface ConnectionPoint {
     type:            string,
+    name?:           string,
     sourceId?:       string,
+    sourceName?:     string,
     targetId?:       string,
+    targetName?:     string,
     edgeId?:         string,
     relPosition?:    Vector2,
     connectionPath?: Vector2, 

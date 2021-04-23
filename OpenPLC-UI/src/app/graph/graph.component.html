@@ -15,7 +15,7 @@
   </tbody>
 </table> -->
 
-<div *ngFor="let edge of selectedNodeEdges; let i = index">
+<!-- <div *ngFor="let edge of selectedNodeEdges; let i = index">
   source:
   <select (change)="change_edge_source(edge.id, $event)">
     <option disabled selected value> -- {{edge.source}} -- </option>
@@ -27,16 +27,36 @@
   <select (change)="change_edge_target(edge.id, $event)">
     <option disabled selected value> -- {{edge.target}} -- </option>
     <option *ngFor="let node of nodes; let j = index" [value]="nodes[j].id">
-      {{node.label}} -- {{node.id}}
     </option>
   </select>
+</div> -->
+<button (click)="test(selectedNodeCons)">test</button>
+<button (click)="test(selectedNodeEdges)">test2</button>
+
+<div *ngFor="let con of selectedNodeCons; let i = index">
+  {{con.name}}:<div *ngIf="con.type==='IN'">
+    <select (change)="change_edge_source(con.edgeId, $event)">
+      <option disable selected value> -- {{con.targetId}}  --</option>
+      <option *ngFor="let selectable_con of allConnectionPointOuts; let i = index" value="selectable_con[i]">
+        {{selectable_con.sourceName}} -- {{selectable_con.name}}
+      </option>
+    </select>
+  </div>
+  <div *ngIf="con.type==='OUT'">
+    <select (change)="change_edge_source(con.edgeId, $event)">
+      <option disable selected value> -- {{con.targetId}}  --</option>
+      <option *ngFor="let selectable_con of allConnectionPointIns; let i = index" value="selectable_con[i]">
+        {{selectable_con.targetName}} -- {{selectable_con.name}}
+      </option>
+    </select>
+  </div>
 </div>
 
 
 <ngx-graph class="chart-container" [update$]="update$" [view]="[2000, 800]" [links]="edges" [nodes]="nodes"
   [curve]="curve">
   <ng-template #nodeTemplate let-node>
-    <svg:g (click)="set_selected_node(node.id)">
+    <svg:g (click)="set_selected_node(node)">
 
       <!-- The down-Fork Template -->
       <!-- The width of the strokes need to be made thiner -->

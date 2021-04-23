@@ -1,35 +1,36 @@
 import { Component, OnInit, Type } from '@angular/core';
 import { Node, Edge } from '@swimlane/ngx-graph';
 import * as shape from 'd3-shape';
-import {Subject} from 'rxjs';
-import {FbdInOutVariable} from '../models/fbdObjects/fbdInOutVariable';
-import {FbdInVariable} from '../models/fbdObjects/fbdInVariable';
-import {FbdOutVariable} from '../models/fbdObjects/fbdOutVariable';
-import {ProjectService} from '../services/project.service';
-import {ActivatedRoute} from '@angular/router';
-import {FbdJump} from '../models/fbdObjects/fbdJump';
-import {FbdLabel} from '../models/fbdObjects/fbdLabel';
-import {FbdReturn} from '../models/fbdObjects/fbdReturn';
-import {FbdBlock} from '../models/fbdObjects/fbdBlock';
-import {LdContact} from '../models/ldObjects/ldContact';
-import {LdCoil} from '../models/ldObjects/ldCoil';
-import {LdLeftPowerRail} from '../models/ldObjects/ldLeftPowerRail';
-import {LdRightPowerRail} from '../models/ldObjects/ldRightPowerRail';
-import {CommonActionBlock} from '../models/commonObjects/commonActionBlock';
-import {CommonComment} from '../models/commonObjects/commonComment';
-import {CommonConnector} from '../models/commonObjects/commonConnector';
-import {CommonContinuation} from '../models/commonObjects/commonContinuation';
-import {CommonError} from '../models/commonObjects/commonError';
-import {CommonVendorElement} from '../models/commonObjects/commonVendorElement';
-import {SfcJumpStep} from '../models/sfcObjects/sfcJumpStep';
-import {SfcMacroStep} from '../models/sfcObjects/sfcMacroStep';
-import {SfcSelectionConvergence} from '../models/sfcObjects/sfcSelectionConvergence';
-import {SfcSelectionDivergence} from '../models/sfcObjects/sfcSelectionDivergence';
-import {SfcSimultaneousConvergence} from '../models/sfcObjects/sfcSimultaneousConvergence';
-import {SfcSimultaneousDivergence} from '../models/sfcObjects/sfcSimultaneousDivergence';
-import {SfcStep} from '../models/sfcObjects/sfcStep';
-import {SfcTransition} from '../models/sfcObjects/sfcTransition';
+import { Subject } from 'rxjs';
+import { FbdInOutVariable } from '../models/fbdObjects/fbdInOutVariable';
+import { FbdInVariable } from '../models/fbdObjects/fbdInVariable';
+import { FbdOutVariable } from '../models/fbdObjects/fbdOutVariable';
+import { ProjectService } from '../services/project.service';
+import { ActivatedRoute } from '@angular/router';
+import { FbdJump } from '../models/fbdObjects/fbdJump';
+import { FbdLabel } from '../models/fbdObjects/fbdLabel';
+import { FbdReturn } from '../models/fbdObjects/fbdReturn';
+import { FbdBlock } from '../models/fbdObjects/fbdBlock';
+import { LdContact } from '../models/ldObjects/ldContact';
+import { LdCoil } from '../models/ldObjects/ldCoil';
+import { LdLeftPowerRail } from '../models/ldObjects/ldLeftPowerRail';
+import { LdRightPowerRail } from '../models/ldObjects/ldRightPowerRail';
+import { CommonActionBlock } from '../models/commonObjects/commonActionBlock';
+import { CommonComment } from '../models/commonObjects/commonComment';
+import { CommonConnector } from '../models/commonObjects/commonConnector';
+import { CommonContinuation } from '../models/commonObjects/commonContinuation';
+import { CommonError } from '../models/commonObjects/commonError';
+import { CommonVendorElement } from '../models/commonObjects/commonVendorElement';
+import { SfcJumpStep } from '../models/sfcObjects/sfcJumpStep';
+import { SfcMacroStep } from '../models/sfcObjects/sfcMacroStep';
+import { SfcSelectionConvergence } from '../models/sfcObjects/sfcSelectionConvergence';
+import { SfcSelectionDivergence } from '../models/sfcObjects/sfcSelectionDivergence';
+import { SfcSimultaneousConvergence } from '../models/sfcObjects/sfcSimultaneousConvergence';
+import { SfcSimultaneousDivergence } from '../models/sfcObjects/sfcSimultaneousDivergence';
+import { SfcStep } from '../models/sfcObjects/sfcStep';
+import { SfcTransition } from '../models/sfcObjects/sfcTransition';
 import { pipeline } from 'stream';
+import { ConnectionPoint, PLCNode } from '../models/PLCNode';
 
 
 @Component({
@@ -39,68 +40,72 @@ import { pipeline } from 'stream';
 })
 export class GraphComponent implements OnInit {
 
-   constructor(private projectService: ProjectService,
-               private route: ActivatedRoute) {
+  constructor(private projectService: ProjectService,
+    private route: ActivatedRoute) {
   }
   // Importierte Variablen
-   inVariableList: FbdInVariable[] = [];
-   outVariableList: FbdOutVariable[] = [];
-   inOutVariableList: FbdInOutVariable[] = [];
-   jumpList: FbdJump[] = [];
-   labelList: FbdLabel[] = [];
-   returnList: FbdReturn[] = [];
-   blockList: FbdBlock[] = [];
-   contactList: LdContact[] = [];
-   coilList: LdCoil[] = [];
-   leftPowerRailList: LdLeftPowerRail[] = [];
-   rightPowerRailList: LdRightPowerRail[] = [];
-   actionBlockList: CommonActionBlock[] = [];
-   commentList: CommonComment[] = [];
-   connectorList: CommonConnector[] = [];
-   continuationList: CommonContinuation[] = [];
-   errorList: CommonError[] = [];
-   vendorElementList: CommonVendorElement[] = [];
-   jumpStepList: SfcJumpStep[] = [];
-   macroStepList: SfcMacroStep[] = [];
-   selConvergenceList: SfcSelectionConvergence[] = [];
-   selDivergenceList: SfcSelectionDivergence[] = [];
-   simConvergenceList: SfcSimultaneousConvergence[] = [];
-   simDivergenceList: SfcSimultaneousDivergence[] = [];
-   stepList: SfcStep[] = [];
-   transitionList: SfcTransition[] = [];
+  inVariableList: FbdInVariable[] = [];
+  outVariableList: FbdOutVariable[] = [];
+  inOutVariableList: FbdInOutVariable[] = [];
+  jumpList: FbdJump[] = [];
+  labelList: FbdLabel[] = [];
+  returnList: FbdReturn[] = [];
+  blockList: FbdBlock[] = [];
+  contactList: LdContact[] = [];
+  coilList: LdCoil[] = [];
+  leftPowerRailList: LdLeftPowerRail[] = [];
+  rightPowerRailList: LdRightPowerRail[] = [];
+  actionBlockList: CommonActionBlock[] = [];
+  commentList: CommonComment[] = [];
+  connectorList: CommonConnector[] = [];
+  continuationList: CommonContinuation[] = [];
+  errorList: CommonError[] = [];
+  vendorElementList: CommonVendorElement[] = [];
+  jumpStepList: SfcJumpStep[] = [];
+  macroStepList: SfcMacroStep[] = [];
+  selConvergenceList: SfcSelectionConvergence[] = [];
+  selDivergenceList: SfcSelectionDivergence[] = [];
+  simConvergenceList: SfcSimultaneousConvergence[] = [];
+  simDivergenceList: SfcSimultaneousDivergence[] = [];
+  stepList: SfcStep[] = [];
+  transitionList: SfcTransition[] = [];
 
-//
-   pouName: string;
-   nodes: Node[] = [];
-   edges: Edge[] = [];
-   edgesIdCounter: number;
-   curve: any = shape.curveStepAfter;
-   selectedNode: string;
-   selectedNodeEdges: Edge[];
+  //
+  pouName: string;
+  nodes: PLCNode[] = [];
+  edges: Edge[] = [];
+  edgesIdCounter: number;
+  curve: any = shape.curveStepAfter;
+  selectedNode: PLCNode;
+  selectedNodeEdges: Edge[];
+  selectedNodeCons: ConnectionPoint[] = null;
+  allConnectionPoints: ConnectionPoint[] = [];
+  allConnectionPointIns: ConnectionPoint[] = [];
+  allConnectionPointOuts: ConnectionPoint[] = [];
 
   update$: Subject<any> = new Subject();
 
-    /*
-    connect_pins(Node1_id, Node2_id, P1_id, P2_id)
+  /*
+  connect_pins(Node1_id, Node2_id, P1_id, P2_id)
 
-    Param: Take two nodes and two pins
+  Param: Take two nodes and two pins
 
-    Return: None
+  Return: None
 
-    Does: adds an edge between the two nodes and registers the connction id in the pins
-          if an edge already exists when registering, the old edge is removed
-    */
-  public connect_pins(sourceNodeId, targetNodeId, sourcePin, targetPin): void{
+  Does: adds an edge between the two nodes and registers the connction id in the pins
+        if an edge already exists when registering, the old edge is removed
+  */
+  /* public connect_pins(sourceNodeId, targetNodeId, sourcePin, targetPin): void {
     // get the nodes
     let sourceNode;
     let targetNode;
-    this.nodes.forEach( n => {
+    this.nodes.forEach(n => {
       if (n.id === sourceNodeId) {
         sourceNode = n;
         return;
       }
     });
-    this.nodes.forEach( n => {
+    this.nodes.forEach(n => {
       if (n.id === targetNodeId) {
         targetNode = n;
         return;
@@ -112,18 +117,18 @@ export class GraphComponent implements OnInit {
     const P2 = targetNode.pins[targetPin];
 
     // check if connection is possible
-    if (P1.type === P2.type){
+    if (P1.type === P2.type) {
       alert('Can\'t connect two pins of the same type');
       return;
     }
 
 
     // check if a connection already exists and remove it
-    if (P1.edge != null){
+    if (P1.edge != null) {
       this.remove_edge(P1.edge);
       P1.edge = null;
     }
-    if (P2.edge != null){
+    if (P2.edge != null) {
       this.remove_edge(P2.edge);
       P1.edge = null;
     }
@@ -141,17 +146,17 @@ export class GraphComponent implements OnInit {
     this.edgesIdCounter++;
     this.edges.push(newEdge);
     this.updateChart();
-  }
+  } */
   /**
    * remove_edge(edgeId)
    * @param edgeId : edgeId to be deleted
    * @returns : none
    * @does : removes the given edge from this.edges
    */
-  public remove_edge(edgeId): void{
+  public remove_edge(edgeId): void {
     for (let index = 0; index < this.edges.length; index++) {
       const edge = this.edges[index];
-      if (edge.id === edgeId){
+      if (edge.id === edgeId) {
         this.edges.splice(index, 1);
         return;
       }
@@ -159,42 +164,44 @@ export class GraphComponent implements OnInit {
   }
 
 
-  public change_edge_source(edgeId, event): void{
+  public change_edge_source(edgeId, event): void {
     const newSource = event.target.value;
     this.edges.forEach(e => {
-      if (e.id === edgeId){
+      if (e.id === edgeId) {
         e.source = newSource;
 
       }
     });
     this.updateChart();
   }
-  public change_edge_target(edgeId, event): void{
+  public change_edge_target(edgeId, event): void {
     const newTarget = event.target.value;
     this.edges.forEach(e => {
-      if (e.id === edgeId){
+      if (e.id === edgeId) {
         e.target = newTarget;
         this.updateChart();
         return;
       }
     });
   }
-  set_selected_node(nodeId): void{
-    this.selectedNode = nodeId;
-    this.selectedNodeEdges = this.get_related_edges(nodeId);
-  }
-  public get_nodes(): any{
+  set_selected_node(node: PLCNode): void {
+    this.selectedNode = node;
+    console.log(node.connectionPoints)
+    this.selectedNodeEdges = this.get_related_edges(node.id);
+    this.selectedNodeCons = this.selectedNode.connectionPoints
+    }
+  public get_nodes(): any {
     return this.nodes;
-}
-  public set_nodes(newNodes: Node[]): void{
+  }
+  public set_nodes(newNodes: PLCNode[]): void {
     this.nodes = newNodes;
     this.updateChart();
-}
-  public get_edges(): any{
+  }
+  public get_edges(): any {
     return this.edges;
   }
 
-  public set_edges(newEdges: Edge[]): void{
+  public set_edges(newEdges: Edge[]): void {
     this.edges = newEdges;
   }
 
@@ -219,7 +226,7 @@ export class GraphComponent implements OnInit {
     this.updateChart();
   }
 */
-  public add_node_v2(node): void{
+  public add_node_v2(node): void {
     this.nodes.push(node);
   }
 
@@ -227,9 +234,17 @@ export class GraphComponent implements OnInit {
   /**
    * add_edge
    */
-  public add_edge(sourceId, targetId, mode?): void {
+  public add_edge(sourceId, targetId): void {
 
-
+    const edgeId = 'e_' + this.edgesIdCounter;
+    const newEdge = {
+      id: edgeId,
+      source: sourceId,
+      target: targetId,
+    };
+    this.edgesIdCounter++;
+    this.edges.push(newEdge);
+    this.updateChart();
   }
 
   /**
@@ -245,8 +260,8 @@ export class GraphComponent implements OnInit {
   public get_related_edges(nodeId): any {
     const relatedEdges: Edge[] = [];
     this.edges.forEach(edge => {
-      if (edge.source === nodeId || edge.target === nodeId){
-          relatedEdges.push(edge);
+      if (edge.source === nodeId || edge.target === nodeId) {
+        relatedEdges.push(edge);
       }
     });
     return relatedEdges;
@@ -258,8 +273,8 @@ export class GraphComponent implements OnInit {
    *
    * Always call after changing the graph
    */
-  updateChart(): void{
-      this.update$.next(true);
+  updateChart(): void {
+    this.update$.next(true);
   }
 
   /**
@@ -291,7 +306,8 @@ export class GraphComponent implements OnInit {
         this.nodes.push(fbdInOutVariable.node);
 
       }
-      /* for (const jump of pou.getElementsByTagName('jump')) {
+      {/*
+       for (const jump of pou.getElementsByTagName('jump')) {
         const fbdJump = new FbdJump(jump);
         this.jumpList.push(fbdJump);
         this.nodes.push(fbdJump.node);
@@ -396,61 +412,75 @@ export class GraphComponent implements OnInit {
       }
       for (const transition of pou.getElementsByTagName('transition')) {
         this.transitionList.push(new SfcTransition(transition));
-      } */
+      } 
+      */}
     }
 
     this.edgesIdCounter = 0;
-    console.log(this.nodes)
+    console.log(this.nodes);
+    for (const node of this.nodes) {
+      for (const con of node.connectionPoints) {
+        if (con.type === "OUT"){
+          this.allConnectionPointOuts.push(con);
+        } else {
+          this.allConnectionPointIns.push(con);
+        }
+        this.allConnectionPoints.push(con);
+        if (con.targetId != null && con.sourceId != null) {
+          this.add_edge(con.sourceId, con.targetId);
+        }
+      }
+    }
     this.updateChart();
 
 
     /*
-this.nodes = [
-  {
-    id: 'n_0',
-    label: 'SR-0',
-    type: 'fbs',
-    pins: {
-      S: {type: 'IN', edge: 'e_0'},
-      R: {type: 'IN', edge: null},
-      Q: {type: 'OUT', edge: 'e_1'}
-    }
-  },
-  {
-    id: 'n_1',
-    label: 'INPUT_Var-0',
-    type: 'var',
-    pins: {
-      "IN": {type: 'IN', edge: 'e_1'}
-    }
-  },
-  {
-    id: 'n_2',
-    label: 'OUTPUT_Var-1',
-    type: 'var',
-    pins: {
-      "OUT": {type: 'OUT', edge: 'e_0'}
-    }
+    this.nodes = [
+      {
+        id: 'n_0',
+        label: 'SR-0',
+        type: 'fbs',
+        pins: {
+          S: {type: 'IN', edge: 'e_0'},
+          R: {type: 'IN', edge: null},
+          Q: {type: 'OUT', edge: 'e_1'}
+        }
+      },
+      {
+        id: 'n_1',
+        label: 'INPUT_Var-0',
+        type: 'var',
+        pins: {
+          "IN": {type: 'IN', edge: 'e_1'}
+        }
+      },
+      {
+        id: 'n_2',
+        label: 'OUTPUT_Var-1',
+        type: 'var',
+        pins: {
+          "OUT": {type: 'OUT', edge: 'e_0'}
+        }
+      }
+    ];
+    
+    this.edges = [
+      {
+        id: 'e_0',
+        source: 'n_2',
+        target: 'n_0'
+      },
+      {
+        id: 'e_1',
+        source: 'n_0',
+        target: 'n_1'
+      },
+    ]
+    */
+
   }
-];
 
-this.edges = [
-  {
-    id: 'e_0',
-    source: 'n_2',
-    target: 'n_0'
-  },
-  {
-    id: 'e_1',
-    source: 'n_0',
-    target: 'n_1'
-  },
-]
-*/
-  
-}
-
-  public test(a): void{
+  public test(a): void {
     alert(a);
     console.log(a);
   }

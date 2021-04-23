@@ -49,9 +49,10 @@ export class FbdInVariable {
       }
       this.node.id = this.localId;
       this.node.label = this.name;
-      this.node.type = '1';
+      this.node.type = 'var';
       const newConnectionPoint: ConnectionPoint = {
         type: "OUT",
+        name: "OUT",
         sourceId: this.localId,
         targetId: this.connectionPointOut.refLocalID,
         edgeId: null,
