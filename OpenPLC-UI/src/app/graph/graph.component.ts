@@ -402,18 +402,14 @@ export class GraphComponent implements OnInit {
       }
     }
 
+    this.edgesIdCounter = 0;
     for (const node of this.nodes) {
-    
-        if (node.type === "fbs"){
-          continue;
-        }
-        console.log(node)
-       
+      console.log(node)
     }
 
     this.updateChart();
 
-    this.edgesIdCounter = 2;
+
     /*
 this.nodes = [
   {

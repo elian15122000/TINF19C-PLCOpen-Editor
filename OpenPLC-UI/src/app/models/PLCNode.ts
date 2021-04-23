@@ -20,5 +20,6 @@ export enum NodeTypes {
 }
 
 export interface PLCNode extends Node {
+    type: string,
     connectionPoints: ConnectionPoint[],
 }
