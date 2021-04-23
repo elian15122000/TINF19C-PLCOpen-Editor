@@ -1,4 +1,5 @@
 import {Node} from '@swimlane/ngx-graph';
+import { PLCNode } from '../PLCNode';
 
 export class FbdLabel {
   public xml: any;
@@ -7,7 +8,7 @@ export class FbdLabel {
   public width = 20;
   public label = '';
   public position: {x: number, y: number} = {x: 0, y: 0};
-  public node: Node = {id: null, label: null, type: null, pins: null};
+  public node: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
   public edges: string[] = [];
 
   constructor(xmlLabel: any) {

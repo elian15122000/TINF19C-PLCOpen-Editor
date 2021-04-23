@@ -1,4 +1,4 @@
-import { Node } from '@swimlane/ngx-graph';
+import { PLCNode, ConnectionPoint } from '../PLCNode';
 
 export class FbdInVariable {
   public xml: any;
@@ -7,10 +7,9 @@ export class FbdInVariable {
   public height = 20;
   public width = 20;
   public negated = false;
-  public position: {x: number, y: number} = {x: 0, y: 0};
-  public connectionPointOut: {x: number, y: number, refLocalID: string} = {x: 0, y: 0, refLocalID: null};
-  public node: Node = {id: null, label: null, type: null, pins: null};
-  public edges: string[] = [];
+  public position: { x: number, y: number } = { x: 0, y: 0 };
+  public connectionPointOut: { x: number, y: number, refLocalID: string } = { x: 0, y: 0, refLocalID: null };
+  public node: PLCNode = { id: null, label: null, type: null, connectionPoints: [] };
 
   constructor(xmlInVariable: any) {
     if (xmlInVariable === '') {
@@ -33,9 +32,9 @@ export class FbdInVariable {
       }
       if (xmlInVariable.getElementsByTagName('position')[0] !== undefined) {
         const position = xmlInVariable.getElementsByTagName('position')[0];
-        this.position = { x: position.getAttribute('x'), y: position.getAttribute('y')};
+        this.position = { x: position.getAttribute('x'), y: position.getAttribute('y') };
       }
-      if ( xmlInVariable.getElementsByTagName('connectionPointOut')[0]  !== undefined) {
+      if (xmlInVariable.getElementsByTagName('connectionPointOut')[0] !== undefined) {
         const connectionPointOut = xmlInVariable.getElementsByTagName('connectionPointOut')[0];
         if (connectionPointOut.getElementsByTagName('relPosition') !== undefined) {
           const position = connectionPointOut.getElementsByTagName('relPosition')[0];
@@ -45,18 +44,20 @@ export class FbdInVariable {
         if (connectionPointOut.getElementsByTagName('connection')[0] !== undefined) {
           const connection = connectionPointOut.getElementsByTagName('connection')[0];
           this.connectionPointOut.refLocalID = connection.getAttribute('refLocalId');
+          console.log(connection)
         }
       }
       this.node.id = this.localId;
       this.node.label = this.name;
-      this.node.type = 'var';
-      this.node.pins = {
-        OUT: {type: 'OUT', refId: null, edge: null}
-      };
-      this.node.position = this.position;
-      if (this.connectionPointOut.refLocalID != null){
-        this.node.pins.OUT.refId = this.connectionPointOut.refLocalID;
+      this.node.type = '1';
+      const newConnectionPoint: ConnectionPoint = {
+        type: "OUT",
+        sourceId: this.localId,
+        targetId: this.connectionPointOut.refLocalID,
+        edgeId: null,
       }
+      this.node.connectionPoints.push(newConnectionPoint);
+
     }
   }
 

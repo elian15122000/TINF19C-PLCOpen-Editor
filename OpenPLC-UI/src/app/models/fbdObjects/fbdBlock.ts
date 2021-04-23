@@ -12,7 +12,7 @@ export class FbdBlock {
   public inputVariables: any[] = [];
   public inOutVariables: any[] = [];
   public outputVariables: any[] = [];
-  public node: Node = {id: null, label: null, type: null, connectionPoints: []};
+  public node: PLCNode = {id: null, label: null, type: null, connectionPoints: []};
   public edges: string[] = [];
 
   constructor(xmlBlock: any) {

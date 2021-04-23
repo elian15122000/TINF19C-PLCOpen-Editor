@@ -1,7 +1,7 @@
 import { Node } from '@swimlane/ngx-graph';
 
 export interface ConnectionPoint {
-    type:           NodeTypes,
+    type:            string,
     sourceId?:       string,
     targetId?:       string,
     edgeId?:         string,
@@ -14,10 +14,7 @@ export interface Vector2{
     y: number
 }
 
-export enum NodeTypes {
-    SOURCE,
-    TARGET,
-}
+
 
 export interface PLCNode extends Node {
     type: string,

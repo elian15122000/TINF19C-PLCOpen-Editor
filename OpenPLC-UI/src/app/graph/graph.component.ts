@@ -41,8 +41,6 @@ export class GraphComponent implements OnInit {
 
    constructor(private projectService: ProjectService,
                private route: ActivatedRoute) {
-
-
   }
   // Importierte Variablen
    inVariableList: FbdInVariable[] = [];
@@ -70,7 +68,6 @@ export class GraphComponent implements OnInit {
    simDivergenceList: SfcSimultaneousDivergence[] = [];
    stepList: SfcStep[] = [];
    transitionList: SfcTransition[] = [];
-   all_elements: any[] = [];
 
 //
    pouName: string;
@@ -294,7 +291,7 @@ export class GraphComponent implements OnInit {
         this.nodes.push(fbdInOutVariable.node);
 
       }
-      for (const jump of pou.getElementsByTagName('jump')) {
+      /* for (const jump of pou.getElementsByTagName('jump')) {
         const fbdJump = new FbdJump(jump);
         this.jumpList.push(fbdJump);
         this.nodes.push(fbdJump.node);
@@ -399,14 +396,11 @@ export class GraphComponent implements OnInit {
       }
       for (const transition of pou.getElementsByTagName('transition')) {
         this.transitionList.push(new SfcTransition(transition));
-      }
+      } */
     }
 
     this.edgesIdCounter = 0;
-    for (const node of this.nodes) {
-      console.log(node)
-    }
-
+    console.log(this.nodes)
     this.updateChart();
 
 
@@ -453,7 +447,8 @@ this.edges = [
   },
 ]
 */
-  }
+  
+}
 
   public test(a): void{
     alert(a);
