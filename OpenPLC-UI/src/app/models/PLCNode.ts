@@ -2,7 +2,8 @@ import { Node } from '@swimlane/ngx-graph';
 
 export interface ConnectionPoint {
     type:            string,
-    name?:           string,
+    sourcePoint?:           string,
+    targetPoint?:    string,
     sourceId?:       string,
     sourceName?:     string,
     targetId?:       string,

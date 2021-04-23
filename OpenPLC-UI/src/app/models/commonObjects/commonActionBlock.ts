@@ -91,7 +91,7 @@ export class CommonActionBlock{
     this.node.type = 'default';
     const newConnectionPointIn: ConnectionPoint = {
       type: "IN",
-      name: "IN",
+      sourcePoint: "IN",
       sourceId: this.connectionPointIn.refLocalId,
       targetId: this.localId,
       edgeId: null

@@ -54,9 +54,10 @@ export class FbdOutVariable {
 
       const newConnectionPoint: ConnectionPoint = {
         type: "IN",
-        name: "IN",
+        targetPoint: "IN",
         sourceId: this.connectionPointIn.refLocalID,
         targetId: this.localId,
+        targetName: this.node.label,
         edgeId: null
       }
       this.node.connectionPoints.push(newConnectionPoint)

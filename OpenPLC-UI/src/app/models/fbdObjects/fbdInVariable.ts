@@ -8,7 +8,7 @@ export class FbdInVariable {
   public width = 20;
   public negated = false;
   public position: { x: number, y: number } = { x: 0, y: 0 };
-  public connectionPointOut: { x: number, y: number, refLocalID: string } = { x: 0, y: 0, refLocalID: null };
+  public connectionPointOut: { x: number, y: number, refLocalID: string, formalParameter: string } = { x: 0, y: 0, refLocalID: null, formalParameter: null };
   public node: PLCNode = { id: null, label: null, type: null, connectionPoints: [] };
 
   constructor(xmlInVariable: any) {
@@ -44,6 +44,8 @@ export class FbdInVariable {
         if (connectionPointOut.getElementsByTagName('connection')[0] !== undefined) {
           const connection = connectionPointOut.getElementsByTagName('connection')[0];
           this.connectionPointOut.refLocalID = connection.getAttribute('refLocalId');
+          // IMPORTANT: read the formal parameter
+          this.connectionPointOut.formalParameter = connection.getAttribute("formalParameter")
           console.log(connection)
         }
       }
@@ -52,8 +54,10 @@ export class FbdInVariable {
       this.node.type = 'var';
       const newConnectionPoint: ConnectionPoint = {
         type: "OUT",
-        name: "OUT",
+        sourcePoint: "OUT",
+        targetPoint: this.connectionPointOut.formalParameter,
         sourceId: this.localId,
+        sourceName: this.node.label,
         targetId: this.connectionPointOut.refLocalID,
         edgeId: null,
       }

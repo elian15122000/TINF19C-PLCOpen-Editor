@@ -168,8 +168,8 @@ export class GraphComponent implements OnInit {
     const newSource = event.target.value;
     this.edges.forEach(e => {
       if (e.id === edgeId) {
-        e.source = newSource;
-
+        this.remove_edge(edgeId);
+        this.add_edge(edgeId, newSource)
       }
     });
     this.updateChart();
@@ -207,7 +207,6 @@ export class GraphComponent implements OnInit {
 
 
 
-
   /**
    * add_node() : adds new nodes to the nodes list and calls updateChart()
    */
@@ -234,7 +233,7 @@ export class GraphComponent implements OnInit {
   /**
    * add_edge
    */
-  public add_edge(sourceId, targetId): void {
+  public add_edge(sourceId, targetId): string {
 
     const edgeId = 'e_' + this.edgesIdCounter;
     const newEdge = {
@@ -245,6 +244,7 @@ export class GraphComponent implements OnInit {
     this.edgesIdCounter++;
     this.edges.push(newEdge);
     this.updateChart();
+    return edgeId
   }
 
   /**
@@ -276,6 +276,100 @@ export class GraphComponent implements OnInit {
   updateChart(): void {
     this.update$.next(true);
   }
+
+      //TODO:
+    /**
+     * 1) connect two points: call on a function that takes ids of two connectionPoints and connect them
+     *        - when connecting. check if the edgeId == null and remove edge if not
+     *        - after connecting. write the newe edgeId and change the source/target in the connectionPoints
+     */
+    /**
+     * connect_points
+     */
+    public connect_points(sourcePoint, targetPoint) {
+      //check if input is valid
+      if(sourcePoint === "" || targetPoint === ""){
+        return
+      }
+      //sometimes an event is passed as one of the points
+      //check which one is an event and get it's value
+      if(sourcePoint.constructor.name === "Event"){
+        sourcePoint = sourcePoint.target.value;
+      }
+
+      if(targetPoint.constructor.name === "Event"){
+        targetPoint = targetPoint.target.value;
+      }
+
+      // check if points have an exisiting connection
+      if(sourcePoint.edgeId != null){
+        var oldEdgeId = sourcePoint.edgeId;
+        // find old connection point
+        for (const con of this.allConnectionPointIns) {
+          if (con.edgeId == oldEdgeId){
+            // remove informations
+            con.edgeId = null;
+            con.sourceId = null;
+            con.sourcePoint = null;
+            con.sourceName = null;
+            this.remove_edge(oldEdgeId)
+            console.log("oldEdge Removed")
+          }
+        }
+        // remove edge
+        
+      }
+      if(targetPoint.edgeId != null){
+        var oldEdgeId = sourcePoint.edgeId;
+        // find old connection point
+        for (const con of this.allConnectionPointOuts) {
+          if (con.edgeId == oldEdgeId){
+            // remove informations
+            con.edgeId = null;
+            con.targetId = null;
+            con.targetPoint = null;
+            con.targetName = null;
+            this.remove_edge(oldEdgeId)
+            console.log("oldEdge Removed")
+          }
+        }
+        // remove edge
+      }
+      console.log(this.allConnectionPoints)
+
+      // -- points doesn't have exisiting connections -- \\
+
+      // get the actual connection points from allConncetionPoints
+      var mySource : ConnectionPoint = null;
+      var myTarget : ConnectionPoint = null;
+      for (const source of this.allConnectionPointOuts) {
+        if (source.sourceId === sourcePoint.sourceId && source.sourcePoint === sourcePoint.sourcePoint){
+          mySource = source;
+          break;
+        }
+      }
+      for (const target of this.allConnectionPointIns) {
+        if (target.targetId === targetPoint.targetId && target.targetPoint === targetPoint.targetPoint){
+          myTarget = target;
+          break;
+        }
+      }
+      // get informations
+      var targetId = targetPoint.targetId;
+      var sourceId = sourcePoint.sourceId;
+      // fill in informations
+      myTarget.sourcePoint = sourcePoint.sourcePoint;
+      mySource.targetPoint = targetPoint.targetPoint;
+      myTarget.sourceId = sourceId;
+      mySource.targetId = targetId;
+      // add edge
+      var newEdgeId = this.add_edge(sourceId, targetId);
+      // set new id
+      myTarget.edgeId = newEdgeId;
+      mySource.edgeId = newEdgeId;
+      this.updateChart()
+    }
+
 
   /**
    * process_elements
@@ -417,7 +511,6 @@ export class GraphComponent implements OnInit {
     }
 
     this.edgesIdCounter = 0;
-    console.log(this.nodes);
     for (const node of this.nodes) {
       for (const con of node.connectionPoints) {
         if (con.type === "OUT"){
@@ -426,12 +519,44 @@ export class GraphComponent implements OnInit {
           this.allConnectionPointIns.push(con);
         }
         this.allConnectionPoints.push(con);
-        if (con.targetId != null && con.sourceId != null) {
-          this.add_edge(con.sourceId, con.targetId);
-        }
       }
     }
     this.updateChart();
+    //update connections
+    for (const con_in of this.allConnectionPointIns) {
+      // if there is a connection
+      if (con_in.sourceId != null){
+        // get the connectionpointout
+        var con_out : ConnectionPoint = null;
+        for (const con_out_member of this.allConnectionPointOuts) {
+          if (con_out_member.sourceId === con_in.sourceId){
+            con_out = con_out_member
+            break
+          }
+        }
+        // get informations
+        var targetPoint = con_in.targetPoint
+        var sourcePoint = con_out.sourcePoint
+        var targetId = con_in.targetId
+        var sourceId = con_in.sourceId
+        var targetName = con_in.targetName
+        var sourceName = con_out.sourceName
+        // fill in informations
+        con_in.sourcePoint = sourcePoint
+        con_out.targetId = targetId
+        con_out.targetPoint = targetPoint
+        con_in.sourceName = sourceName
+        con_out.targetName = targetName
+        var newId = this.add_edge(sourceId, targetId)
+        con_in.edgeId = newId
+        con_out.edgeId = newId
+      }
+    }
+
+
+    console.log(this.allConnectionPoints);
+
+    console.log(this.edges);
 
 
     /*
