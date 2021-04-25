@@ -83,6 +83,7 @@ export class GraphComponent implements OnInit {
   allConnectionPointIns: ConnectionPoint[] = [];
   allConnectionPointOuts: ConnectionPoint[] = [];
 
+  
   update$: Subject<any> = new Subject();
 
   /*
@@ -229,7 +230,6 @@ export class GraphComponent implements OnInit {
     this.nodes.push(node);
   }
 
-
   /**
    * add_edge
    */
@@ -301,7 +301,18 @@ export class GraphComponent implements OnInit {
         targetPoint = targetPoint.target.value;
       }
 
+      if(targetPoint.type === sourcePoint.type){
+        alert("Can't Connect two pins with the same type");
+        return;
+      }
+
+      if(sourcePoint.sourceId === targetPoint.targetId){
+        // In case of connecting the same node with itself
+      }
+
       // check if points have an exisiting connection
+      var oldTarget : ConnectionPoint = null
+      var oldSource : ConnectionPoint = null
       if(sourcePoint.edgeId != null){
         var oldEdgeId = sourcePoint.edgeId;
         // find old connection point
@@ -313,14 +324,13 @@ export class GraphComponent implements OnInit {
             con.sourcePoint = null;
             con.sourceName = null;
             this.remove_edge(oldEdgeId)
-            console.log("oldEdge Removed")
           }
         }
         // remove edge
         
       }
       if(targetPoint.edgeId != null){
-        var oldEdgeId = sourcePoint.edgeId;
+        var oldEdgeId = targetPoint.edgeId;
         // find old connection point
         for (const con of this.allConnectionPointOuts) {
           if (con.edgeId == oldEdgeId){
@@ -330,7 +340,6 @@ export class GraphComponent implements OnInit {
             con.targetPoint = null;
             con.targetName = null;
             this.remove_edge(oldEdgeId)
-            console.log("oldEdge Removed")
           }
         }
         // remove edge
