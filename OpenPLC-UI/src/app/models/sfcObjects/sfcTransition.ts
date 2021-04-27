@@ -1,16 +1,18 @@
+import {ConnectionPoint, PLCNode} from '../PLCNode';
+
 export class SfcTransition {
   public xml: any;
-  public localId: number;
+  public localId: string;
   public height = 20;
   public width = 20;
-  public connectionPointIn: {x: 0, y: 0, refLocalId: 0, formalParameter: string};
-  public connectionPointOut: {x: 0, y: 0, refLocalId: 0, formalParameter: string};
+  public connectionPointIn: {x: 0, y: 0, refLocalId: '', formalParameter: string};
+  public connectionPointOut: {x: 0, y: 0, refLocalId: '', formalParameter: string};
   public position: {x: 0, y: 0};
   public conditionReferenceName = '';
-  public conditionConnectionPointIn: {x: 0, y: 0, refLocalId: 0, formalParameter: string};
+  public conditionConnectionPointIn: {x: 0, y: 0, refLocalId: '', formalParameter: string};
   public conditionInlineName = '';
   public conditionNegated = false;
-
+  public node: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
 
   constructor(xmlTransition: any) {
     if (xmlTransition === '') {
@@ -32,7 +34,7 @@ export class SfcTransition {
             const relPos = item.getElementsByTagName('relPosition');
             let inX: any;
             let inY: any;
-            let refLocId: 0;
+            let refLocId: '';
             let formalParam: '';
             if (relPos[0] !== undefined) {
               inX = relPos[0].getAttribute('x');
@@ -53,7 +55,7 @@ export class SfcTransition {
             const relPos = item.getElementsByTagName('relPosition');
             let outX: any;
             let outY: any;
-            let refLocId: 0;
+            let refLocId: '';
             let formalParam: '';
             if (relPos[0] !== undefined) {
               outX = relPos[0].getAttribute('x');
@@ -92,7 +94,7 @@ export class SfcTransition {
           const relPos = item.getElementsByTagName('relPosition');
           let inX: any;
           let inY: any;
-          let refLocId: 0;
+          let refLocId: '';
           let formalParam: '';
           if (relPos[0] !== undefined) {
             inX = relPos[0].getAttribute('x');
@@ -107,6 +109,23 @@ export class SfcTransition {
         }
       }
     }
+    this.node.id = this.localId;
+    this.node.type = 'default';
+    const newConnectionPointIn: ConnectionPoint = {
+      type: 'IN',
+      sourceId: this.connectionPointIn.refLocalId,
+      targetId: this.localId,
+      edgeId: null
+    };
+    this.node.connectionPoints.push(newConnectionPointIn);
+
+    const newConnectionPointOut: ConnectionPoint = {
+      type: 'OUT',
+      sourceId: this.connectionPointOut.refLocalId,
+      targetId: this.localId,
+      edgeId: null
+    };
+    this.node.connectionPoints.push(newConnectionPointOut);
   }
   createXML(): void {
     const xmlString = '<transition localId="0" height="50" width="30">\n' +

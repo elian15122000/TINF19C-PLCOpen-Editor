@@ -1,4 +1,4 @@
-import {Node} from '@swimlane/ngx-graph';
+// import {PLCNode} from '@swimlane/ngx-graph';
 import { ConnectionPoint, PLCNode } from '../PLCNode';
 
 export class CommonActionBlock{
@@ -18,7 +18,7 @@ export class CommonActionBlock{
   public actionDuration = '';
   public actionIndicator = '';
   public connectionPointIn: {x: number, y: number, refLocalId: string, formalParameter: string};
-  public node: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
+  public PLCNode: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
 
   constructor(xmlCommonActionBlock: any) {
     if (xmlCommonActionBlock === ''){
@@ -86,17 +86,17 @@ export class CommonActionBlock{
 
       }
     }
-    this.node.id = this.localId;
-    this.node.label = '';
-    this.node.type = 'default';
+    this.PLCNode.id = this.localId;
+    this.PLCNode.label = '';
+    this.PLCNode.type = 'default';
     const newConnectionPointIn: ConnectionPoint = {
-      type: "IN",
-      sourcePoint: "IN",
+      type: 'IN',
+      sourcePoint: 'IN',
       sourceId: this.connectionPointIn.refLocalId,
       targetId: this.localId,
       edgeId: null
-    }
-    this.node.connectionPoints.push(newConnectionPointIn);
+    };
+    this.PLCNode.connectionPoints.push(newConnectionPointIn);
   }
   createXML(): void{
     const xmlString = '<actionBlock localId="0" height="50" width="30" negated="false"   >\n' +

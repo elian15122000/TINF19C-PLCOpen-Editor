@@ -1,13 +1,16 @@
+import {ConnectionPoint, PLCNode} from "../PLCNode";
+
 export class SfcSimultaneousDivergence{
   public xml: any;
-  public localId: number;
+  public localId: string;
   public globalId: number;
   public height = 20;
   public width = 20;
   public name = '';
-  public connectionPointIn: {x: 0, y: 0};
-  public connectionPointOut: {x: 0, y: 0};
+  public connectionPointIn: { x: number, y: number, refLocalId: string, formalParameter: string }[] = [];
+  public connectionPointOut: { x: number, y: number, refLocalId: string, formalParameter: string }[] = [];
   public position: {x: 0, y: 0};
+  public node: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
 
   constructor(xmlSimDivergence: any) {
     if (xmlSimDivergence === '') {
@@ -29,30 +32,61 @@ export class SfcSimultaneousDivergence{
       if (xmlSimDivergence.getAttribute('name') !== undefined) {
         this.name = xmlSimDivergence.getAttribute('name');
       }
-      if (xmlSimDivergence.getElementsByTagName('connectionPointIn') !== undefined) {
-        for (const item of xmlSimDivergence.getElementsByTagName('connectionPointIn')) {
-          const relPos = item.getElementsByTagName('relPosition');
-          if (relPos[0] !== undefined) {
-            const inX = relPos[0].getAttribute('x');
-            const inY = relPos[0].getAttribute('y');
-            this.connectionPointIn = {x: inX, y: inY};
-          }
+
+      for (const connectionPointIn of xmlSimDivergence.getElementsByTagName('connectionPointIn')) {
+        const newConnectionPoint = {x: 0, y: 0, refLocalId: '', formalParameter: ''};
+        if (connectionPointIn.getElementsByTagName('relPosition') !== undefined) {
+          const position = connectionPointIn.getElementsByTagName('relPosition')[0];
+          newConnectionPoint.x = position.getAttribute('x');
+          newConnectionPoint.y = position.getAttribute('y');
         }
+        if (connectionPointIn.getElementsByTagName('connection')[0] !== undefined) {
+          const connection = connectionPointIn.getElementsByTagName('connection')[0];
+          newConnectionPoint.refLocalId = connection.getAttribute('refLocalId');
+          newConnectionPoint.formalParameter = connection.getAttribute('formalParameter');
+        }
+        this.connectionPointIn.push(newConnectionPoint);
       }
-      if (xmlSimDivergence.getElementsByTagName('connectionPointOut') !== undefined) {
-        for (const item of xmlSimDivergence.getElementsByTagName('connectionPointOut')) {
-          const relPos = item.getElementsByTagName('relPosition');
-          if (relPos[0] !== undefined) {
-            const outX = relPos[0].getAttribute('x');
-            const outY = relPos[0].getAttribute('y');
-            this.connectionPointOut = {x: outX, y: outY};
-          }
+      for (const connectionPointOut of xmlSimDivergence.getElementsByTagName('connectionPointOut'))
+      {
+        const newConnectionPoint = {x: 0, y: 0, refLocalId: '', formalParameter: ''};
+        if (connectionPointOut.getElementsByTagName('relPosition') !== undefined) {
+          const position = connectionPointOut.getElementsByTagName('relPosition')[0];
+          newConnectionPoint.x = position.getAttribute('x');
+          newConnectionPoint.y = position.getAttribute('y');
         }
+        if (connectionPointOut.getElementsByTagName('connection')[0] !== undefined) {
+          const connection = connectionPointOut.getElementsByTagName('connection')[0];
+          newConnectionPoint.refLocalId = connection.getAttribute('refLocalId');
+          newConnectionPoint.formalParameter = connection.getAttribute('formalParameter');
+        }
+        this.connectionPointIn.push(newConnectionPoint);
       }
       if (xmlSimDivergence.getElementsByTagName('position') !== undefined) {
         const position = xmlSimDivergence.getElementsByTagName('position')[0];
         this.position = {x: position.getAttribute('x'), y: position.getAttribute('y')};
       }
+    }
+    this.node.id = this.localId;
+    this.node.type = 'default';
+    this.node.label = this.name;
+    for (let i = 0; i < this.connectionPointIn.length; i++){
+      const newConnectionPointIn: ConnectionPoint = {
+        type: 'IN',
+        sourceId: this.connectionPointIn[i].refLocalId,
+        targetId: this.localId,
+        edgeId: null
+      };
+      this.node.connectionPoints.push(newConnectionPointIn);
+    }
+    for (let i = 0; i < this.connectionPointOut.length; i++){
+      const newConnectionPointOut: ConnectionPoint = {
+        type: 'OUT',
+        sourceId: this.connectionPointOut[i].refLocalId,
+        targetId: this.localId,
+        edgeId: null
+      };
+      this.node.connectionPoints.push(newConnectionPointOut);
     }
   }
   createXML(): void {

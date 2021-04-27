@@ -1,12 +1,15 @@
+import {ConnectionPoint, PLCNode} from '../PLCNode';
+
 export class SfcMacroStep {
   public xml: any;
-  public localId: number;
+  public localId: string;
   public height = 20;
   public width = 20;
   public name = '';
-  public connectionPointIn: {x: 0, y: 0, refLocalId: 0, formalParameter: string};
-  public connectionPointOut: {x: 0, y: 0, refLocalId: 0, formalParameter: string};
+  public connectionPointIn: {x: 0, y: 0, refLocalId: '', formalParameter: string};
+  public connectionPointOut: {x: 0, y: 0, refLocalId: '', formalParameter: string};
   public position: {x: 0, y: 0};
+  public PLCNode: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
 
   constructor(xmlMacroStep: any) {
     if (xmlMacroStep === '') {
@@ -61,6 +64,25 @@ export class SfcMacroStep {
         }
       }
     }
+    this.PLCNode.id = this.localId;
+    this.PLCNode.label = '';
+    this.PLCNode.type = 'default';
+    const newConnectionPointIn: ConnectionPoint = {
+      type: 'IN',
+      sourcePoint: 'IN',
+      sourceId: this.connectionPointIn.refLocalId,
+      targetId: this.localId,
+      edgeId: null
+    };
+    const newConnectionPointOut: ConnectionPoint = {
+      type: 'OUT',
+      sourcePoint: 'OUT',
+      sourceId: this.connectionPointOut.refLocalId,
+      targetId: this.localId,
+      edgeId: null
+    };
+    this.PLCNode.connectionPoints.push(newConnectionPointIn);
+    this.PLCNode.connectionPoints.push(newConnectionPointOut);
   }
   createXML(): void {
     const xmlString = '<macroStep localId="0" height="50" width="30" name="">\n' +

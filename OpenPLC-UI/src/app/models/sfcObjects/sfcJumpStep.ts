@@ -1,4 +1,4 @@
-import { ConnectionPoint, PLCNode } from "../PLCNode";
+import { ConnectionPoint, PLCNode } from '../PLCNode';
 
 
 export class SfcJumpStep {
@@ -10,7 +10,7 @@ export class SfcJumpStep {
   public connectionPointIn: {x: number, y: number, refLocalID: string, formalParameter: string} = {x: 0, y: 0, refLocalID: '', formalParameter: ''};
   public position: {x: 0, y: 0};
   public node: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
-  
+
 constructor(xmlJumpStep: any) {
   if (xmlJumpStep === '') {
     this.createXML();
@@ -49,11 +49,11 @@ constructor(xmlJumpStep: any) {
   this.node.id = this.localId;
   this.node.type = 'default';
   const newConnectionPointIn: ConnectionPoint = {
-    type: "IN",
+    type: 'IN',
     sourceId: this.connectionPointIn.refLocalID,
     targetId: this.localId,
     edgeId: null
-  }
+  };
   this.node.connectionPoints.push(newConnectionPointIn);
 
 }
