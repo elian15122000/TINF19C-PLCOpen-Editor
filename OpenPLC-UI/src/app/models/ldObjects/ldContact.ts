@@ -1,4 +1,4 @@
-import { ConnectionPoint, PLCNode } from "../PLCNode";
+import { ConnectionPoint, PLCNode } from '../PLCNode';
 
 
 export class LdContact {
@@ -66,21 +66,20 @@ export class LdContact {
     this.node.label = this.variable;
     this.node.type = 'contact';
     const newConnectionPointOut: ConnectionPoint = {
-      type: "OUT",
+      type: 'OUT',
       sourceId: this.localId,
       targetId: this.connectionPointOut.refLocalID,
       edgeId: null,
-    }
+    };
     this.node.connectionPoints.push(newConnectionPointOut);
 
     const newConnectionPointIn: ConnectionPoint = {
-      type: "IN",
+      type: 'IN',
       sourceId: this.connectionPointIn.refLocalID,
       targetId: this.localId,
       edgeId: null
-    }
+    };
     this.node.connectionPoints.push(newConnectionPointIn);
-  
   }
 
   createNewContact(): void {

@@ -1,36 +1,36 @@
-import { Component, OnInit, Type } from '@angular/core';
-import { Node, Edge } from '@swimlane/ngx-graph';
+import {Component, OnInit, Type} from '@angular/core';
+import {Node, Edge} from '@swimlane/ngx-graph';
 import * as shape from 'd3-shape';
-import { Subject } from 'rxjs';
-import { FbdInOutVariable } from '../models/fbdObjects/fbdInOutVariable';
-import { FbdInVariable } from '../models/fbdObjects/fbdInVariable';
-import { FbdOutVariable } from '../models/fbdObjects/fbdOutVariable';
-import { ProjectService } from '../services/project.service';
-import { ActivatedRoute } from '@angular/router';
-import { FbdJump } from '../models/fbdObjects/fbdJump';
-import { FbdLabel } from '../models/fbdObjects/fbdLabel';
-import { FbdReturn } from '../models/fbdObjects/fbdReturn';
-import { FbdBlock } from '../models/fbdObjects/fbdBlock';
-import { LdContact } from '../models/ldObjects/ldContact';
-import { LdCoil } from '../models/ldObjects/ldCoil';
-import { LdLeftPowerRail } from '../models/ldObjects/ldLeftPowerRail';
-import { LdRightPowerRail } from '../models/ldObjects/ldRightPowerRail';
-import { CommonActionBlock } from '../models/commonObjects/commonActionBlock';
-import { CommonComment } from '../models/commonObjects/commonComment';
-import { CommonConnector } from '../models/commonObjects/commonConnector';
-import { CommonContinuation } from '../models/commonObjects/commonContinuation';
-import { CommonError } from '../models/commonObjects/commonError';
-import { CommonVendorElement } from '../models/commonObjects/commonVendorElement';
-import { SfcJumpStep } from '../models/sfcObjects/sfcJumpStep';
-import { SfcMacroStep } from '../models/sfcObjects/sfcMacroStep';
-import { SfcSelectionConvergence } from '../models/sfcObjects/sfcSelectionConvergence';
-import { SfcSelectionDivergence } from '../models/sfcObjects/sfcSelectionDivergence';
-import { SfcSimultaneousConvergence } from '../models/sfcObjects/sfcSimultaneousConvergence';
-import { SfcSimultaneousDivergence } from '../models/sfcObjects/sfcSimultaneousDivergence';
-import { SfcStep } from '../models/sfcObjects/sfcStep';
-import { SfcTransition } from '../models/sfcObjects/sfcTransition';
-import { pipeline } from 'stream';
-import { ConnectionPoint, PLCNode } from '../models/PLCNode';
+import {Subject} from 'rxjs';
+import {FbdInOutVariable} from '../models/fbdObjects/fbdInOutVariable';
+import {FbdInVariable} from '../models/fbdObjects/fbdInVariable';
+import {FbdOutVariable} from '../models/fbdObjects/fbdOutVariable';
+import {ProjectService} from '../services/project.service';
+import {ActivatedRoute} from '@angular/router';
+import {FbdJump} from '../models/fbdObjects/fbdJump';
+import {FbdLabel} from '../models/fbdObjects/fbdLabel';
+import {FbdReturn} from '../models/fbdObjects/fbdReturn';
+import {FbdBlock} from '../models/fbdObjects/fbdBlock';
+import {LdContact} from '../models/ldObjects/ldContact';
+import {LdCoil} from '../models/ldObjects/ldCoil';
+import {LdLeftPowerRail} from '../models/ldObjects/ldLeftPowerRail';
+import {LdRightPowerRail} from '../models/ldObjects/ldRightPowerRail';
+import {CommonActionBlock} from '../models/commonObjects/commonActionBlock';
+import {CommonComment} from '../models/commonObjects/commonComment';
+import {CommonConnector} from '../models/commonObjects/commonConnector';
+import {CommonContinuation} from '../models/commonObjects/commonContinuation';
+import {CommonError} from '../models/commonObjects/commonError';
+import {CommonVendorElement} from '../models/commonObjects/commonVendorElement';
+import {SfcJumpStep} from '../models/sfcObjects/sfcJumpStep';
+import {SfcMacroStep} from '../models/sfcObjects/sfcMacroStep';
+import {SfcSelectionConvergence} from '../models/sfcObjects/sfcSelectionConvergence';
+import {SfcSelectionDivergence} from '../models/sfcObjects/sfcSelectionDivergence';
+import {SfcSimultaneousConvergence} from '../models/sfcObjects/sfcSimultaneousConvergence';
+import {SfcSimultaneousDivergence} from '../models/sfcObjects/sfcSimultaneousDivergence';
+import {SfcStep} from '../models/sfcObjects/sfcStep';
+import {SfcTransition} from '../models/sfcObjects/sfcTransition';
+import {pipeline} from 'stream';
+import {ConnectionPoint, PLCNode} from '../models/PLCNode';
 
 
 @Component({
@@ -43,6 +43,7 @@ export class GraphComponent implements OnInit {
   constructor(private projectService: ProjectService,
               private route: ActivatedRoute) {
   }
+
   // Importierte Variablen
   inVariableList: FbdInVariable[] = [];
   outVariableList: FbdOutVariable[] = [];
@@ -96,6 +97,7 @@ export class GraphComponent implements OnInit {
   Does: adds an edge between the two nodes and registers the connction id in the pins
         if an edge already exists when registering, the old edge is removed
   */
+
   /* public connect_pins(sourceNodeId, targetNodeId, sourcePin, targetPin): void {
     // get the nodes
     let sourceNode;
@@ -175,6 +177,7 @@ export class GraphComponent implements OnInit {
     });
     this.updateChart();
   }
+
   public change_edge_target(edgeId, event): void {
     const newTarget = event.target.value;
     this.edges.forEach(e => {
@@ -185,19 +188,23 @@ export class GraphComponent implements OnInit {
       }
     });
   }
+
   set_selected_node(node: PLCNode): void {
     this.selectedNode = node;
     console.log(node.connectionPoints);
     this.selectedNodeEdges = this.get_related_edges(node.id);
     this.selectedNodeCons = this.selectedNode.connectionPoints;
-    }
+  }
+
   public get_nodes(): any {
     return this.nodes;
   }
+
   public set_nodes(newNodes: PLCNode[]): void {
     this.nodes = newNodes;
     this.updateChart();
   }
+
   public get_edges(): any {
     return this.edges;
   }
@@ -205,7 +212,6 @@ export class GraphComponent implements OnInit {
   public set_edges(newEdges: Edge[]): void {
     this.edges = newEdges;
   }
-
 
 
   /**
@@ -277,107 +283,107 @@ export class GraphComponent implements OnInit {
     this.update$.next(true);
   }
 
-      // TODO:
-    /**
-     * 1) connect two points: call on a function that takes ids of two connectionPoints and connect them
-     *        - when connecting. check if the edgeId == null and remove edge if not
-     *        - after connecting. write the newe edgeId and change the source/target in the connectionPoints
-     */
-    /**
-     * connect_points
-     */
-    public connect_points(sourcePoint, targetPoint): void{
-      // check if input is valid
-      if (sourcePoint === '' || targetPoint === ''){
-        return;
-      }
-      // sometimes an event is passed as one of the points
-      // check which one is an event and get it's value
-      if (sourcePoint.constructor.name === 'Event'){
-        sourcePoint = sourcePoint.target.value;
-      }
-
-      if (targetPoint.constructor.name === 'Event'){
-        targetPoint = targetPoint.target.value;
-      }
-
-      if (targetPoint.type === sourcePoint.type){
-        alert('Can\'t Connect two pins with the same type');
-        return;
-      }
-
-      if (sourcePoint.sourceId === targetPoint.targetId){
-        // In case of connecting the same node with itself
-      }
-
-      // check if points have an exisiting connection
-      const oldTarget: ConnectionPoint = null;
-      const oldSource: ConnectionPoint = null;
-      if (sourcePoint.edgeId != null){
-        const oldEdgeId = sourcePoint.edgeId;
-        // find old connection point
-        for (const con of this.allConnectionPointIns) {
-          if (con.edgeId === oldEdgeId){
-            // remove informations
-            con.edgeId = null;
-            con.sourceId = null;
-            con.sourcePoint = null;
-            con.sourceName = null;
-            this.remove_edge(oldEdgeId);
-          }
-        }
-        // remove edge
-
-      }
-      if (targetPoint.edgeId != null){
-        const oldEdgeId = targetPoint.edgeId;
-        // find old connection point
-        for (const con of this.allConnectionPointOuts) {
-          if (con.edgeId === oldEdgeId){
-            // remove informations
-            con.edgeId = null;
-            con.targetId = null;
-            con.targetPoint = null;
-            con.targetName = null;
-            this.remove_edge(oldEdgeId);
-          }
-        }
-        // remove edge
-      }
-      console.log(this.allConnectionPoints);
-
-      // -- points doesn't have exisiting connections -- \\
-
-      // get the actual connection points from allConncetionPoints
-      let mySource: ConnectionPoint = null;
-      let myTarget: ConnectionPoint = null;
-      for (const source of this.allConnectionPointOuts) {
-        if (source.sourceId === sourcePoint.sourceId && source.sourcePoint === sourcePoint.sourcePoint){
-          mySource = source;
-          break;
-        }
-      }
-      for (const target of this.allConnectionPointIns) {
-        if (target.targetId === targetPoint.targetId && target.targetPoint === targetPoint.targetPoint){
-          myTarget = target;
-          break;
-        }
-      }
-      // get informations
-      const targetId = targetPoint.targetId;
-      const sourceId = sourcePoint.sourceId;
-      // fill in informations
-      myTarget.sourcePoint = sourcePoint.sourcePoint;
-      mySource.targetPoint = targetPoint.targetPoint;
-      myTarget.sourceId = sourceId;
-      mySource.targetId = targetId;
-      // add edge
-      const newEdgeId = this.add_edge(sourceId, targetId);
-      // set new id
-      myTarget.edgeId = newEdgeId;
-      mySource.edgeId = newEdgeId;
-      this.updateChart();
+  // TODO:
+  /**
+   * 1) connect two points: call on a function that takes ids of two connectionPoints and connect them
+   *        - when connecting. check if the edgeId == null and remove edge if not
+   *        - after connecting. write the newe edgeId and change the source/target in the connectionPoints
+   */
+  /**
+   * connect_points
+   */
+  public connect_points(sourcePoint, targetPoint): void {
+    // check if input is valid
+    if (sourcePoint === '' || targetPoint === '') {
+      return;
     }
+    // sometimes an event is passed as one of the points
+    // check which one is an event and get it's value
+    if (sourcePoint.constructor.name === 'Event') {
+      sourcePoint = sourcePoint.target.value;
+    }
+
+    if (targetPoint.constructor.name === 'Event') {
+      targetPoint = targetPoint.target.value;
+    }
+
+    if (targetPoint.type === sourcePoint.type) {
+      alert('Can\'t Connect two pins with the same type');
+      return;
+    }
+
+    if (sourcePoint.sourceId === targetPoint.targetId) {
+      // In case of connecting the same node with itself
+    }
+
+    // check if points have an exisiting connection
+    const oldTarget: ConnectionPoint = null;
+    const oldSource: ConnectionPoint = null;
+    if (sourcePoint.edgeId != null) {
+      const oldEdgeId = sourcePoint.edgeId;
+      // find old connection point
+      for (const con of this.allConnectionPointIns) {
+        if (con.edgeId === oldEdgeId) {
+          // remove informations
+          con.edgeId = null;
+          con.sourceId = null;
+          con.sourcePoint = null;
+          con.sourceName = null;
+          this.remove_edge(oldEdgeId);
+        }
+      }
+      // remove edge
+
+    }
+    if (targetPoint.edgeId != null) {
+      const oldEdgeId = targetPoint.edgeId;
+      // find old connection point
+      for (const con of this.allConnectionPointOuts) {
+        if (con.edgeId === oldEdgeId) {
+          // remove informations
+          con.edgeId = null;
+          con.targetId = null;
+          con.targetPoint = null;
+          con.targetName = null;
+          this.remove_edge(oldEdgeId);
+        }
+      }
+      // remove edge
+    }
+    console.log(this.allConnectionPoints);
+
+    // -- points doesn't have exisiting connections -- \\
+
+    // get the actual connection points from allConncetionPoints
+    let mySource: ConnectionPoint = null;
+    let myTarget: ConnectionPoint = null;
+    for (const source of this.allConnectionPointOuts) {
+      if (source.sourceId === sourcePoint.sourceId && source.sourcePoint === sourcePoint.sourcePoint) {
+        mySource = source;
+        break;
+      }
+    }
+    for (const target of this.allConnectionPointIns) {
+      if (target.targetId === targetPoint.targetId && target.targetPoint === targetPoint.targetPoint) {
+        myTarget = target;
+        break;
+      }
+    }
+    // get informations
+    const targetId = targetPoint.targetId;
+    const sourceId = sourcePoint.sourceId;
+    // fill in informations
+    myTarget.sourcePoint = sourcePoint.sourcePoint;
+    mySource.targetPoint = targetPoint.targetPoint;
+    myTarget.sourceId = sourceId;
+    mySource.targetId = targetId;
+    // add edge
+    const newEdgeId = this.add_edge(sourceId, targetId);
+    // set new id
+    myTarget.edgeId = newEdgeId;
+    mySource.edgeId = newEdgeId;
+    this.updateChart();
+  }
 
 
   /**
@@ -394,135 +400,109 @@ export class GraphComponent implements OnInit {
         const fbdInVariable = new FbdInVariable(inVariable);
         this.inVariableList.push(fbdInVariable);
         this.nodes.push(fbdInVariable.node);
-
       }
-
       for (const outVariable of pou.getElementsByTagName('outVariable')) {
         const fbdOutVariable = new FbdOutVariable(outVariable);
         this.outVariableList.push(fbdOutVariable);
         this.nodes.push(fbdOutVariable.node);
-
       }
       for (const inOutVariable of pou.getElementsByTagName('inOutVariable')) {
         const fbdInOutVariable = new FbdInOutVariable(inOutVariable);
         this.inOutVariableList.push(fbdInOutVariable);
         this.nodes.push(fbdInOutVariable.node);
-
       }
-      {/*
-       for (const jump of pou.getElementsByTagName('jump')) {
-        const fbdJump = new FbdJump(jump);
-        this.jumpList.push(fbdJump);
-        this.nodes.push(fbdJump.node);
-        fbdJump.edges.forEach(i => {
-          this.add_edge(fbdJump.localId, i);
-        });
+      {
+        for (const jump of pou.getElementsByTagName('jump')) {
+          const fbdJump = new FbdJump(jump);
+          this.jumpList.push(fbdJump);
+          this.nodes.push(fbdJump.node);
+        }
+        for (const label of pou.getElementsByTagName('label')) {
+          const fbdLabel = new FbdLabel(label);
+          this.labelList.push(fbdLabel);
+          this.nodes.push(fbdLabel.node);
+        }
+        for (const returnItem of pou.getElementsByTagName('return')) {
+          const fbdReturn = new FbdReturn(returnItem);
+          this.returnList.push(fbdReturn);
+          this.nodes.push(fbdReturn.node);
+        }
+        for (const block of pou.getElementsByTagName('block')) {
+          const fbdBlock = new FbdBlock(block);
+          this.blockList.push(fbdBlock);
+          this.nodes.push(fbdBlock.node);
+        }
+        for (const contact of pou.getElementsByTagName('contact')) {
+          const ldContact = new LdContact(contact);
+          this.contactList.push(ldContact);
+          this.nodes.push(ldContact.node);
+        }
+        for (const leftPowerRail of pou.getElementsByTagName('leftPowerRail')) {
+          const ldLPR = new LdLeftPowerRail(leftPowerRail);
+          this.leftPowerRailList.push(ldLPR);
+          this.nodes.push(ldLPR.node);
+        }
+        for (const rightPowerRail of pou.getElementsByTagName('rightPowerRail')) {
+          const ldRPR = new LdRightPowerRail(rightPowerRail);
+          this.rightPowerRailList.push(ldRPR);
+          this.nodes.push(ldRPR.node);
+        }
+        for (const coil of pou.getElementsByTagName('coil')) {
+          const ldCoil = new LdCoil(coil);
+          this.coilList.push(ldCoil);
+          this.nodes.push(ldCoil.node);
+        }
+        /*
+        for (const actionBlock of pou.getElementsByTagName('actionBlock')) {
+          this.actionBlockList.push(new CommonActionBlock(actionBlock));
+        }
+        for (const comment of pou.getElementsByTagName('comment')) {
+          this.commentList.push(new CommonComment(comment));
+        }
+        for (const connector of pou.getElementsByTagName('connector')) {
+          this.connectorList.push(new CommonConnector(connector));
+        }
+        for (const continuation of pou.getElementsByTagName('continuation')) {
+          this.continuationList.push(new CommonContinuation(continuation));
+        }
+        for (const error of pou.getElementsByTagName('error')) {
+          this.errorList.push(new CommonError(error));
+        }
+        for (const vendorElement of pou.getElementsByTagName('vendorElement')) {
+          this.vendorElementList.push(new CommonVendorElement(vendorElement));
+        }
+        for (const jumpStep of pou.getElementsByTagName('jumpStep')) {
+          this.jumpStepList.push(new SfcJumpStep(jumpStep));
+        }
+        for (const macroStep of pou.getElementsByTagName('macroStep')) {
+          this.macroStepList.push(new SfcMacroStep(macroStep));
+        }
+        for (const selectionConvergence of pou.getElementsByTagName('selectionConvergence')) {
+          this.selConvergenceList.push(new SfcSelectionConvergence(selectionConvergence));
+        }
+        for (const selectionDivergence of pou.getElementsByTagName('selectionDivergence')) {
+          this.selDivergenceList.push(new SfcSelectionDivergence(selectionDivergence));
+        }
+        for (const simultaneousConvergence of pou.getElementsByTagName('simultaneousConvergence')) {
+          this.simConvergenceList.push(new SfcSimultaneousConvergence(simultaneousConvergence));
+        }
+        for (const simultaneousDivergence of pou.getElementsByTagName('simultaneousDivergence')) {
+          this.simDivergenceList.push(new SfcSimultaneousDivergence(simultaneousDivergence));
+        }
+        for (const step of pou.getElementsByTagName('step')) {
+          this.stepList.push(new SfcStep(step));
+        }
+        for (const transition of pou.getElementsByTagName('transition')) {
+          this.transitionList.push(new SfcTransition(transition));
+        }
+        */
       }
-      for (const label of pou.getElementsByTagName('label')) {
-        const fbdLabel = new FbdLabel(label);
-        this.labelList.push(fbdLabel);
-        this.nodes.push(fbdLabel.node);
-        fbdLabel.edges.forEach(i => {
-          this.add_edge(fbdLabel.localId, i);
-        });
-      }
-      for (const returnItem of pou.getElementsByTagName('return')) {
-        const fbdReturn = new FbdReturn(returnItem);
-        this.returnList.push(fbdReturn);
-        this.nodes.push(fbdReturn.node);
-        fbdReturn.edges.forEach(i => {
-          this.add_edge(fbdReturn.localId, i);
-        });
-      }
-      for (const block of pou.getElementsByTagName('block')) {
-        const fbdBlock = new FbdBlock(block);
-        this.blockList.push(fbdBlock);
-        this.nodes.push(fbdBlock.node);
-        fbdBlock.edges.forEach(i => {
-          this.add_edge(fbdBlock.localId, i);
-        });
-      }
-      for (const contact of pou.getElementsByTagName('contact')) {
-        const ldContact = new LdContact(contact);
-        this.contactList.push(ldContact);
-        this.nodes.push(ldContact.node);
-        ldContact.edges.forEach(i => {
-          this.add_edge(ldContact.localId, i);
-        });
-      }
-      for (const leftPowerRail of pou.getElementsByTagName('leftPowerRail')) {
-        const ldLPR = new LdLeftPowerRail(leftPowerRail);
-        this.leftPowerRailList.push(ldLPR);
-        this.nodes.push(ldLPR.node);
-        ldLPR.edges.forEach(i => {
-          this.add_edge(ldLPR.localId, i);
-        });
-      }
-      for (const rightPowerRail of pou.getElementsByTagName('rightPowerRail')) {
-        const ldRPR = new LdRightPowerRail(rightPowerRail);
-        this.rightPowerRailList.push(ldRPR);
-        this.nodes.push(ldRPR.node);
-        ldRPR.edges.forEach(i => {
-          this.add_edge(ldRPR.localId, i);
-        });
-      }
-      for (const coil of pou.getElementsByTagName('coil')) {
-        const ldCoil = new LdCoil(coil);
-        this.coilList.push(ldCoil);
-        this.nodes.push(ldCoil.node);
-        ldCoil.edges.forEach(i => {
-          this.add_edge(ldCoil.localId, i);
-        });
-      }
-      for (const actionBlock of pou.getElementsByTagName('actionBlock')) {
-        this.actionBlockList.push(new CommonActionBlock(actionBlock));
-      }
-      for (const comment of pou.getElementsByTagName('comment')) {
-        this.commentList.push(new CommonComment(comment));
-      }
-      for (const connector of pou.getElementsByTagName('connector')) {
-        this.connectorList.push(new CommonConnector(connector));
-      }
-      for (const continuation of pou.getElementsByTagName('continuation')) {
-        this.continuationList.push(new CommonContinuation(continuation));
-      }
-      for (const error of pou.getElementsByTagName('error')) {
-        this.errorList.push(new CommonError(error));
-      }
-      for (const vendorElement of pou.getElementsByTagName('vendorElement')) {
-        this.vendorElementList.push(new CommonVendorElement(vendorElement));
-      }
-      for (const jumpStep of pou.getElementsByTagName('jumpStep')) {
-        this.jumpStepList.push(new SfcJumpStep(jumpStep));
-      }
-      for (const macroStep of pou.getElementsByTagName('macroStep')) {
-        this.macroStepList.push(new SfcMacroStep(macroStep));
-      }
-      for (const selectionConvergence of pou.getElementsByTagName('selectionConvergence')) {
-        this.selConvergenceList.push(new SfcSelectionConvergence(selectionConvergence));
-      }
-      for (const selectionDivergence of pou.getElementsByTagName('selectionDivergence')) {
-        this.selDivergenceList.push(new SfcSelectionDivergence(selectionDivergence));
-      }
-      for (const simultaneousConvergence of pou.getElementsByTagName('simultaneousConvergence')) {
-        this.simConvergenceList.push(new SfcSimultaneousConvergence(simultaneousConvergence));
-      }
-      for (const simultaneousDivergence of pou.getElementsByTagName('simultaneousDivergence')) {
-        this.simDivergenceList.push(new SfcSimultaneousDivergence(simultaneousDivergence));
-      }
-      for (const step of pou.getElementsByTagName('step')) {
-        this.stepList.push(new SfcStep(step));
-      }
-      for (const transition of pou.getElementsByTagName('transition')) {
-        this.transitionList.push(new SfcTransition(transition));
-      }
-      */}
     }
 
     this.edgesIdCounter = 0;
     for (const node of this.nodes) {
       for (const con of node.connectionPoints) {
-        if (con.type === 'OUT'){
+        if (con.type === 'OUT') {
           this.allConnectionPointOuts.push(con);
         } else {
           this.allConnectionPointIns.push(con);
@@ -534,11 +514,11 @@ export class GraphComponent implements OnInit {
     // update connections
     for (const conIn of this.allConnectionPointIns) {
       // if there is a connection
-      if (conIn.sourceId != null){
+      if (conIn.sourceId != null) {
         // get the connectionpointout
         let conOut: ConnectionPoint = null;
         for (const conOutRemember of this.allConnectionPointOuts) {
-          if (conOutRemember.sourceId === conIn.sourceId){
+          if (conOutRemember.sourceId === conIn.sourceId) {
             conOut = conOutRemember;
             break;
           }

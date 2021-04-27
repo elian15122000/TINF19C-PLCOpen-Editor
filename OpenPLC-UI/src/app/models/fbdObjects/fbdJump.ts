@@ -48,11 +48,11 @@ export class FbdJump {
     this.node.label = this.label;
     this.node.type = 'jump';
     const newConnectionPointIn: ConnectionPoint = {
-      type: "IN",
+      type: 'IN',
       sourceId: this.connectionPointIn.refLocalID,
       targetId: this.localId,
       edgeId: null
-    }
+    };
     this.node.connectionPoints.push(newConnectionPointIn);
   }
 

@@ -53,14 +53,14 @@ export class FbdOutVariable {
       this.node.type = 'var';
 
       const newConnectionPoint: ConnectionPoint = {
-        type: "IN",
-        targetPoint: "IN",
+        type: 'IN',
+        targetPoint: 'IN',
         sourceId: this.connectionPointIn.refLocalID,
         targetId: this.localId,
         targetName: this.node.label,
         edgeId: null
-      }
-      this.node.connectionPoints.push(newConnectionPoint)
+      };
+      this.node.connectionPoints.push(newConnectionPoint);
     }
   }
 

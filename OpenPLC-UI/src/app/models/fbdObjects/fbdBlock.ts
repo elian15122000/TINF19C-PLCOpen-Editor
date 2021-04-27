@@ -1,5 +1,5 @@
 import {Node} from '@swimlane/ngx-graph';
-import { PLCNode } from '../PLCNode';
+import {ConnectionPoint, PLCNode} from '../PLCNode';
 
 export class FbdBlock {
   public xml: any;
@@ -60,11 +60,34 @@ export class FbdBlock {
     this.node.id = this.localId;
     this.node.type = 'fbs';
     this.node.label = this.typeName;
+
+    for (const variable of this.inputVariables){
+      const newConnectionPointIn: ConnectionPoint = {
+        type: 'IN',
+        targetPoint: variable.formalParameter,
+        targetName: this.node.label,
+        sourceId: variable.connectionPointIn.refLocalID,
+        targetId: this.localId,
+        edgeId: null
+      };
+      this.node.connectionPoints.push(newConnectionPointIn);
+    }
+    for (const variable of this.outputVariables){
+      const newConnectionPointOut: ConnectionPoint = {
+        type: 'OUT',
+        targetPoint: 'OUT',
+        targetName: this.node.label,
+        sourceId: this.localId,
+        targetId: variable.connectionPointOut.refLocalID,
+        edgeId: null
+      };
+      this.node.connectionPoints.push(newConnectionPointOut);
+    }
   }
 
   readInputVariable(xmlVariable: any): any {
     const variable = {
-      formalParameter: '',
+      formalParameter: 'IN',
       negated: false,
       connectionPointIn: {x: 0, y: 0, refLocalID: null}
     };
@@ -92,11 +115,11 @@ export class FbdBlock {
 
   readOutputVariable(xmlVariable: any): any {
     const variable = {
-      formalParameter: '',
+      formalParameter: 'OUT',
       negated: false,
       connectionPointOut: {x: 0, y: 0, refLocalID: null}
     };
-    if (xmlVariable.getAttribute('formalParameter') !== undefined){
+    if (xmlVariable.getAttribute('formalParameter') !== null){
       variable.formalParameter = xmlVariable.getAttribute('formalParameter');
     }
     if (xmlVariable.getAttribute('negated') === true){

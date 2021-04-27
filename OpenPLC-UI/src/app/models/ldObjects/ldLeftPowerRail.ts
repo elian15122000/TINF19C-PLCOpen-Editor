@@ -1,4 +1,4 @@
-import { ConnectionPoint, PLCNode } from "../PLCNode";
+import { ConnectionPoint, PLCNode } from '../PLCNode';
 
 
 export class LdLeftPowerRail {
@@ -44,11 +44,11 @@ export class LdLeftPowerRail {
     this.node.id = this.localId;
     this.node.type = 'LPR';
     const newConnectionPointOut: ConnectionPoint = {
-      type: "OUT",
+      type: 'OUT',
       sourceId: this.localId,
       targetId: this.connectionPointOut.refLocalID,
       edgeId: null,
-    }
+    };
     this.node.connectionPoints.push(newConnectionPointOut);
 
   }

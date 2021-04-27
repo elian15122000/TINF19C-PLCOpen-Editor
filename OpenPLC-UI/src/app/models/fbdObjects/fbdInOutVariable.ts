@@ -1,4 +1,3 @@
-import { Node } from '@swimlane/ngx-graph';
 import { ConnectionPoint, PLCNode } from '../PLCNode';
 
 export class FbdInOutVariable {
