@@ -55,6 +55,7 @@ The Application runs is written in Angular 8 and runs solely as a front end appl
 <br>
 
 **Why are we using a weird template for this project?**<br>
-Its required of use to use this template.<br>
+Its required of us to use this template.<br>
+However, you only need to navigate to OpenPLC-UI to see our source-code. Everything outside of the that folder is just for Project management purposes.
 <br>
 <br>
