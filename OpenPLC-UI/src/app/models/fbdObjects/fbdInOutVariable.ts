@@ -70,23 +70,23 @@ export class FbdInOutVariable {
       this.node.type = 'var';
 
       const newConnectionPointOut: ConnectionPoint = {
-        type: "OUT",
-        sourcePoint: "OUT",
+        type: 'OUT',
+        sourcePoint: 'OUT',
         sourceName: this.node.label,
         sourceId: this.localId,
         targetId: this.connectionPointOut.refLocalID,
         edgeId: null,
-      }
+      };
       this.node.connectionPoints.push(newConnectionPointOut);
 
       const newConnectionPointIn: ConnectionPoint = {
-        type: "IN",
-        targetPoint: "IN",
+        type: 'IN',
+        targetPoint: 'IN',
         targetName: this.node.label,
         sourceId: this.connectionPointIn.refLocalID,
         targetId: this.localId,
         edgeId: null
-      }
+      };
       this.node.connectionPoints.push(newConnectionPointIn);
     }
 

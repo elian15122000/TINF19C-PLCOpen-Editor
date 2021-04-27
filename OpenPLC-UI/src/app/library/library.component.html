@@ -3,10 +3,10 @@
   <h3>Library</h3>
 
   <select>
-    <option>Standardfunktionsblöcke</option>
+    <option (click)="loadFunctionBlocks('Standard_Function_Blocks.xml')">Standardfunktionsblöcke</option>
     <option>Zusätzliche Bausteine</option>
     <option>Typumwandlung</option>
-    <option>Numerisch</option>
+    <option (click)="loadFunctionBlocks('Additional_Function_Blocks.xml')">Numerisch</option>
     <option>Arithmetik</option>
     <option>Zeit</option>
     <option>Bit-Shift</option>
@@ -19,7 +19,23 @@
   </select>
 
   <div class="libraryList">
-
+    <div *ngFor="let fb of functionBlocks">
+      <table>
+        <tr>
+          <td>
+            <svg style="float:left; width: 120px; height: 120px">
+              <g>
+                <rect x="0" y="0" width="100" height="100" fill="white" stroke="black"></rect>
+                <text x="5" y="50" font-family="Verdana" font-size="15" fill="black">{{fb.getAttribute('name')}}</text>
+              </g>
+            </svg>
+          </td>
+          <td>
+            <button class="btn btn-outline-primary">Add to the editor</button>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
 </div>
 

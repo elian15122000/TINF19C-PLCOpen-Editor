@@ -41,7 +41,7 @@ import { ConnectionPoint, PLCNode } from '../models/PLCNode';
 export class GraphComponent implements OnInit {
 
   constructor(private projectService: ProjectService,
-    private route: ActivatedRoute) {
+              private route: ActivatedRoute) {
   }
   // Importierte Variablen
   inVariableList: FbdInVariable[] = [];
@@ -83,7 +83,7 @@ export class GraphComponent implements OnInit {
   allConnectionPointIns: ConnectionPoint[] = [];
   allConnectionPointOuts: ConnectionPoint[] = [];
 
-  
+
   update$: Subject<any> = new Subject();
 
   /*
@@ -170,7 +170,7 @@ export class GraphComponent implements OnInit {
     this.edges.forEach(e => {
       if (e.id === edgeId) {
         this.remove_edge(edgeId);
-        this.add_edge(edgeId, newSource)
+        this.add_edge(edgeId, newSource);
       }
     });
     this.updateChart();
@@ -187,9 +187,9 @@ export class GraphComponent implements OnInit {
   }
   set_selected_node(node: PLCNode): void {
     this.selectedNode = node;
-    console.log(node.connectionPoints)
+    console.log(node.connectionPoints);
     this.selectedNodeEdges = this.get_related_edges(node.id);
-    this.selectedNodeCons = this.selectedNode.connectionPoints
+    this.selectedNodeCons = this.selectedNode.connectionPoints;
     }
   public get_nodes(): any {
     return this.nodes;
@@ -244,7 +244,7 @@ export class GraphComponent implements OnInit {
     this.edgesIdCounter++;
     this.edges.push(newEdge);
     this.updateChart();
-    return edgeId
+    return edgeId;
   }
 
   /**
@@ -277,7 +277,7 @@ export class GraphComponent implements OnInit {
     this.update$.next(true);
   }
 
-      //TODO:
+      // TODO:
     /**
      * 1) connect two points: call on a function that takes ids of two connectionPoints and connect them
      *        - when connecting. check if the edgeId == null and remove edge if not
@@ -286,71 +286,71 @@ export class GraphComponent implements OnInit {
     /**
      * connect_points
      */
-    public connect_points(sourcePoint, targetPoint) {
-      //check if input is valid
-      if(sourcePoint === "" || targetPoint === ""){
-        return
+    public connect_points(sourcePoint, targetPoint): void{
+      // check if input is valid
+      if (sourcePoint === '' || targetPoint === ''){
+        return;
       }
-      //sometimes an event is passed as one of the points
-      //check which one is an event and get it's value
-      if(sourcePoint.constructor.name === "Event"){
+      // sometimes an event is passed as one of the points
+      // check which one is an event and get it's value
+      if (sourcePoint.constructor.name === 'Event'){
         sourcePoint = sourcePoint.target.value;
       }
 
-      if(targetPoint.constructor.name === "Event"){
+      if (targetPoint.constructor.name === 'Event'){
         targetPoint = targetPoint.target.value;
       }
 
-      if(targetPoint.type === sourcePoint.type){
-        alert("Can't Connect two pins with the same type");
+      if (targetPoint.type === sourcePoint.type){
+        alert('Can\'t Connect two pins with the same type');
         return;
       }
 
-      if(sourcePoint.sourceId === targetPoint.targetId){
+      if (sourcePoint.sourceId === targetPoint.targetId){
         // In case of connecting the same node with itself
       }
 
       // check if points have an exisiting connection
-      var oldTarget : ConnectionPoint = null
-      var oldSource : ConnectionPoint = null
-      if(sourcePoint.edgeId != null){
-        var oldEdgeId = sourcePoint.edgeId;
+      const oldTarget: ConnectionPoint = null;
+      const oldSource: ConnectionPoint = null;
+      if (sourcePoint.edgeId != null){
+        const oldEdgeId = sourcePoint.edgeId;
         // find old connection point
         for (const con of this.allConnectionPointIns) {
-          if (con.edgeId == oldEdgeId){
+          if (con.edgeId === oldEdgeId){
             // remove informations
             con.edgeId = null;
             con.sourceId = null;
             con.sourcePoint = null;
             con.sourceName = null;
-            this.remove_edge(oldEdgeId)
+            this.remove_edge(oldEdgeId);
           }
         }
         // remove edge
-        
+
       }
-      if(targetPoint.edgeId != null){
-        var oldEdgeId = targetPoint.edgeId;
+      if (targetPoint.edgeId != null){
+        const oldEdgeId = targetPoint.edgeId;
         // find old connection point
         for (const con of this.allConnectionPointOuts) {
-          if (con.edgeId == oldEdgeId){
+          if (con.edgeId === oldEdgeId){
             // remove informations
             con.edgeId = null;
             con.targetId = null;
             con.targetPoint = null;
             con.targetName = null;
-            this.remove_edge(oldEdgeId)
+            this.remove_edge(oldEdgeId);
           }
         }
         // remove edge
       }
-      console.log(this.allConnectionPoints)
+      console.log(this.allConnectionPoints);
 
       // -- points doesn't have exisiting connections -- \\
 
       // get the actual connection points from allConncetionPoints
-      var mySource : ConnectionPoint = null;
-      var myTarget : ConnectionPoint = null;
+      let mySource: ConnectionPoint = null;
+      let myTarget: ConnectionPoint = null;
       for (const source of this.allConnectionPointOuts) {
         if (source.sourceId === sourcePoint.sourceId && source.sourcePoint === sourcePoint.sourcePoint){
           mySource = source;
@@ -364,19 +364,19 @@ export class GraphComponent implements OnInit {
         }
       }
       // get informations
-      var targetId = targetPoint.targetId;
-      var sourceId = sourcePoint.sourceId;
+      const targetId = targetPoint.targetId;
+      const sourceId = sourcePoint.sourceId;
       // fill in informations
       myTarget.sourcePoint = sourcePoint.sourcePoint;
       mySource.targetPoint = targetPoint.targetPoint;
       myTarget.sourceId = sourceId;
       mySource.targetId = targetId;
       // add edge
-      var newEdgeId = this.add_edge(sourceId, targetId);
+      const newEdgeId = this.add_edge(sourceId, targetId);
       // set new id
       myTarget.edgeId = newEdgeId;
       mySource.edgeId = newEdgeId;
-      this.updateChart()
+      this.updateChart();
     }
 
 
@@ -515,14 +515,14 @@ export class GraphComponent implements OnInit {
       }
       for (const transition of pou.getElementsByTagName('transition')) {
         this.transitionList.push(new SfcTransition(transition));
-      } 
+      }
       */}
     }
 
     this.edgesIdCounter = 0;
     for (const node of this.nodes) {
       for (const con of node.connectionPoints) {
-        if (con.type === "OUT"){
+        if (con.type === 'OUT'){
           this.allConnectionPointOuts.push(con);
         } else {
           this.allConnectionPointIns.push(con);
@@ -531,34 +531,34 @@ export class GraphComponent implements OnInit {
       }
     }
     this.updateChart();
-    //update connections
-    for (const con_in of this.allConnectionPointIns) {
+    // update connections
+    for (const conIn of this.allConnectionPointIns) {
       // if there is a connection
-      if (con_in.sourceId != null){
+      if (conIn.sourceId != null){
         // get the connectionpointout
-        var con_out : ConnectionPoint = null;
-        for (const con_out_member of this.allConnectionPointOuts) {
-          if (con_out_member.sourceId === con_in.sourceId){
-            con_out = con_out_member
-            break
+        let conOut: ConnectionPoint = null;
+        for (const conOutRemember of this.allConnectionPointOuts) {
+          if (conOutRemember.sourceId === conIn.sourceId){
+            conOut = conOutRemember;
+            break;
           }
         }
         // get informations
-        var targetPoint = con_in.targetPoint
-        var sourcePoint = con_out.sourcePoint
-        var targetId = con_in.targetId
-        var sourceId = con_in.sourceId
-        var targetName = con_in.targetName
-        var sourceName = con_out.sourceName
+        const targetPoint = conIn.targetPoint;
+        const sourcePoint = conOut.sourcePoint;
+        const targetId = conIn.targetId;
+        const sourceId = conIn.sourceId;
+        const targetName = conIn.targetName;
+        const sourceName = conOut.sourceName;
         // fill in informations
-        con_in.sourcePoint = sourcePoint
-        con_out.targetId = targetId
-        con_out.targetPoint = targetPoint
-        con_in.sourceName = sourceName
-        con_out.targetName = targetName
-        var newId = this.add_edge(sourceId, targetId)
-        con_in.edgeId = newId
-        con_out.edgeId = newId
+        conIn.sourcePoint = sourcePoint;
+        conOut.targetId = targetId;
+        conOut.targetPoint = targetPoint;
+        conIn.sourceName = sourceName;
+        conOut.targetName = targetName;
+        const newId = this.add_edge(sourceId, targetId);
+        conIn.edgeId = newId;
+        conOut.edgeId = newId;
       }
     }
 
@@ -597,7 +597,7 @@ export class GraphComponent implements OnInit {
         }
       }
     ];
-    
+
     this.edges = [
       {
         id: 'e_0',

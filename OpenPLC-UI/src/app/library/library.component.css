@@ -6,6 +6,8 @@ li {
   font-style: normal;
   font-size: medium;
 }
+
+
 .library {
   position: absolute;
   box-sizing: border-box;
@@ -17,10 +19,16 @@ li {
   padding-left: 10px;
   margin: 5px;
 }
+
+ */
+
 .libraryList {
-  overflow: auto;
+  overflow-y: scroll;
   box-sizing: border-box;
+  margin-top: 20px;
+  padding: 20px;
   height: 90%;
   border-top: solid black 1px;
 }
- */
+
+
