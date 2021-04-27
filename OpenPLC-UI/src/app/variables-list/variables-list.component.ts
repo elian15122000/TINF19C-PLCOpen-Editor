@@ -20,7 +20,7 @@ export class VariablesListComponent implements OnInit {
   ngOnInit(): void {
     this.pouName = this.route.snapshot.params.pouName;
     const pou = this.projectService.getPou(this.pouName);
-    console.log(pou);
+    //console.log(pou);
     if (pou !== undefined) {
       const list = pou.getElementsByTagName('interface')[0];
       if (list !== undefined){
@@ -43,7 +43,7 @@ export class VariablesListComponent implements OnInit {
           this.variables.push(new Variable(inOutVars, 'inOut'));
         }
 
-        console.log(this.variables);
+        //console.log(this.variables);
       }
     }
   }

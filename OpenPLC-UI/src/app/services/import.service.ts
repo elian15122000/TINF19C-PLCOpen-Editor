@@ -37,15 +37,15 @@ export class ImportService {
       const i = dom.documentElement.getElementsByTagName('pous')[0].childElementCount;
       for (let j = 0; j < i; j++){
         this.projectService.pouItems.push(dom.documentElement.getElementsByTagName('pou')[j]);
-        console.log(this.projectService.pouItems[j]);
+        //console.log(this.projectService.pouItems[j]);
       }
-      console.log(this.xmlFile);
+      //console.log(this.xmlFile);
       this.projectService.headerItems.push(dom.documentElement.getElementsByTagName('fileHeader')[0]);
       this.projectService.headerItems.push(dom.documentElement.getElementsByTagName('contentHeader')[0]);
       this.projectService.instanceItems = dom.documentElement.getElementsByTagName('instances')[0];
-      console.log(this.projectService.headerItems[0]);
-      console.log(this.projectService.headerItems[1]);
-      console.log(this.projectService.instanceItems);
+      //console.log(this.projectService.headerItems[0]);
+      //console.log(this.projectService.headerItems[1]);
+      //console.log(this.projectService.instanceItems);
     } catch (e) {
       console.log('FEHLER BEIM IMPORT');
     }

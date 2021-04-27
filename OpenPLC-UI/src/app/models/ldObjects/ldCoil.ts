@@ -1,4 +1,5 @@
-import {Node} from '@swimlane/ngx-graph';
+import { ConnectionPoint, PLCNode } from "../PLCNode";
+
 
 export class LdCoil {
   public xml: any;
@@ -10,7 +11,7 @@ export class LdCoil {
   public position: { x: number, y: number } = {x: 0, y: 0};
   public connectionPointIn: { x: number, y: number, refLocalID: string} = {x: 0, y: 0, refLocalID: null};
   public connectionPointOut: {x: number, y: number, refLocalID: string} = {x: 0, y: 0, refLocalID: null};
-  public node: Node = {id: null, label: null, type: null, pins: null};
+  public node: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
   public edges: string[] = [];
 
   constructor(xmlCoil: any) {
@@ -64,17 +65,24 @@ export class LdCoil {
     this.node.id = this.localId;
     this.node.label = this.variable;
     this.node.type = 'coil';
-    this.node.pins = {
-      OUT: {type: 'OUT', edge: null},
-      IN: {type: 'IN', edge: null}
-    };
-    if (this.connectionPointOut.refLocalID != null){
-      this.edges.push(this.connectionPointOut.refLocalID);
+
+    const newConnectionPointOut: ConnectionPoint = {
+      type: "OUT",
+      sourceId: this.localId,
+      targetId: this.connectionPointOut.refLocalID,
+      edgeId: null,
     }
-    if (this.connectionPointIn.refLocalID != null){
-      this.edges.push(this.connectionPointIn.refLocalID);
+    this.node.connectionPoints.push(newConnectionPointOut);
+
+    const newConnectionPointIn: ConnectionPoint = {
+      type: "IN",
+      sourceId: this.connectionPointIn.refLocalID,
+      targetId: this.localId,
+      edgeId: null
     }
-  }
+    this.node.connectionPoints.push(newConnectionPointIn);
+
+}
 
   createNewCoil(): void {
     const xmlString = '<coil localId="0" height="20" width="20" negated="false" > \n' +

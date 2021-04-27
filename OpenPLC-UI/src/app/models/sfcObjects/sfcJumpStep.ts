@@ -1,4 +1,5 @@
-import {Node} from '@swimlane/ngx-graph';
+import { ConnectionPoint, PLCNode } from "../PLCNode";
+
 
 export class SfcJumpStep {
   public xml: any;
@@ -6,10 +7,10 @@ export class SfcJumpStep {
   public height = 20;
   public width = 20;
   public targetName = '';
-  public connectionPointIn: {x: number, y: number, refLocalId: string, formalParameter: string} = {x: 0, y: 0, refLocalId: '', formalParameter: ''};
+  public connectionPointIn: {x: number, y: number, refLocalID: string, formalParameter: string} = {x: 0, y: 0, refLocalID: '', formalParameter: ''};
   public position: {x: 0, y: 0};
-  public node: Node = {id: null, label: null, type: null, pins: null};
-
+  public node: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
+  
 constructor(xmlJumpStep: any) {
   if (xmlJumpStep === '') {
     this.createXML();
@@ -36,7 +37,7 @@ constructor(xmlJumpStep: any) {
       }
       if (connectionPointIn.getElementsByTagName('connection')[0] !== undefined) {
         const connection = connectionPointIn.getElementsByTagName('connection')[0];
-        this.connectionPointIn.refLocalId = connection.getAttribute('refLocalId');
+        this.connectionPointIn.refLocalID = connection.getAttribute('refLocalId');
         this.connectionPointIn.formalParameter = connection.getAttribute('formalParameter');
       }
     }
@@ -47,12 +48,14 @@ constructor(xmlJumpStep: any) {
   }
   this.node.id = this.localId;
   this.node.type = 'default';
-  this.node.pins = {
-    IN: {type: 'IN', refId: null, edge: null}
-  };
-  if (this.connectionPointIn.refLocalId != null){
-    this.node.pins.IN.refId = this.connectionPointIn.refLocalId;
+  const newConnectionPointIn: ConnectionPoint = {
+    type: "IN",
+    sourceId: this.connectionPointIn.refLocalID,
+    targetId: this.localId,
+    edgeId: null
   }
+  this.node.connectionPoints.push(newConnectionPointIn);
+
 }
 
   createXML(): void{

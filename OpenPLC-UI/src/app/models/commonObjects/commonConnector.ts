@@ -1,4 +1,5 @@
 import {Node} from '@swimlane/ngx-graph';
+import { ConnectionPoint, PLCNode } from '../PLCNode';
 
 export class CommonConnector{
   public xml: any;
@@ -8,7 +9,7 @@ export class CommonConnector{
   public name = '';
   public connectionPointIn: {x: 0, y: 0, refLocalId: '', formalParameter: ''};
   public position: {x: 0, y: 0};
-  public node: Node = {id: null, label: null, type: null, pins: null};
+  public node: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
 
   constructor(xmlCommonConnector: any) {
     if (xmlCommonConnector === ''){
@@ -48,12 +49,13 @@ export class CommonConnector{
     this.node.id = this.localId;
     this.node.label = this.name;
     this.node.type = 'default';
-    this.node.pins = {
-      IN: {type: 'IN', refId: null, edge: null}
-    };
-    if (this.connectionPointIn.refLocalId != null){
-      this.node.pins.IN.refId = this.connectionPointIn.refLocalId;
+    const newConnectionPointIn: ConnectionPoint = {
+      type: "IN",
+      sourceId: this.connectionPointIn.refLocalId,
+      targetId: this.localId,
+      edgeId: null
     }
+    this.node.connectionPoints.push(newConnectionPointIn);
   }
   createXML(): void{
     const xmlString = '<connector localId="0" height="50" width="30" name=""  >\n' +

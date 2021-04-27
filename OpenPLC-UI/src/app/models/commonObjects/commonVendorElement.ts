@@ -1,4 +1,5 @@
 import {Node} from '@swimlane/ngx-graph';
+import { PLCNode } from '../PLCNode';
 
 export class CommonVendorElement{
   public xml: any;
@@ -9,7 +10,7 @@ export class CommonVendorElement{
   public inputVariables: any[] = [];
   public inOutVariables: any[] = [];
   public outputVariables: any[] = [];
-  public node: Node = {id: null, label: null, type: null, pins: null};
+  public node: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
 
   constructor(xmlCommonVendorElement: any) {
     this.xml = xmlCommonVendorElement;

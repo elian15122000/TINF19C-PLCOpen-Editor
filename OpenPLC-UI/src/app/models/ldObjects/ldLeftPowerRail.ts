@@ -1,4 +1,5 @@
-import {Node} from '@swimlane/ngx-graph';
+import { ConnectionPoint, PLCNode } from "../PLCNode";
+
 
 export class LdLeftPowerRail {
   public xml: any;
@@ -7,7 +8,7 @@ export class LdLeftPowerRail {
   public width = 20;
   public position: { x: number, y: number } = {x: 0, y: 0};
   public connectionPointOut: {x: number, y: number, refLocalID: string} = {x: 0, y: 0, refLocalID: null};
-  public node: Node = {id: null, label: null, type: null, pins: null};
+  public node: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
   public edges: string[] = [];
 
   constructor(xmlLeftPowerRail: any) {
@@ -42,12 +43,14 @@ export class LdLeftPowerRail {
     }
     this.node.id = this.localId;
     this.node.type = 'LPR';
-    this.node.pins = {
-      OUT: {type: 'OUT', edge: null},
-    };
-    if (this.connectionPointOut.refLocalID != null){
-      this.edges.push(this.connectionPointOut.refLocalID);
+    const newConnectionPointOut: ConnectionPoint = {
+      type: "OUT",
+      sourceId: this.localId,
+      targetId: this.connectionPointOut.refLocalID,
+      edgeId: null,
     }
+    this.node.connectionPoints.push(newConnectionPointOut);
+
   }
 
   createNewLeftPowerRail(): void {
