@@ -17,6 +17,25 @@ Our team members are:<br>
 The goal of this project is to develop a web version of the [OpenPLC-Editor](https://www.openplcproject.com/plcopen-editor/) that supports the Sequential Function Chart (SFC) and Function Block Diagram (FBD) languages.
 It is supposed to be an easy tool to create PLC programs without needing to install the software.
 
+## How to run
+**Installing NodeJs**<br>
+In order to install Angular you need npm, which comes with NodeJs.
+visit this [link](https://nodejs.org/en/download/) to download and install NodeJs
+
+**Installing Angular**<br>
+Now go to your terminal and install angular by entering the following:
+npm install -g @angular/cli
+
+**Installing dependacies**<br>
+Navigate in the terminal into OpenPLC-UI in the terminal and enter
+npm i
+this will install all the packages needed for the project
+
+**Testing the project**<br>
+If all the dependancies are installed just navigate to OpenPLC-UI in the terminal and enter
+ng serve
+This will lunch a development serve on localhost://4200 open that on your browser and you should be good to go
+
 ## FAQ <br>
 **What is PLC?**<br>
 PLC stands for Programable logic controllers.<br>
@@ -34,6 +53,9 @@ You can find more information about the project by visiting the wiki and reading
 The Application runs is written in Angular 8 and runs solely as a front end application. There is no backedend envolved<br>
 <br>
 <br>
-**Do we have an icon yet?**<br>
-nope, but we will soon. :D<br>
 
+**Why are we using a weird template for this project?**<br>
+Its required of us to use this template.<br>
+However, you only need to navigate to OpenPLC-UI to see our source-code. Everything outside of the that folder is just for Project management purposes.
+<br>
+<br>

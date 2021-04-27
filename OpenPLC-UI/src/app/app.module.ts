@@ -15,6 +15,7 @@ import {NgxGraphModule} from '@swimlane/ngx-graph';
 import { NavigationComponent } from './navigation/navigation.component';
 import { FooterComponent } from './footer/footer.component';
 import { HttpClientModule} from '@angular/common/http';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { HttpClientModule} from '@angular/common/http';
     GraphComponent,
     NavigationComponent,
     FooterComponent,
+    AboutComponent,
   ],
   imports: [
     NgxGraphModule,
