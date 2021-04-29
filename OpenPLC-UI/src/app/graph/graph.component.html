@@ -1,44 +1,10 @@
 <div style="margin-top: 10px; margin-bottom: 5px;">
-<<<<<<< HEAD
+
   <!-- <app-library></app-library> -->
- <button class="btn btn-outline-primary" (click)="updateChart()">Update Chart</button>
-=======
-  <button class="btn btn-outline-primary">test connect_pins</button>
-  <!-- <app-library></app-library> -->
-  <button class="btn btn-outline-primary">Get Lenght</button>
->>>>>>> 37a8a89681e8f0fc41709a0dd42bf57e306f341c
+  <button class="btn btn-outline-primary" (click)="updateChart()">Update Chart</button>
 </div>
 
-
-
-<!--https://stackoverflow.com/questions/54888126/how-to-create-tables-td-dynamically-in-angular-->
-<!-- <table>
-  <tbody>
-    <tr *ngFor="let node of nodes;" (click)="set_selected_node(node.id)">
-      <td> {{ node.id }}</td>
-      <td>{{ node.label }}</td>
-  </tbody>
-</table> -->
-
-<!-- <div *ngFor="let edge of selectedNodeEdges; let i = index">
-  source:
-  <select (change)="change_edge_source(edge.id, $event)">
-    <option disabled selected value> -- {{edge.source}} -- </option>
-    <option *ngFor="let node of nodes; let j = index" [value]="nodes[j].id">
-      {{node.label}} -- {{node.id}}
-    </option>
-  </select>
-  target:
-  <select (change)="change_edge_target(edge.id, $event)">
-    <option disabled selected value> -- {{edge.target}} -- </option>
-    <option *ngFor="let node of nodes; let j = index" [value]="nodes[j].id">
-    </option>
-  </select>
-</div> -->
-<button (click)="test(selectedNodeCons)">test</button>
-<button (click)="test(selectedNodeEdges)">test2</button>
-
-<div *ngFor="let con of selectedNodeCons; let i = index">
+<div *ngFor="let con of selectedNodeCons; let i = index" >
   <div *ngIf="con.type==='IN'">
     {{con.targetPoint}}:
     <select [(ngModel)]="ConnectionPoint" (ngModelChange)="connect_points($event, con)">

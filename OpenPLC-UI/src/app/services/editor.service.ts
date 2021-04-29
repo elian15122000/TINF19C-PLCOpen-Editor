@@ -10,7 +10,8 @@ import {LdContact} from '../models/ldObjects/ldContact';
 import {LdCoil} from '../models/ldObjects/ldCoil';
 import {LdLeftPowerRail} from '../models/ldObjects/ldLeftPowerRail';
 import {LdRightPowerRail} from '../models/ldObjects/ldRightPowerRail';
-import {PLCNode} from '../models/PLCNode';
+import {ConnectionPoint, PLCNode} from '../models/PLCNode';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -29,12 +30,18 @@ export class EditorService {
   leftPowerRailList: LdLeftPowerRail[] = [];
   rightPowerRailList: LdRightPowerRail[] = [];
   nodes: PLCNode[] = [];
+  update$: Subject<any> = new Subject();
+  allConnectionPointIns: ConnectionPoint[] = [];
+  allConnectionPointOuts: ConnectionPoint[] = [];
+  allConnectionPoints: ConnectionPoint[] = [];
+  server_connections: ConnectionPoint[] = [];
 
   constructor() { }
 
   loadPou(pou: any): void {
     this.elementCounter = 0;
     this.nodes = [];
+    
     for (const inVariable of pou.getElementsByTagName('inVariable')) {
       const fbdInVariable = new FbdInVariable(inVariable);
       if (Number(fbdInVariable.localId) > this.elementCounter){
@@ -132,6 +139,7 @@ export class EditorService {
     this.elementCounter++;
     newBlock.localId = this.elementCounter.toString();
     newBlock.typeName = fbXml.getAttribute('name');
+    newBlock.instanceName = newBlock.typeName + newBlock.localId
 
     const inputVars = fbXml.getElementsByTagName('inputVars')[0];
     const outputVars = fbXml.getElementsByTagName('outputVars')[0];
@@ -158,5 +166,17 @@ export class EditorService {
     newBlock.updateNode();
     this.blockList.push(newBlock);
     this.nodes.push(newBlock.node);
+    for (const con of newBlock.node.connectionPoints) {
+      this.server_connections.push(con)
+    }
+    this.update_chart()
+
+  }
+
+  update_connections(){
+  }
+  
+  update_chart(){
+    this.update$.next(true);
   }
 }

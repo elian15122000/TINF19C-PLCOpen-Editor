@@ -75,8 +75,8 @@ export class FbdBlock {
     for (const variable of this.outputVariables){
       const newConnectionPointOut: ConnectionPoint = {
         type: 'OUT',
-        targetPoint: 'OUT',
-        targetName: this.node.label,
+        sourcePoint: variable.formalParameter,
+        sourceName: this.node.label,
         sourceId: this.localId,
         targetId: variable.connectionPointOut.refLocalID,
         edgeId: null
@@ -198,7 +198,7 @@ export class FbdBlock {
   updateNode(): void {
     this.node.id = this.localId;
     this.node.type = 'fbs';
-    this.node.label = this.typeName;
+    this.node.label = this.instanceName;
 
     for (const variable of this.inputVariables){
       const newConnectionPointIn: ConnectionPoint = {
@@ -214,10 +214,9 @@ export class FbdBlock {
     for (const variable of this.outputVariables) {
       const newConnectionPointOut: ConnectionPoint = {
         type: 'OUT',
-        targetPoint: 'OUT',
-        targetName: this.node.label,
+        sourcePoint: variable.formalParameter,
+        sourceName: this.node.label,
         sourceId: this.localId,
-        targetId: variable.connectionPointOut.refLocalID,
         edgeId: null
       };
       this.node.connectionPoints.push(newConnectionPointOut);
