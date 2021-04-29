@@ -9,7 +9,7 @@ export class SfcMacroStep {
   public connectionPointIn: {x: 0, y: 0, refLocalId: '', formalParameter: string};
   public connectionPointOut: {x: 0, y: 0, refLocalId: '', formalParameter: string};
   public position: {x: 0, y: 0};
-  public PLCNode: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
+  public node: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
 
   constructor(xmlMacroStep: any) {
     if (xmlMacroStep === '') {
@@ -64,9 +64,9 @@ export class SfcMacroStep {
         }
       }
     }
-    this.PLCNode.id = this.localId;
-    this.PLCNode.label = '';
-    this.PLCNode.type = 'default';
+    this.node.id = this.localId;
+    this.node.label = '';
+    this.node.type = 'default';
     const newConnectionPointIn: ConnectionPoint = {
       type: 'IN',
       sourcePoint: 'IN',
@@ -81,8 +81,8 @@ export class SfcMacroStep {
       targetId: this.localId,
       edgeId: null
     };
-    this.PLCNode.connectionPoints.push(newConnectionPointIn);
-    this.PLCNode.connectionPoints.push(newConnectionPointOut);
+    this.node.connectionPoints.push(newConnectionPointIn);
+    this.node.connectionPoints.push(newConnectionPointOut);
   }
   createXML(): void {
     const xmlString = '<macroStep localId="0" height="50" width="30" name="">\n' +

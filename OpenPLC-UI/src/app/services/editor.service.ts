@@ -10,8 +10,23 @@ import {LdContact} from '../models/ldObjects/ldContact';
 import {LdCoil} from '../models/ldObjects/ldCoil';
 import {LdLeftPowerRail} from '../models/ldObjects/ldLeftPowerRail';
 import {LdRightPowerRail} from '../models/ldObjects/ldRightPowerRail';
+
 import {ConnectionPoint, PLCNode} from '../models/PLCNode';
 import { Subject } from 'rxjs';
+import {CommonActionBlock} from '../models/commonObjects/commonActionBlock';
+import {CommonComment} from '../models/commonObjects/commonComment';
+import {CommonConnector} from '../models/commonObjects/commonConnector';
+import {CommonContinuation} from '../models/commonObjects/commonContinuation';
+import {CommonError} from '../models/commonObjects/commonError';
+import {CommonVendorElement} from '../models/commonObjects/commonVendorElement';
+import {SfcJumpStep} from '../models/sfcObjects/sfcJumpStep';
+import {SfcMacroStep} from '../models/sfcObjects/sfcMacroStep';
+import {SfcSelectionConvergence} from '../models/sfcObjects/sfcSelectionConvergence';
+import {SfcSelectionDivergence} from '../models/sfcObjects/sfcSelectionDivergence';
+import {SfcSimultaneousConvergence} from '../models/sfcObjects/sfcSimultaneousConvergence';
+import {SfcSimultaneousDivergence} from '../models/sfcObjects/sfcSimultaneousDivergence';
+import {SfcStep} from '../models/sfcObjects/sfcStep';
+import {SfcTransition} from '../models/sfcObjects/sfcTransition';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +44,21 @@ export class EditorService {
   coilList: LdCoil[] = [];
   leftPowerRailList: LdLeftPowerRail[] = [];
   rightPowerRailList: LdRightPowerRail[] = [];
+  actionBlockList: CommonActionBlock[] = [];
+  commentList: CommonComment[] = [];
+  connectorList: CommonConnector[] = [];
+  continuationList: CommonContinuation[] = [];
+  errorList: CommonError[] = [];
+  vendorElementList: CommonVendorElement[] = [];
+  jumpStepList: SfcJumpStep[] = [];
+  macroStepList: SfcMacroStep[] = [];
+  selectionConvergenceList: SfcSelectionConvergence[] = [];
+  selectionDivergenceList: SfcSelectionDivergence[] = [];
+  simultaneousConvergenceList: SfcSimultaneousConvergence[] = [];
+  simultaneousDivergenceList: SfcSimultaneousDivergence[] = [];
+  stepList: SfcStep[] = [];
+  transitionList: SfcTransition[] = [];
+
   nodes: PLCNode[] = [];
   update$: Subject<any> = new Subject();
   allConnectionPointIns: ConnectionPoint[] = [];
@@ -130,6 +160,111 @@ export class EditorService {
         }
         this.coilList.push(ldCoil);
         this.nodes.push(ldCoil.node);
+      }
+      /* for (const actionBlock of pou.getElementsByTagName('actionBlock')) {
+        const commonActionBlock = new CommonActionBlock(actionBlock);
+        if (Number(commonActionBlock.localId) > this.elementCounter){
+          this.elementCounter = Number(commonActionBlock.localId);
+        }
+        this.actionBlockList.push(commonActionBlock);
+        this.nodes.push(commonActionBlock.node);
+      } */
+      for (const comment of pou.getElementsByTagName('comment')) {
+        const commonComment = new CommonComment(comment);
+        if (Number(commonComment.localId) > this.elementCounter){
+          this.elementCounter = Number(commonComment.localId);
+        }
+        this.commentList.push(commonComment);
+        this.nodes.push(commonComment.node);
+      }
+      for (const connector of pou.getElementsByTagName('connector')) {
+        const commonConnector = new CommonConnector(connector);
+        if (Number(commonConnector.localId) > this.elementCounter){
+          this.elementCounter = Number(commonConnector.localId);
+        }
+        this.connectorList.push(commonConnector);
+        this.nodes.push(commonConnector.node);
+      }
+      for (const continuation of pou.getElementsByTagName('continuation')) {
+        const commonContinuation = new CommonContinuation(continuation);
+        if (Number(commonContinuation.localId) > this.elementCounter){
+          this.elementCounter = Number(commonContinuation.localId);
+        }
+        this.continuationList.push(commonContinuation);
+        this.nodes.push(commonContinuation.node);
+      }
+      for (const error of pou.getElementsByTagName('error')) {
+        const commonError = new CommonError(error);
+        if (Number(commonError.localId) > this.elementCounter){
+          this.elementCounter = Number(commonError.localId);
+        }
+        this.errorList.push(commonError);
+        this.nodes.push(commonError.node);
+      }
+      for (const jumpStep of pou.getElementsByTagName('jumpStep')) {
+        const sfcJumpStep = new SfcJumpStep(jumpStep);
+        if (Number(sfcJumpStep.localId) > this.elementCounter){
+          this.elementCounter = Number(sfcJumpStep.localId);
+        }
+        this.jumpStepList.push(sfcJumpStep);
+        this.nodes.push(sfcJumpStep.node);
+      }
+      for (const macroStep of pou.getElementsByTagName('macroStep')) {
+        const sfcMacroStep = new SfcMacroStep(macroStep);
+        if (Number(sfcMacroStep.localId) > this.elementCounter){
+          this.elementCounter = Number(sfcMacroStep.localId);
+        }
+        this.macroStepList.push(sfcMacroStep);
+        this.nodes.push(sfcMacroStep.node);
+      }
+      for (const selectionConvergence of pou.getElementsByTagName('selectionConvergence')) {
+        const sfcSelectionConvergence = new SfcSelectionConvergence(selectionConvergence);
+        if (Number(sfcSelectionConvergence.localId) > this.elementCounter){
+          this.elementCounter = Number(sfcSelectionConvergence.localId);
+        }
+        this.selectionConvergenceList.push(sfcSelectionConvergence);
+        this.nodes.push(sfcSelectionConvergence.node);
+      }
+      for (const selectionDivergence of pou.getElementsByTagName('selectionDivergence')) {
+        const sfcSelectionDivergence = new SfcSelectionDivergence(selectionDivergence);
+        if (Number(sfcSelectionDivergence.localId) > this.elementCounter){
+          this.elementCounter = Number(sfcSelectionDivergence.localId);
+        }
+        this.selectionDivergenceList.push(sfcSelectionDivergence);
+        this.nodes.push(sfcSelectionDivergence.node);
+      }
+      for (const simultaneousConvergence of pou.getElementsByTagName('simultaneousConvergence')) {
+        const sfcSimultaneousConvergence = new SfcSimultaneousConvergence(simultaneousConvergence);
+        if (Number(sfcSimultaneousConvergence.localId) > this.elementCounter){
+          this.elementCounter = Number(sfcSimultaneousConvergence.localId);
+        }
+        this.simultaneousConvergenceList.push(sfcSimultaneousConvergence);
+        this.nodes.push(sfcSimultaneousConvergence.node);
+      }
+      for (const simultaneousDivergence of pou.getElementsByTagName('simultaneousDivergence')) {
+        const sfcSimultaneousDivergence = new SfcSimultaneousDivergence(simultaneousDivergence);
+        if (Number(sfcSimultaneousDivergence.localId) > this.elementCounter){
+          this.elementCounter = Number(sfcSimultaneousDivergence.localId);
+        }
+        this.simultaneousDivergenceList.push(sfcSimultaneousDivergence);
+        this.nodes.push(sfcSimultaneousDivergence.node);
+      }
+      /*
+      for (const step of pou.getElementsByTagName('step')) {
+        const sfcStep = new SfcStep(step);
+        if (Number(sfcStep.localId) > this.elementCounter){
+          this.elementCounter = Number(sfcStep.localId);
+        }
+        this.stepList.push(sfcStep);
+        this.nodes.push(sfcStep.node);
+      } */
+      for (const transition of pou.getElementsByTagName('transition')) {
+        const sfcTransition = new SfcTransition(transition);
+        if (Number(sfcTransition.localId) > this.elementCounter){
+          this.elementCounter = Number(sfcTransition.localId);
+        }
+        this.transitionList.push(sfcTransition);
+        this.nodes.push(sfcTransition.node);
       }
     }
   }
