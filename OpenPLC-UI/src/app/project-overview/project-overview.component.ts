@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ProjectService} from '../services/project.service';
+import {ImportService} from '../services/import.service';
 
 @Component({
   selector: 'app-project-overview',
@@ -10,7 +11,7 @@ export class ProjectOverviewComponent implements OnInit {
   public pous: string[] = [];
   public projectName = '';
 
-  constructor(private projectService: ProjectService) {
+  constructor(private projectService: ProjectService, private importService: ImportService) {
   }
 
   ngOnInit(): void {
@@ -45,6 +46,15 @@ export class ProjectOverviewComponent implements OnInit {
 
   exportProject(): void {
     this.projectService.exportProject();
+  }
+
+  fileUpload(event: Event): void {
+    this.importService.fileUpload(event);
+  }
+
+  openProject(): void {
+    this.loadPous();
+    /* document.getElementById("openprojectmodal").style.display = "none"; */
   }
 
 }

@@ -66,4 +66,12 @@
 }
 
 
+a:hover {
+  color: gray;
+}
+
+.modal {
+  background-color: #333b3f;
+}
+
 
