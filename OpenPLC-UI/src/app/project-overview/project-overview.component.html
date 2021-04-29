@@ -14,80 +14,15 @@
 
         <h3>Project: {{projectName}}</h3>
 
-        <!-- <div *ngFor="let pou of pous">
-          <table>
-            <tr class="dropdown">
-              <td>
-                <a class="dropbtn" routerLink="/editor/{{pou}}">{{pou}}</a>
-              </td>
-              <td>
-                <span class="dropdown-content" style="position: absolute; right: 0px;">
-                  <button class="actionButton" (click)="deletePou(pou)">Delete</button>
-                </span>
-              </td>
-            </tr>
-          </table>
-        </div> -->
-
-
-        <!-- <div *ngFor="let pou of pous">
-          <table>
-            <tr class="dropdown" style="line-height: 40px;">
-              <td>
-                <a class="dropbtn" routerLink="/editor/{{pou}}" style="margin-left: 90px;">{{pou}}</a>
-              </td>
-              <td>
-                <span class="dropdown-content" style="">
-                  <button class="btn btn-outline-danger btn-sm" (click)="deletePou(pou)">Delete</button>
-                </span>
-              </td>
-            </tr>
-            <hr>
-          </table>
-        </div> -->
-
         <div *ngFor="let pou of pous">
           <b><a class="dropbtn" routerLink="/editor/{{pou}}" style="font-size: 150%">{{pou}}</a></b><br>
           <button class="btn btn-outline-danger btn-sm" (click)="deletePou(pou)">Delete</button>
           <hr>
         </div>
 
-          <!-- <ul>
-            <li *ngFor="let pou of pous">
-              <a routerLink="/editor/{{puo}}">{{pou}}</a>
-              <button class="btn btn-danger-outline" (click)="deletePou(pou)">Delete</button>
-            </li>
-          </ul> -->
-
-          <!-- (click)="openAddModal()" -->
         <button class="btn btn-outline-primary"  data-toggle="modal" data-target="#newpoumodal" style="margin-top: 5%">Add</button><br><br>
         <button class="btn btn-outline-dark" data-toggle="modal" data-target="#openprojectmodal">Open</button>
       </div>
-
-      
-
-      <!-- <div class="projectModal" id="addPouModal">
-        <div class="modalBox">
-          <form #newPOU="ngForm" class="form">
-            <h3>Create a new POU:</h3>
-            <label for="name">Name: </label>
-            <input id="name" name="name" type="text" required ngModel>
-            <br><br>
-            <label for="type">Type: </label>
-            <input id="type" name="type" type="text" required ngModel>
-            <br><br>
-            <label for="lang">Language: </label>
-            <select id="lang" name="lang" required ngModel>
-              <option value="FBD">FBD</option>
-              <option value="SFC">SFC</option>
-            </select>
-            <br><br>
-            <input type="button" (click)="closePouModal()" class="actionButton" value="Close">
-            <input type="submit" (click)="addPou(newPOU.value)" class="actionButton" value="Open">
-          </form>
-        </div>
-
-      </div> -->
 
 
     </div>
