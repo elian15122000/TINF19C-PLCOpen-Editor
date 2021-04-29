@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
+import {EditorService} from '../services/editor.service';
 
 @Component({
   selector: 'app-library',
@@ -9,7 +10,7 @@ import { HttpClient, HttpHeaders} from '@angular/common/http';
 export class LibraryComponent implements OnInit {
   public functionBlocks: any[] = [];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private editorService: EditorService) {
   }
 
   ngOnInit(): void {
@@ -30,5 +31,9 @@ export class LibraryComponent implements OnInit {
           this.functionBlocks.push(pou);
         }
       });
+  }
+
+  addFB(fbXml: any): void{
+    this.editorService.addFB(fbXml);
   }
 }

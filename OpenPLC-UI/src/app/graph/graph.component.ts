@@ -31,6 +31,7 @@ import {SfcStep} from '../models/sfcObjects/sfcStep';
 import {SfcTransition} from '../models/sfcObjects/sfcTransition';
 import {pipeline} from 'stream';
 import {ConnectionPoint, PLCNode} from '../models/PLCNode';
+import {EditorService} from '../services/editor.service';
 
 
 @Component({
@@ -40,7 +41,7 @@ import {ConnectionPoint, PLCNode} from '../models/PLCNode';
 })
 export class GraphComponent implements OnInit {
 
-  constructor(private projectService: ProjectService,
+  constructor(private projectService: ProjectService, private editorService: EditorService,
               private route: ActivatedRoute) {
   }
 
@@ -395,63 +396,8 @@ export class GraphComponent implements OnInit {
     const pou = this.projectService.getPou(this.pouName);
 
     if (pou !== undefined) {
-
-      for (const inVariable of pou.getElementsByTagName('inVariable')) {
-        const fbdInVariable = new FbdInVariable(inVariable);
-        this.inVariableList.push(fbdInVariable);
-        this.nodes.push(fbdInVariable.node);
-      }
-      for (const outVariable of pou.getElementsByTagName('outVariable')) {
-        const fbdOutVariable = new FbdOutVariable(outVariable);
-        this.outVariableList.push(fbdOutVariable);
-        this.nodes.push(fbdOutVariable.node);
-      }
-      for (const inOutVariable of pou.getElementsByTagName('inOutVariable')) {
-        const fbdInOutVariable = new FbdInOutVariable(inOutVariable);
-        this.inOutVariableList.push(fbdInOutVariable);
-        this.nodes.push(fbdInOutVariable.node);
-      }
-      {
-        for (const jump of pou.getElementsByTagName('jump')) {
-          const fbdJump = new FbdJump(jump);
-          this.jumpList.push(fbdJump);
-          this.nodes.push(fbdJump.node);
-        }
-        for (const label of pou.getElementsByTagName('label')) {
-          const fbdLabel = new FbdLabel(label);
-          this.labelList.push(fbdLabel);
-          this.nodes.push(fbdLabel.node);
-        }
-        for (const returnItem of pou.getElementsByTagName('return')) {
-          const fbdReturn = new FbdReturn(returnItem);
-          this.returnList.push(fbdReturn);
-          this.nodes.push(fbdReturn.node);
-        }
-        for (const block of pou.getElementsByTagName('block')) {
-          const fbdBlock = new FbdBlock(block);
-          this.blockList.push(fbdBlock);
-          this.nodes.push(fbdBlock.node);
-        }
-        for (const contact of pou.getElementsByTagName('contact')) {
-          const ldContact = new LdContact(contact);
-          this.contactList.push(ldContact);
-          this.nodes.push(ldContact.node);
-        }
-        for (const leftPowerRail of pou.getElementsByTagName('leftPowerRail')) {
-          const ldLPR = new LdLeftPowerRail(leftPowerRail);
-          this.leftPowerRailList.push(ldLPR);
-          this.nodes.push(ldLPR.node);
-        }
-        for (const rightPowerRail of pou.getElementsByTagName('rightPowerRail')) {
-          const ldRPR = new LdRightPowerRail(rightPowerRail);
-          this.rightPowerRailList.push(ldRPR);
-          this.nodes.push(ldRPR.node);
-        }
-        for (const coil of pou.getElementsByTagName('coil')) {
-          const ldCoil = new LdCoil(coil);
-          this.coilList.push(ldCoil);
-          this.nodes.push(ldCoil.node);
-        }
+      this.editorService.loadPou(pou);
+      this.nodes = this.editorService.nodes;
         /*
         for (const actionBlock of pou.getElementsByTagName('actionBlock')) {
           this.actionBlockList.push(new CommonActionBlock(actionBlock));
@@ -496,7 +442,6 @@ export class GraphComponent implements OnInit {
           this.transitionList.push(new SfcTransition(transition));
         }
         */
-      }
     }
 
     this.edgesIdCounter = 0;

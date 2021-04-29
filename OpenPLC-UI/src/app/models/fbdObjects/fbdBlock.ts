@@ -194,4 +194,33 @@ export class FbdBlock {
     this.xml = parser.parseFromString(xmlString, 'application/xml');
     this.xml = this.xml.getElementsByTagName('block')[0];
   }
+
+  updateNode(): void {
+    this.node.id = this.localId;
+    this.node.type = 'fbs';
+    this.node.label = this.typeName;
+
+    for (const variable of this.inputVariables){
+      const newConnectionPointIn: ConnectionPoint = {
+        type: 'IN',
+        targetPoint: variable.formalParameter,
+        targetName: this.node.label,
+        sourceId: variable.connectionPointIn.refLocalID,
+        targetId: this.localId,
+        edgeId: null
+      };
+      this.node.connectionPoints.push(newConnectionPointIn);
+    }
+    for (const variable of this.outputVariables) {
+      const newConnectionPointOut: ConnectionPoint = {
+        type: 'OUT',
+        targetPoint: 'OUT',
+        targetName: this.node.label,
+        sourceId: this.localId,
+        targetId: variable.connectionPointOut.refLocalID,
+        edgeId: null
+      };
+      this.node.connectionPoints.push(newConnectionPointOut);
+    }
+  }
 }
