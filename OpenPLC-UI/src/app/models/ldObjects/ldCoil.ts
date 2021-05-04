@@ -99,4 +99,14 @@ export class LdCoil {
     this.xml = parser.parseFromString(xmlString, 'application/xml');
     this.xml = this.xml.getElementsByTagName('coil')[0];
   }
+
+  updatePosition(xPos: number, yPos: number): void {
+    this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
+    this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
+  }
+
+  updateAttributes(localId: number, negated: string): void{
+    this.xml.setAttribute('localId', localId);
+    this.xml.setAttribute('negated', negated);
+  }
 }

@@ -97,4 +97,13 @@ export class SfcMacroStep {
     const parser = new DOMParser();
     this.xml = parser.parseFromString(xmlString, 'application/xml').getElementsByTagName('macroStep')[0];
   }
+  updatePosition(xPos: number, yPos: number): void {
+    this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
+    this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
+  }
+
+  updateAttributes(localId: number, name: string): void{
+    this.xml.setAttribute('localId', localId);
+    this.xml.setAttribute('name', name);
+  }
 }

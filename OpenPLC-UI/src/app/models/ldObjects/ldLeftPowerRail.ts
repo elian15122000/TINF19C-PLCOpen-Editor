@@ -64,4 +64,13 @@ export class LdLeftPowerRail {
     this.xml = parser.parseFromString(xmlString, 'application/xml');
     this.xml = this.xml.getElementsByTagName('leftPowerRail')[0];
   }
+
+  updatePosition(xPos: number, yPos: number): void {
+    this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
+    this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
+  }
+
+  updateAttributes(localId: number): void{
+    this.xml.setAttribute('localId', localId);
+  }
 }

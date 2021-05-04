@@ -50,11 +50,11 @@ export class CommonConnector{
     this.node.label = this.name;
     this.node.type = 'default';
     const newConnectionPointIn: ConnectionPoint = {
-      type: "IN",
+      type: 'IN',
       sourceId: this.connectionPointIn.refLocalId,
       targetId: this.localId,
       edgeId: null
-    }
+    };
     this.node.connectionPoints.push(newConnectionPointIn);
   }
   createXML(): void{
@@ -66,5 +66,15 @@ export class CommonConnector{
     '              </connector>\n';
     const parser = new DOMParser();
     this.xml = parser.parseFromString(xmlString, 'application/xml').getElementsByTagName('connector')[0];
+  }
+
+  updatePosition(xPos: number, yPos: number): void {
+    this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
+    this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
+  }
+
+  updateAttributes(localId: number, name: string): void{
+    this.xml.setAttribute('localId', localId);
+    this.xml.setAttribute('name', name);
   }
 }

@@ -82,4 +82,16 @@ export class SfcStep
     const parser = new DOMParser();
     this.xml = parser.parseFromString(xmlString, 'application/xml').getElementsByTagName('step')[0];
   }
+
+  updatePosition(xPos: number, yPos: number): void {
+    this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
+    this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
+  }
+
+  updateAttributes(localId: number, name: string, negated: string, initialStep: string): void{
+    this.xml.setAttribute('localId', localId);
+    this.xml.setAttribute('name', name);
+    this.xml.setAttribute('negated', negated);
+    this.xml.setAttribute('initialStep', initialStep);
+  }
 }

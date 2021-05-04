@@ -92,7 +92,7 @@ export class FbdInOutVariable {
   }
 
   createNewInOutVariable(): void {
-    const xmlString = '<inOutVariable localId="0" height="20" width="20" negated="false" > \n' +
+    const xmlString = '<inOutVariable localId="0" height="20" width="20" negatedIn="false" negatedOut="false" > \n' +
       '              <position x="0" y="0"/> \n' +
       '              <connectionPointIn> \n' +
       '                <relPosition x="0" y="0"/> \n' +
@@ -104,5 +104,16 @@ export class FbdInOutVariable {
     const parser = new DOMParser();
     this.xml = parser.parseFromString(xmlString, 'application/xml');
     this.xml = this.xml.getElementsByTagName('inOutVariable')[0];
+  }
+
+  updatePosition(xPos: number, yPos: number): void {
+    this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
+    this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
+  }
+
+  updateAttributes(localId: number, negatedIn: string, negatedOut: string): void{
+    this.xml.setAttribute('localId', localId);
+    this.xml.setAttribute('negated', negatedIn);
+    this.xml.setAttribute('negated', negatedOut);
   }
 }

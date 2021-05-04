@@ -48,4 +48,12 @@ export class CommonError{
     temp.parentNode.removeChild(temp);
     this.xml = this.xml.getElementsByTagName('error')[0];
   }
+  updatePosition(xPos: number, yPos: number): void {
+    this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
+    this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
+  }
+
+  updateAttributes(localId: number): void{
+    this.xml.setAttribute('localId', localId);
+  }
 }

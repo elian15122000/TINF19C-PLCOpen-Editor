@@ -195,6 +195,17 @@ export class FbdBlock {
     this.xml = this.xml.getElementsByTagName('block')[0];
   }
 
+  updatePosition(xPos: number, yPos: number): void {
+    this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
+    this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
+  }
+
+  updateAttributes(localId: number, typeName: string, instanceName: string): void{
+    this.xml.setAttribute('localId', localId);
+    this.xml.setAttribute('typeName', typeName);
+    this.xml.setAttribute('instanceName', instanceName);
+  }
+
   updateNode(): void {
     this.node.id = this.localId;
     this.node.type = 'fbs';

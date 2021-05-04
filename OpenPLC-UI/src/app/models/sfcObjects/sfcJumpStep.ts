@@ -68,4 +68,13 @@ constructor(xmlJumpStep: any) {
     const parser = new DOMParser();
     this.xml = parser.parseFromString(xmlString, 'application/xml').getElementsByTagName('jumpStep')[0];
   }
+  updatePosition(xPos: number, yPos: number): void {
+    this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
+    this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
+  }
+
+  updateAttributes(localId: number, targetName: string): void{
+    this.xml.setAttribute('localId', localId);
+    this.xml.setAttribute('targetName', targetName);
+  }
 }
