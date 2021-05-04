@@ -49,7 +49,7 @@ export class VariablesListComponent implements OnInit {
   }
 
   public newVariable(): void {
-
+    
   }
 
   deleteVariable(item: Variable): void {
