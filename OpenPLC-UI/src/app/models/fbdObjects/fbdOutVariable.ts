@@ -75,4 +75,16 @@ export class FbdOutVariable {
     this.xml = parser.parseFromString(xmlString, 'application/xml');
     this.xml = this.xml.getElementsByTagName('outVariable')[0];
   }
+
+  change_refid(new_ref): void {
+    // go to connectionPointIn
+    // change refLocal ID
+    console.log(this.xml.getElementsByTagName("connectionPointIn")[0])
+    console.log(this.xml.getElementsByTagName("connectionPointIn")[0].getElementsByTagName("connection"))
+    this.xml.getElementsByTagName("connectionPointIn")[0].getElementsByTagName("connection")[0].setAttribute("refLocalId", new_ref)
+    console.log(this.xml)
+    // if connectionPointIn.length > 1 
+      // check for FormalParameter
+      // change refLocalId of the Con with the given FormalParameter
+  }
 }

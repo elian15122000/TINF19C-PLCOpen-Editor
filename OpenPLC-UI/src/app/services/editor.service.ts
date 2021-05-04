@@ -27,6 +27,7 @@ import {SfcSimultaneousConvergence} from '../models/sfcObjects/sfcSimultaneousCo
 import {SfcSimultaneousDivergence} from '../models/sfcObjects/sfcSimultaneousDivergence';
 import {SfcStep} from '../models/sfcObjects/sfcStep';
 import {SfcTransition} from '../models/sfcObjects/sfcTransition';
+import { ProjectService } from './project.service';
 
 @Injectable({
   providedIn: 'root'
@@ -58,6 +59,7 @@ export class EditorService {
   simultaneousDivergenceList: SfcSimultaneousDivergence[] = [];
   stepList: SfcStep[] = [];
   transitionList: SfcTransition[] = [];
+  allList: any[] = [];
 
   nodes: PLCNode[] = [];
   update$: Subject<any> = new Subject();
@@ -66,7 +68,7 @@ export class EditorService {
   allConnectionPoints: ConnectionPoint[] = [];
   server_connections: ConnectionPoint[] = [];
 
-  constructor() { }
+  constructor(private ProjectService: ProjectService) { }
 
   loadPou(pou: any): void {
     this.elementCounter = 0;
@@ -97,7 +99,7 @@ export class EditorService {
       this.nodes.push(fbdInOutVariable.node);
     }
     {
-      for (const jump of pou.getElementsByTagName('jump')) {
+    for (const jump of pou.getElementsByTagName('jump')) {
         const fbdJump = new FbdJump(jump);
         if (Number(fbdJump.localId) > this.elementCounter){
           this.elementCounter = Number(fbdJump.localId);
@@ -105,7 +107,7 @@ export class EditorService {
         this.jumpList.push(fbdJump);
         this.nodes.push(fbdJump.node);
       }
-      for (const label of pou.getElementsByTagName('label')) {
+    for (const label of pou.getElementsByTagName('label')) {
         const fbdLabel = new FbdLabel(label);
         if (Number(fbdLabel.localId) > this.elementCounter){
           this.elementCounter = Number(fbdLabel.localId);
@@ -113,7 +115,7 @@ export class EditorService {
         this.labelList.push(fbdLabel);
         this.nodes.push(fbdLabel.node);
       }
-      for (const returnItem of pou.getElementsByTagName('return')) {
+    for (const returnItem of pou.getElementsByTagName('return')) {
         const fbdReturn = new FbdReturn(returnItem);
         if (Number(fbdReturn.localId) > this.elementCounter){
           this.elementCounter = Number(fbdReturn.localId);
@@ -121,7 +123,7 @@ export class EditorService {
         this.returnList.push(fbdReturn);
         this.nodes.push(fbdReturn.node);
       }
-      for (const block of pou.getElementsByTagName('block')) {
+    for (const block of pou.getElementsByTagName('block')) {
         const fbdBlock = new FbdBlock(block);
         if (Number(fbdBlock.localId) > this.elementCounter){
           this.elementCounter = Number(fbdBlock.localId);
@@ -129,7 +131,7 @@ export class EditorService {
         this.blockList.push(fbdBlock);
         this.nodes.push(fbdBlock.node);
       }
-      for (const contact of pou.getElementsByTagName('contact')) {
+    for (const contact of pou.getElementsByTagName('contact')) {
         const ldContact = new LdContact(contact);
         if (Number(ldContact.localId) > this.elementCounter){
           this.elementCounter = Number(ldContact.localId);
@@ -137,7 +139,7 @@ export class EditorService {
         this.contactList.push(ldContact);
         this.nodes.push(ldContact.node);
       }
-      for (const leftPowerRail of pou.getElementsByTagName('leftPowerRail')) {
+    for (const leftPowerRail of pou.getElementsByTagName('leftPowerRail')) {
         const ldLPR = new LdLeftPowerRail(leftPowerRail);
         if (Number(ldLPR.localId) > this.elementCounter){
           this.elementCounter = Number(ldLPR.localId);
@@ -145,7 +147,7 @@ export class EditorService {
         this.leftPowerRailList.push(ldLPR);
         this.nodes.push(ldLPR.node);
       }
-      for (const rightPowerRail of pou.getElementsByTagName('rightPowerRail')) {
+    for (const rightPowerRail of pou.getElementsByTagName('rightPowerRail')) {
         const ldRPR = new LdRightPowerRail(rightPowerRail);
         if (Number(ldRPR.localId) > this.elementCounter){
           this.elementCounter = Number(ldRPR.localId);
@@ -153,7 +155,7 @@ export class EditorService {
         this.rightPowerRailList.push(ldRPR);
         this.nodes.push(ldRPR.node);
       }
-      for (const coil of pou.getElementsByTagName('coil')) {
+    for (const coil of pou.getElementsByTagName('coil')) {
         const ldCoil = new LdCoil(coil);
         if (Number(ldCoil.localId) > this.elementCounter){
           this.elementCounter = Number(ldCoil.localId);
@@ -266,6 +268,8 @@ export class EditorService {
         this.transitionList.push(sfcTransition);
         this.nodes.push(sfcTransition.node);
       }
+
+
     }
   }
 
@@ -313,5 +317,12 @@ export class EditorService {
   
   update_chart(){
     this.update$.next(true);
+  }
+
+  fill_all_list(){
+    // für alle Listen
+    for (const item of this.inVariableList) {
+      this.allList.push(item)
+    }
   }
 }

@@ -10,7 +10,7 @@ export class FbdInVariable {
   public position: { x: number, y: number } = { x: 0, y: 0 };
   public connectionPointOut: { x: number, y: number, refLocalID: string, formalParameter: string } =
     { x: 0, y: 0, refLocalID: null, formalParameter: null };
-  public node: PLCNode = { id: null, label: null, type: null, connectionPoints: [] };
+  public node: PLCNode = { id: null, label: null, type: null, connectionPoints: []};
 
   constructor(xmlInVariable: any) {
     if (xmlInVariable === '') {
@@ -78,4 +78,9 @@ export class FbdInVariable {
     this.xml = parser.parseFromString(xmlString, 'application/xml');
     this.xml = this.xml.getElementsByTagName('inVariable')[0];
   }
+
+
+
 }
+
+

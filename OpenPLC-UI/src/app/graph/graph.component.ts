@@ -230,6 +230,7 @@ export class GraphComponent implements OnInit {
       for (const con of this.allConnectionPointIns) {
         if (con.edgeId === oldEdgeId) {
           // remove informations
+          // TODO: Remove Localref ID in the old target from the xml
           con.edgeId = null;
           con.sourceId = null;
           con.sourcePoint = null;
@@ -237,9 +238,9 @@ export class GraphComponent implements OnInit {
           this.remove_edge(oldEdgeId);
         }
       }
-      // remove edge
-
     }
+
+
     if (targetPoint.edgeId != null) {
       const oldEdgeId = targetPoint.edgeId;
       // find old connection point
@@ -274,6 +275,7 @@ export class GraphComponent implements OnInit {
         break;
       }
     }
+
     // get informations
     const targetId = targetPoint.targetId;
     const sourceId = sourcePoint.sourceId;
@@ -284,12 +286,29 @@ export class GraphComponent implements OnInit {
     mySource.targetId = targetId;
     // add edge
     const newEdgeId = this.add_edge(sourceId, targetId);
+    // TODO: add reflocal id in target in xml
+    // check the model name of the node
+    // go through the list and change stuff
+    var test_node: PLCNode = {
+      id : "dsad",
+      type : "fbdInVariable",
+      connectionPoints : []
+    }
+    switch(test_node.type){
+      case "fbdInVariable":
+        // loop fbdInVariable and change stuff
+        break;
+      default:
+        break;
+    }
+
     // set new id
     myTarget.edgeId = newEdgeId;
     mySource.edgeId = newEdgeId;
     this.updateChart();
   }
 
+  
 
   /**
    * process_elements
@@ -397,5 +416,10 @@ export class GraphComponent implements OnInit {
         conOut.edgeId = newId;
       }
     }
+  }
+
+  public test(){
+    this.editorService.outVariableList[0].change_refid("10");
+
   }
 }
