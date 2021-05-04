@@ -1,5 +1,4 @@
 <app-navigation></app-navigation>
-<button class="btn btn-outline-primary" (click)="exportProject()">Export</button>
 
 <div class="container">
   <div class="row">
@@ -9,20 +8,35 @@
     <div class="col-sm-6 text-center">
 
 
-      <div class="projectOverview">
-        <h2 style="margin-bottom: 3%">Project Overview</h2>
+      <div *ngIf="pous?.length; else other_content">
 
-        <h3>Project: {{projectName}}</h3>
+        <div class="projectOverview">
+          <h2 style="margin-bottom: 3%">Project Overview</h2>
 
-        <div *ngFor="let pou of pous">
-          <b><a class="dropbtn" routerLink="/editor/{{pou}}" style="font-size: 150%">{{pou}}</a></b><br>
-          <button class="btn btn-outline-danger btn-sm" (click)="deletePou(pou)">Delete</button>
-          <hr>
+          <h3>Project: {{projectName}}</h3>
+
+
+
+          <div *ngFor="let pou of pous">
+            <b><a class="dropbtn" routerLink="/editor/{{pou}}" style="font-size: 150%">{{pou}}</a></b><br>
+            <button class="btn btn-outline-danger btn-sm" (click)="deletePou(pou)">Delete</button>
+            <hr>
+          </div>
+
+          
         </div>
 
-        <button class="btn btn-outline-primary"  data-toggle="modal" data-target="#newpoumodal" style="margin-top: 5%">Add</button><br><br>
-        <button class="btn btn-outline-dark" data-toggle="modal" data-target="#openprojectmodal">Open</button>
       </div>
+
+
+      <ng-template #other_content>No list existing... <br></ng-template>
+
+      <button class="btn btn-outline-primary" data-toggle="modal" data-target="#newpoumodal"
+            style="margin-top: 5%">Add POU</button><br><br>
+          <button class="btn btn-outline-primary" data-toggle="modal" data-target="#openprojectmodal">Open project</button><br><br>
+          <button class="btn btn-outline-primary" (click)="exportProject()">Export</button>
+
+      
 
 
     </div>
@@ -57,12 +71,13 @@
       </div>
       <div class="modal-body">
         <div>
-            <form class="uploadForm">
-              <label for="file" style="margin-right: 5px;">XML file: </label>
-              <input id="file" name="file" type="file" accept="text/xml" (change)="fileUpload($event)" required>
-              <br><br> 
-              <input type="submit" data-dismiss="modal" (click)="openProject()" routerLink="/projectOverview" class="btn btn-outline-primary" value="Open">
-            </form>
+          <form class="uploadForm">
+            <label for="file" style="margin-right: 5px;">XML file: </label>
+            <input id="file" name="file" type="file" accept="text/xml" (change)="fileUpload($event)" required>
+            <br><br>
+            <input type="submit" data-dismiss="modal" (click)="openProject()" routerLink="/projectOverview"
+              class="btn btn-outline-primary" value="Open">
+          </form>
         </div>
       </div>
       <div class="modal-footer">

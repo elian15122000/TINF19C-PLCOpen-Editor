@@ -10,6 +10,7 @@ import {ImportService} from '../services/import.service';
 export class ProjectOverviewComponent implements OnInit {
   public pous: string[] = [];
   public projectName = '';
+  
 
   constructor(private projectService: ProjectService, private importService: ImportService) {
   }
@@ -17,6 +18,7 @@ export class ProjectOverviewComponent implements OnInit {
   ngOnInit(): void {
     this.pous = this.projectService.getPouName();
     this.projectName = this.projectService.getProjectName();
+    console.log("Projekt: " + this.projectName);
   }
 
   loadPous(): void {

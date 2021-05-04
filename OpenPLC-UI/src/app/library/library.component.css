@@ -23,7 +23,7 @@ li {
  */
 
 .libraryList {
-  overflow-y: scroll;
+  overflow-y: hidden;
   box-sizing: border-box;
   margin-top: 20px;
   padding: 20px;
