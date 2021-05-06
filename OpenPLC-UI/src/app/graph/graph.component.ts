@@ -1,35 +1,9 @@
-import { Component, OnInit, Type } from '@angular/core';
-import { Node, Edge } from '@swimlane/ngx-graph';
+import { Component, OnInit } from '@angular/core';
+import { Edge } from '@swimlane/ngx-graph';
 import * as shape from 'd3-shape';
 import { Subject } from 'rxjs';
-import { FbdInOutVariable } from '../models/fbdObjects/fbdInOutVariable';
-import { FbdInVariable } from '../models/fbdObjects/fbdInVariable';
-import { FbdOutVariable } from '../models/fbdObjects/fbdOutVariable';
 import { ProjectService } from '../services/project.service';
 import { ActivatedRoute } from '@angular/router';
-import { FbdJump } from '../models/fbdObjects/fbdJump';
-import { FbdLabel } from '../models/fbdObjects/fbdLabel';
-import { FbdReturn } from '../models/fbdObjects/fbdReturn';
-import { FbdBlock } from '../models/fbdObjects/fbdBlock';
-import { LdContact } from '../models/ldObjects/ldContact';
-import { LdCoil } from '../models/ldObjects/ldCoil';
-import { LdLeftPowerRail } from '../models/ldObjects/ldLeftPowerRail';
-import { LdRightPowerRail } from '../models/ldObjects/ldRightPowerRail';
-import { CommonActionBlock } from '../models/commonObjects/commonActionBlock';
-import { CommonComment } from '../models/commonObjects/commonComment';
-import { CommonConnector } from '../models/commonObjects/commonConnector';
-import { CommonContinuation } from '../models/commonObjects/commonContinuation';
-import { CommonError } from '../models/commonObjects/commonError';
-import { CommonVendorElement } from '../models/commonObjects/commonVendorElement';
-import { SfcJumpStep } from '../models/sfcObjects/sfcJumpStep';
-import { SfcMacroStep } from '../models/sfcObjects/sfcMacroStep';
-import { SfcSelectionConvergence } from '../models/sfcObjects/sfcSelectionConvergence';
-import { SfcSelectionDivergence } from '../models/sfcObjects/sfcSelectionDivergence';
-import { SfcSimultaneousConvergence } from '../models/sfcObjects/sfcSimultaneousConvergence';
-import { SfcSimultaneousDivergence } from '../models/sfcObjects/sfcSimultaneousDivergence';
-import { SfcStep } from '../models/sfcObjects/sfcStep';
-import { SfcTransition } from '../models/sfcObjects/sfcTransition';
-import { pipeline } from 'stream';
 import { ConnectionPoint, PLCNode } from '../models/PLCNode';
 import { EditorService } from '../services/editor.service';
 
@@ -42,38 +16,11 @@ import { EditorService } from '../services/editor.service';
 export class GraphComponent implements OnInit {
 
   constructor(private projectService: ProjectService, private editorService: EditorService,
-    private route: ActivatedRoute) {
+              private route: ActivatedRoute) {
     this.update$ = this.editorService.update$;
     this.allConnectionPointIns = this.editorService.allConnectionPointIns;
     this.allConnectionPointOuts = this.editorService.allConnectionPointOuts;
   }
-
-  // Importierte Variablen
-  inVariableList: FbdInVariable[] = [];
-  outVariableList: FbdOutVariable[] = [];
-  inOutVariableList: FbdInOutVariable[] = [];
-  jumpList: FbdJump[] = [];
-  labelList: FbdLabel[] = [];
-  returnList: FbdReturn[] = [];
-  blockList: FbdBlock[] = [];
-  contactList: LdContact[] = [];
-  coilList: LdCoil[] = [];
-  leftPowerRailList: LdLeftPowerRail[] = [];
-  rightPowerRailList: LdRightPowerRail[] = [];
-  actionBlockList: CommonActionBlock[] = [];
-  commentList: CommonComment[] = [];
-  connectorList: CommonConnector[] = [];
-  continuationList: CommonContinuation[] = [];
-  errorList: CommonError[] = [];
-  vendorElementList: CommonVendorElement[] = [];
-  jumpStepList: SfcJumpStep[] = [];
-  macroStepList: SfcMacroStep[] = [];
-  selConvergenceList: SfcSelectionConvergence[] = [];
-  selDivergenceList: SfcSelectionDivergence[] = [];
-  simConvergenceList: SfcSimultaneousConvergence[] = [];
-  simDivergenceList: SfcSimultaneousDivergence[] = [];
-  stepList: SfcStep[] = [];
-  transitionList: SfcTransition[] = [];
 
   //
   pouName: string;
@@ -87,7 +34,7 @@ export class GraphComponent implements OnInit {
   allConnectionPoints: ConnectionPoint[] = [];
   allConnectionPointIns: ConnectionPoint[] = [];
   allConnectionPointOuts: ConnectionPoint[] = [];
-  server_connections: ConnectionPoint[] = [];
+  serverConnections: ConnectionPoint[] = [];
 
   update$: Subject<any> = new Subject();
 
@@ -118,7 +65,7 @@ export class GraphComponent implements OnInit {
       });
       this.updateChart();
     }
-  
+
     public change_edge_target(edgeId, event): void {
       const newTarget = event.target.value;
       this.edges.forEach(e => {
@@ -131,15 +78,15 @@ export class GraphComponent implements OnInit {
     } */
 
   set_selected_node(node: PLCNode): void {
-    for (const con of this.editorService.server_connections) {
+    for (const con of this.editorService.serverConnections) {
       if (con.type === 'OUT') {
         this.allConnectionPointOuts.push(con);
       } else {
         this.allConnectionPointIns.push(con);
       }
-      this.allConnectionPoints.push(con)
+      this.allConnectionPoints.push(con);
     }
-    this.editorService.server_connections = []
+    this.editorService.serverConnections = [];
 
     this.selectedNode = node;
     console.log(node.connectionPoints);
@@ -162,7 +109,7 @@ export class GraphComponent implements OnInit {
     this.updateChart();
     return edgeId;
   }
-  
+
   /**
    * get_related_edges
    */
@@ -184,9 +131,9 @@ export class GraphComponent implements OnInit {
    */
   updateChart(): void {
     this.update$.next(true);
-    
+
     }
-  
+
 
   // TODO:
   /**
@@ -289,13 +236,13 @@ export class GraphComponent implements OnInit {
     // TODO: add reflocal id in target in xml
     // check the model name of the node
     // go through the list and change stuff
-    var test_node: PLCNode = {
-      id : "dsad",
-      type : "fbdInVariable",
+    const testNode: PLCNode = {
+      id : 'dsad',
+      type : 'fbdInVariable',
       connectionPoints : []
-    }
-    switch(test_node.type){
-      case "fbdInVariable":
+    };
+    switch (testNode.type){
+      case 'fbdInVariable':
         // loop fbdInVariable and change stuff
         break;
       default:
@@ -308,7 +255,6 @@ export class GraphComponent implements OnInit {
     this.updateChart();
   }
 
-  
 
   /**
    * process_elements
@@ -321,53 +267,9 @@ export class GraphComponent implements OnInit {
     if (pou !== undefined) {
       this.editorService.loadPou(pou);
       this.nodes = this.editorService.nodes;
-      this.allConnectionPoints = this.editorService.allConnectionPoints
-      this.allConnectionPointIns = this.editorService.allConnectionPointIns
-      this.allConnectionPointOuts = this.editorService.allConnectionPointOuts
-      /*
-      for (const actionBlock of pou.getElementsByTagName('actionBlock')) {
-        this.actionBlockList.push(new CommonActionBlock(actionBlock));
-      }
-      for (const comment of pou.getElementsByTagName('comment')) {
-        this.commentList.push(new CommonComment(comment));
-      }
-      for (const connector of pou.getElementsByTagName('connector')) {
-        this.connectorList.push(new CommonConnector(connector));
-      }
-      for (const continuation of pou.getElementsByTagName('continuation')) {
-        this.continuationList.push(new CommonContinuation(continuation));
-      }
-      for (const error of pou.getElementsByTagName('error')) {
-        this.errorList.push(new CommonError(error));
-      }
-      for (const vendorElement of pou.getElementsByTagName('vendorElement')) {
-        this.vendorElementList.push(new CommonVendorElement(vendorElement));
-      }
-      for (const jumpStep of pou.getElementsByTagName('jumpStep')) {
-        this.jumpStepList.push(new SfcJumpStep(jumpStep));
-      }
-      for (const macroStep of pou.getElementsByTagName('macroStep')) {
-        this.macroStepList.push(new SfcMacroStep(macroStep));
-      }
-      for (const selectionConvergence of pou.getElementsByTagName('selectionConvergence')) {
-        this.selConvergenceList.push(new SfcSelectionConvergence(selectionConvergence));
-      }
-      for (const selectionDivergence of pou.getElementsByTagName('selectionDivergence')) {
-        this.selDivergenceList.push(new SfcSelectionDivergence(selectionDivergence));
-      }
-      for (const simultaneousConvergence of pou.getElementsByTagName('simultaneousConvergence')) {
-        this.simConvergenceList.push(new SfcSimultaneousConvergence(simultaneousConvergence));
-      }
-      for (const simultaneousDivergence of pou.getElementsByTagName('simultaneousDivergence')) {
-        this.simDivergenceList.push(new SfcSimultaneousDivergence(simultaneousDivergence));
-      }
-      for (const step of pou.getElementsByTagName('step')) {
-        this.stepList.push(new SfcStep(step));
-      }
-      for (const transition of pou.getElementsByTagName('transition')) {
-        this.transitionList.push(new SfcTransition(transition));
-      }
-      */
+      this.allConnectionPoints = this.editorService.allConnectionPoints;
+      this.allConnectionPointIns = this.editorService.allConnectionPointIns;
+      this.allConnectionPointOuts = this.editorService.allConnectionPointOuts;
     }
 
     this.edgesIdCounter = 0;
@@ -379,14 +281,14 @@ export class GraphComponent implements OnInit {
         } else {
             this.allConnectionPointIns.push(con);
         }
-          this.allConnectionPoints.push(con)
+        this.allConnectionPoints.push(con);
         }
     }
 
     this.updateChart();
     // update connections
-    console.log(this.allConnectionPointIns)
-    console.log(this.allConnectionPointOuts)
+    console.log(this.allConnectionPointIns);
+    console.log(this.allConnectionPointOuts);
     for (const conIn of this.allConnectionPointIns) {
       // if there is a connection
       if (conIn.sourceId != null) {
@@ -418,8 +320,10 @@ export class GraphComponent implements OnInit {
     }
   }
 
-  public test(){
-    this.editorService.outVariableList[0].change_refid("10");
+  public test(): void{
+    this.editorService.outVariableList[0].change_refid('100');
+    console.log(this.editorService.nodes);
+    console.log(this.editorService.outVariableList);
 
   }
 }

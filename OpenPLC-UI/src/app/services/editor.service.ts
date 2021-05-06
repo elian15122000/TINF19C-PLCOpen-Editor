@@ -61,19 +61,22 @@ export class EditorService {
   transitionList: SfcTransition[] = [];
   allList: any[] = [];
 
+  pou: any;
+
   nodes: PLCNode[] = [];
   update$: Subject<any> = new Subject();
   allConnectionPointIns: ConnectionPoint[] = [];
   allConnectionPointOuts: ConnectionPoint[] = [];
   allConnectionPoints: ConnectionPoint[] = [];
-  server_connections: ConnectionPoint[] = [];
+  serverConnections: ConnectionPoint[] = [];
 
-  constructor(private ProjectService: ProjectService) { }
+  constructor(private projectService: ProjectService) { }
 
   loadPou(pou: any): void {
+    this.pou = pou;
     this.elementCounter = 0;
     this.nodes = [];
-    
+
     for (const inVariable of pou.getElementsByTagName('inVariable')) {
       const fbdInVariable = new FbdInVariable(inVariable);
       if (Number(fbdInVariable.localId) > this.elementCounter){
@@ -98,7 +101,7 @@ export class EditorService {
       this.inOutVariableList.push(fbdInOutVariable);
       this.nodes.push(fbdInOutVariable.node);
     }
-    {
+
     for (const jump of pou.getElementsByTagName('jump')) {
         const fbdJump = new FbdJump(jump);
         if (Number(fbdJump.localId) > this.elementCounter){
@@ -171,7 +174,7 @@ export class EditorService {
         this.actionBlockList.push(commonActionBlock);
         this.nodes.push(commonActionBlock.node);
       } */
-      for (const comment of pou.getElementsByTagName('comment')) {
+    for (const comment of pou.getElementsByTagName('comment')) {
         const commonComment = new CommonComment(comment);
         if (Number(commonComment.localId) > this.elementCounter){
           this.elementCounter = Number(commonComment.localId);
@@ -179,78 +182,78 @@ export class EditorService {
         this.commentList.push(commonComment);
         this.nodes.push(commonComment.node);
       }
-      for (const connector of pou.getElementsByTagName('connector')) {
-        const commonConnector = new CommonConnector(connector);
-        if (Number(commonConnector.localId) > this.elementCounter){
-          this.elementCounter = Number(commonConnector.localId);
-        }
-        this.connectorList.push(commonConnector);
-        this.nodes.push(commonConnector.node);
+    for (const connector of pou.getElementsByTagName('connector')) {
+      const commonConnector = new CommonConnector(connector);
+      if (Number(commonConnector.localId) > this.elementCounter){
+        this.elementCounter = Number(commonConnector.localId);
       }
-      for (const continuation of pou.getElementsByTagName('continuation')) {
-        const commonContinuation = new CommonContinuation(continuation);
-        if (Number(commonContinuation.localId) > this.elementCounter){
-          this.elementCounter = Number(commonContinuation.localId);
-        }
-        this.continuationList.push(commonContinuation);
-        this.nodes.push(commonContinuation.node);
+      this.connectorList.push(commonConnector);
+      this.nodes.push(commonConnector.node);
+    }
+    for (const continuation of pou.getElementsByTagName('continuation')) {
+      const commonContinuation = new CommonContinuation(continuation);
+      if (Number(commonContinuation.localId) > this.elementCounter){
+        this.elementCounter = Number(commonContinuation.localId);
       }
-      for (const error of pou.getElementsByTagName('error')) {
-        const commonError = new CommonError(error);
-        if (Number(commonError.localId) > this.elementCounter){
-          this.elementCounter = Number(commonError.localId);
-        }
-        this.errorList.push(commonError);
-        this.nodes.push(commonError.node);
+      this.continuationList.push(commonContinuation);
+      this.nodes.push(commonContinuation.node);
+    }
+    for (const error of pou.getElementsByTagName('error')) {
+      const commonError = new CommonError(error);
+      if (Number(commonError.localId) > this.elementCounter){
+        this.elementCounter = Number(commonError.localId);
       }
-      for (const jumpStep of pou.getElementsByTagName('jumpStep')) {
-        const sfcJumpStep = new SfcJumpStep(jumpStep);
-        if (Number(sfcJumpStep.localId) > this.elementCounter){
-          this.elementCounter = Number(sfcJumpStep.localId);
-        }
-        this.jumpStepList.push(sfcJumpStep);
-        this.nodes.push(sfcJumpStep.node);
+      this.errorList.push(commonError);
+      this.nodes.push(commonError.node);
+    }
+    for (const jumpStep of pou.getElementsByTagName('jumpStep')) {
+      const sfcJumpStep = new SfcJumpStep(jumpStep);
+      if (Number(sfcJumpStep.localId) > this.elementCounter){
+        this.elementCounter = Number(sfcJumpStep.localId);
       }
-      for (const macroStep of pou.getElementsByTagName('macroStep')) {
-        const sfcMacroStep = new SfcMacroStep(macroStep);
-        if (Number(sfcMacroStep.localId) > this.elementCounter){
-          this.elementCounter = Number(sfcMacroStep.localId);
-        }
-        this.macroStepList.push(sfcMacroStep);
-        this.nodes.push(sfcMacroStep.node);
+      this.jumpStepList.push(sfcJumpStep);
+      this.nodes.push(sfcJumpStep.node);
+    }
+    for (const macroStep of pou.getElementsByTagName('macroStep')) {
+      const sfcMacroStep = new SfcMacroStep(macroStep);
+      if (Number(sfcMacroStep.localId) > this.elementCounter){
+        this.elementCounter = Number(sfcMacroStep.localId);
       }
-      for (const selectionConvergence of pou.getElementsByTagName('selectionConvergence')) {
-        const sfcSelectionConvergence = new SfcSelectionConvergence(selectionConvergence);
-        if (Number(sfcSelectionConvergence.localId) > this.elementCounter){
-          this.elementCounter = Number(sfcSelectionConvergence.localId);
-        }
-        this.selectionConvergenceList.push(sfcSelectionConvergence);
-        this.nodes.push(sfcSelectionConvergence.node);
+      this.macroStepList.push(sfcMacroStep);
+      this.nodes.push(sfcMacroStep.node);
+    }
+    for (const selectionConvergence of pou.getElementsByTagName('selectionConvergence')) {
+      const sfcSelectionConvergence = new SfcSelectionConvergence(selectionConvergence);
+      if (Number(sfcSelectionConvergence.localId) > this.elementCounter){
+        this.elementCounter = Number(sfcSelectionConvergence.localId);
       }
-      for (const selectionDivergence of pou.getElementsByTagName('selectionDivergence')) {
-        const sfcSelectionDivergence = new SfcSelectionDivergence(selectionDivergence);
-        if (Number(sfcSelectionDivergence.localId) > this.elementCounter){
-          this.elementCounter = Number(sfcSelectionDivergence.localId);
-        }
-        this.selectionDivergenceList.push(sfcSelectionDivergence);
-        this.nodes.push(sfcSelectionDivergence.node);
+      this.selectionConvergenceList.push(sfcSelectionConvergence);
+      this.nodes.push(sfcSelectionConvergence.node);
+    }
+    for (const selectionDivergence of pou.getElementsByTagName('selectionDivergence')) {
+      const sfcSelectionDivergence = new SfcSelectionDivergence(selectionDivergence);
+      if (Number(sfcSelectionDivergence.localId) > this.elementCounter){
+        this.elementCounter = Number(sfcSelectionDivergence.localId);
       }
-      for (const simultaneousConvergence of pou.getElementsByTagName('simultaneousConvergence')) {
-        const sfcSimultaneousConvergence = new SfcSimultaneousConvergence(simultaneousConvergence);
-        if (Number(sfcSimultaneousConvergence.localId) > this.elementCounter){
-          this.elementCounter = Number(sfcSimultaneousConvergence.localId);
-        }
-        this.simultaneousConvergenceList.push(sfcSimultaneousConvergence);
-        this.nodes.push(sfcSimultaneousConvergence.node);
+      this.selectionDivergenceList.push(sfcSelectionDivergence);
+      this.nodes.push(sfcSelectionDivergence.node);
+    }
+    for (const simultaneousConvergence of pou.getElementsByTagName('simultaneousConvergence')) {
+      const sfcSimultaneousConvergence = new SfcSimultaneousConvergence(simultaneousConvergence);
+      if (Number(sfcSimultaneousConvergence.localId) > this.elementCounter){
+        this.elementCounter = Number(sfcSimultaneousConvergence.localId);
       }
-      for (const simultaneousDivergence of pou.getElementsByTagName('simultaneousDivergence')) {
-        const sfcSimultaneousDivergence = new SfcSimultaneousDivergence(simultaneousDivergence);
-        if (Number(sfcSimultaneousDivergence.localId) > this.elementCounter){
-          this.elementCounter = Number(sfcSimultaneousDivergence.localId);
-        }
-        this.simultaneousDivergenceList.push(sfcSimultaneousDivergence);
-        this.nodes.push(sfcSimultaneousDivergence.node);
+      this.simultaneousConvergenceList.push(sfcSimultaneousConvergence);
+      this.nodes.push(sfcSimultaneousConvergence.node);
+    }
+    for (const simultaneousDivergence of pou.getElementsByTagName('simultaneousDivergence')) {
+      const sfcSimultaneousDivergence = new SfcSimultaneousDivergence(simultaneousDivergence);
+      if (Number(sfcSimultaneousDivergence.localId) > this.elementCounter){
+        this.elementCounter = Number(sfcSimultaneousDivergence.localId);
       }
+      this.simultaneousDivergenceList.push(sfcSimultaneousDivergence);
+      this.nodes.push(sfcSimultaneousDivergence.node);
+    }
       /*
       for (const step of pou.getElementsByTagName('step')) {
         const sfcStep = new SfcStep(step);
@@ -260,16 +263,13 @@ export class EditorService {
         this.stepList.push(sfcStep);
         this.nodes.push(sfcStep.node);
       } */
-      for (const transition of pou.getElementsByTagName('transition')) {
-        const sfcTransition = new SfcTransition(transition);
-        if (Number(sfcTransition.localId) > this.elementCounter){
-          this.elementCounter = Number(sfcTransition.localId);
-        }
-        this.transitionList.push(sfcTransition);
-        this.nodes.push(sfcTransition.node);
+    for (const transition of pou.getElementsByTagName('transition')) {
+      const sfcTransition = new SfcTransition(transition);
+      if (Number(sfcTransition.localId) > this.elementCounter){
+        this.elementCounter = Number(sfcTransition.localId);
       }
-
-
+      this.transitionList.push(sfcTransition);
+      this.nodes.push(sfcTransition.node);
     }
   }
 
@@ -278,8 +278,7 @@ export class EditorService {
     this.elementCounter++;
     newBlock.localId = this.elementCounter.toString();
     newBlock.typeName = fbXml.getAttribute('name');
-    newBlock.instanceName = newBlock.typeName + newBlock.localId
-
+    newBlock.instanceName = newBlock.typeName + newBlock.localId;
     const inputVars = fbXml.getElementsByTagName('inputVars')[0];
     const outputVars = fbXml.getElementsByTagName('outputVars')[0];
 
@@ -306,23 +305,32 @@ export class EditorService {
     this.blockList.push(newBlock);
     this.nodes.push(newBlock.node);
     for (const con of newBlock.node.connectionPoints) {
-      this.server_connections.push(con)
+      this.serverConnections.push(con);
     }
-    this.update_chart()
+    console.log(this.pou.getElementsByTagName('SFC')[0]);
+    if (this.pou.getElementsByTagName('SFC')[0] !== undefined) {
+      this.pou.getElementsByTagName('SFC')[0].addChild(newBlock.xml);
+      console.log(this.pou.getElementsByTagName('SFC')[0]);
+    }
+    if (this.pou.getElementsByTagName('FBD')[0] !== undefined) {
+      this.pou.getElementsByTagName('FBD')[0].appendChild(newBlock.xml);
+      console.log(this.pou.getElementsByTagName('FBD')[0]);
+    }
+    newBlock.updateAttributes(Number(newBlock.localId), newBlock.typeName, newBlock.instanceName);
+
+
+    this.update_chart();
 
   }
 
-  update_connections(){
-  }
-  
-  update_chart(){
+  update_chart(): void{
     this.update$.next(true);
   }
 
-  fill_all_list(){
+  fillAllList(): void{
     // für alle Listen
     for (const item of this.inVariableList) {
-      this.allList.push(item)
+      this.allList.push(item);
     }
   }
 }

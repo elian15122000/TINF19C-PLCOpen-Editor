@@ -1,59 +1,59 @@
 export class Variable {
-  public class = '';
+  public xml: Document;
+  public class = 'local';
   public option = '';
-  public variables: Array<{
-    name: string,
-    type: string,
-    iec: any,
-    init: any
-    documentation: string;
-  }> = [];
+  public name = 'a';
+  public type = 'BOOL';
+  public iec: any = '';
+  public init: any = '';
+  public documentation = '';
 
-  constructor(xmlVariable: any, varClass: string) {
-    this.class = varClass;
-    if (xmlVariable.getAttribute('constant') === 'true') {
-      this.option = 'constant';
-    } else if (xmlVariable.getAttribute('retain') === 'true') {
-      this.option = 'retain';
-    } else if (xmlVariable.getAttribute('nonretain') === 'true') {
-      this.option = 'non-retain';
-    }
-    for (const item of xmlVariable.getElementsByTagName('variable')){
-      const variable = {name: '', type: '', iec: '', init: '', documentation: ''};
-      if (item.getAttribute('address') !== undefined){
-        variable.iec = item.getAttribute('address');
+
+  constructor(xmlVariable: any, varClass: string, varOption: string) {
+    if (xmlVariable !== '') {
+      this.class = varClass;
+      this.option = varOption;
+
+      if (xmlVariable.getAttribute('address') !== undefined){
+        this.iec = xmlVariable.getAttribute('address');
       }
-      if (item.getElementsByTagName('documentation') !== undefined) {
-        if (item.getElementsByTagName('documentation')[0] !== undefined) {
-          variable.documentation = item.getElementsByTagName('documentation')[0].children[0].innerText;
+      if (xmlVariable.getElementsByTagName('documentation') !== undefined) {
+        if (xmlVariable.getElementsByTagName('documentation')[0] !== undefined) {
+          this.documentation = xmlVariable.getElementsByTagName('documentation')[0].children[0].innerText;
         }
       }
-      if (item.getElementsByTagName('simpleValue') !== undefined){
-        const init = item.getElementsByTagName('simpleValue')[0];
+      if (xmlVariable.getElementsByTagName('simpleValue') !== undefined){
+        const init = xmlVariable.getElementsByTagName('simpleValue')[0];
         if (init !== undefined){
-          variable.init = init.getAttribute('value');
+          this.init = init.getAttribute('value');
         }
       }
-      if (item.getAttribute('name') !== undefined){
-        variable.name = item.getAttribute('name');
+      if (xmlVariable.getAttribute('name') !== undefined){
+        this.name = xmlVariable.getAttribute('name');
       }
-      if (item.getElementsByTagName('type') !== undefined) {
-        if (item.getElementsByTagName('derived').length > 0){
-          const derived = item.getElementsByTagName('derived')[0];
-          variable.type = derived.getAttribute('name');
+      if (xmlVariable.getElementsByTagName('type') !== undefined) {
+        if (xmlVariable.getElementsByTagName('derived').length > 0){
+          const derived = xmlVariable.getElementsByTagName('derived')[0];
+          this.type = derived.getAttribute('name');
         }
         else {
           const types = ['BOOL', 'SINT', 'INT', 'DINT', 'LINT', 'USINT', 'UINT', 'UDINT', 'ULINT',
-          'REAL', 'LREAL', 'TIME', 'DATE', 'TOD', 'DT', 'STRING', 'BYTE', 'WORD', 'DWORD', 'LWORD'];
+            'REAL', 'LREAL', 'TIME', 'DATE', 'TOD', 'DT', 'STRING', 'BYTE', 'WORD', 'DWORD', 'LWORD'];
           for (const type of types) {
-            if (item.getElementsByTagName(type).length > 0) {
-              variable.type = type;
+            if (xmlVariable.getElementsByTagName(type).length > 0) {
+              this.type = type;
             }
           }
         }
       }
-      this.variables.push(variable);
     }
+    else {
+      this.createXML();
+    }
+  }
+
+  createXML(): void {
+
   }
 }
 

@@ -20,36 +20,64 @@ export class VariablesListComponent implements OnInit {
   ngOnInit(): void {
     this.pouName = this.route.snapshot.params.pouName;
     const pou = this.projectService.getPou(this.pouName);
-    //console.log(pou);
     if (pou !== undefined) {
       const list = pou.getElementsByTagName('interface')[0];
       if (list !== undefined){
         for (const localVars of list.getElementsByTagName('localVars')) {
-          this.variables.push(new Variable(localVars, 'local'));
+          for ( const xmlVariable of localVars.getElementsByTagName('variable')) {
+            const option = this.checkVariableOption(xmlVariable);
+            this.variables.push(new Variable(xmlVariable, 'local', option));
+          }
+
         }
         for (const outputVars of list.getElementsByTagName('outputVars')) {
-          this.variables.push(new Variable(outputVars, 'output'));
+          for ( const xmlVariable of outputVars.getElementsByTagName('variable')) {
+            const option = this.checkVariableOption(xmlVariable);
+            this.variables.push(new Variable(xmlVariable, 'output', option));
+          }
         }
         for (const inputVars of list.getElementsByTagName('inputVars')) {
-          this.variables.push(new Variable(inputVars, 'input'));
+          for ( const xmlVariable of inputVars.getElementsByTagName('variable')) {
+            const option = this.checkVariableOption(xmlVariable);
+            this.variables.push(new Variable(xmlVariable, 'input', option));
+          }
         }
         for (const tempVars of list.getElementsByTagName('tempVars')) {
-          this.variables.push(new Variable(tempVars, 'temp'));
+          for ( const xmlVariable of tempVars.getElementsByTagName('variable')) {
+            const option = this.checkVariableOption(xmlVariable);
+            this.variables.push(new Variable(xmlVariable, 'temp', option));
+          }
         }
         for (const externalVars of list.getElementsByTagName('externalVars')) {
-          this.variables.push(new Variable(externalVars, 'external'));
+          for ( const xmlVariable of externalVars.getElementsByTagName('variable')) {
+            const option = this.checkVariableOption(xmlVariable);
+            this.variables.push(new Variable(xmlVariable, 'external', option));
+          }
         }
         for (const inOutVars of list.getElementsByTagName('inOutVars')) {
-          this.variables.push(new Variable(inOutVars, 'inOut'));
+          for ( const xmlVariable of inOutVars.getElementsByTagName('variable')) {
+            const option = this.checkVariableOption(xmlVariable);
+            this.variables.push(new Variable(xmlVariable, 'inOut', option));
+          }
         }
-
-        //console.log(this.variables);
       }
     }
   }
 
+  checkVariableOption(xmlVariable: any): string{
+    let option = '';
+    if (xmlVariable.getAttribute('constant') === 'true') {
+      option = 'constant';
+    } else if (xmlVariable.getAttribute('retain') === 'true') {
+      option = 'retain';
+    } else if (xmlVariable.getAttribute('nonretain') === 'true') {
+      option = 'non-retain';
+    }
+    return option;
+  }
+
   public newVariable(): void {
-    
+    this.variables.push(new Variable('', '', ''));
   }
 
   deleteVariable(item: Variable): void {

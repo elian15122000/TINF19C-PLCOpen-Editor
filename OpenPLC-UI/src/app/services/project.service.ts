@@ -106,6 +106,9 @@ export class ProjectService {
       while (pouString.includes('xmlns:xhtml="http://www.w3.org/1999/xhtml"')) {
         pouString = pouString.replace(' xmlns:xhtml="http://www.w3.org/1999/xhtml"', '');
       }
+      while (pouString.includes('xmlns=""')) {
+        pouString = pouString.replace(' xmlns=""', '');
+      }
     });
     const xmlString2 =
       '<types>\n' +

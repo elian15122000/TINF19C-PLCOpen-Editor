@@ -1,4 +1,3 @@
-import { Node } from '@swimlane/ngx-graph';
 import { ConnectionPoint, PLCNode } from '../PLCNode';
 
 export class FbdOutVariable {
@@ -84,13 +83,13 @@ export class FbdOutVariable {
     this.xml.setAttribute('localId', localId);
     this.xml.setAttribute('negated', negated);
   }
-  change_refid(new_ref): void {
+  change_refid(newRef): void {
     // go to connectionPointIn
     // change refLocal ID
-    console.log(this.xml.getElementsByTagName("connectionPointIn")[0])
-    console.log(this.xml.getElementsByTagName("connectionPointIn")[0].getElementsByTagName("connection"))
-    this.xml.getElementsByTagName("connectionPointIn")[0].getElementsByTagName("connection")[0].setAttribute("refLocalId", new_ref)
-    console.log(this.xml)
+    console.log(this.xml.getElementsByTagName('connectionPointIn')[0]);
+    console.log(this.xml.getElementsByTagName('connectionPointIn')[0].getElementsByTagName('connection'));
+    this.xml.getElementsByTagName('connectionPointIn')[0].getElementsByTagName('connection')[0].setAttribute('refLocalId', newRef);
+    console.log(this.xml);
     // if connectionPointIn.length > 1
     // check for FormalParameter
     // change refLocalId of the Con with the given FormalParameter

@@ -189,7 +189,7 @@ export class FbdBlock {
       '              <inputVariables/> \n' +
       '              <inOutVariables/> \n' +
       '              <outputVariables/> \n' +
-      '            </block> ';
+      '            </block>\n ';
     const parser = new DOMParser();
     this.xml = parser.parseFromString(xmlString, 'application/xml');
     this.xml = this.xml.getElementsByTagName('block')[0];
