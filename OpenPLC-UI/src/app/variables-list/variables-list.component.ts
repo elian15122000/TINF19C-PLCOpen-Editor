@@ -13,16 +13,17 @@ export class VariablesListComponent implements OnInit {
   public variables: Variable[] = [];
   public types = ['BOOL', 'SINT', 'INT', 'DINT', 'LINT', 'USINT', 'UINT', 'UDINT', 'ULINT',
     'REAL', 'LREAL', 'TIME', 'DATE', 'TOD', 'DT', 'STRING', 'BYTE', 'WORD', 'DWORD', 'LWORD'];
+  public pou: any;
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     this.pouName = this.route.snapshot.params.pouName;
-    const pou = this.projectService.getPou(this.pouName);
-    if (pou !== undefined) {
-      const list = pou.getElementsByTagName('interface')[0];
-      if (list !== undefined){
+    this.pou = this.projectService.getPou(this.pouName);
+    if (this.pou !== undefined) {
+      if (this.pou.getElementsByTagName('interface')[0] !== undefined){
+        const list = this.pou.getElementsByTagName('interface')[0];
         for (const localVars of list.getElementsByTagName('localVars')) {
           for ( const xmlVariable of localVars.getElementsByTagName('variable')) {
             const option = this.checkVariableOption(xmlVariable);
@@ -77,24 +78,22 @@ export class VariablesListComponent implements OnInit {
   }
 
   public newVariable(): void {
-    this.variables.push(new Variable('', '', ''));
+    const newVariable = new Variable('', '', '');
+    this.variables.push(newVariable);
+    this.onchange();
   }
 
   deleteVariable(item: Variable): void {
     this.variables = this.variables.filter(obj => obj !== item);
-    /*this.projectService.project.pous.forEach((pou) => {
-      if (pou.name === this.pouName) {
-        pou.variables = this.variables;
-      }
-    });*/
   }
 
   onchange(): void{
-    /*this.projectService.project.pous.forEach((pou) => {
-      if (pou.name === this.pouName) {
-        pou.variables = this.variables;
-      }
-    });*/
+    this.pou.getElementsByTagName('interface')[0].innerHTML = '';
+    for (const variable of this.variables) {
+      variable.createXML();
+      this.pou.getElementsByTagName('interface')[0].appendChild(variable.xml);
+    }
+    console.log(this.pou);
   }
 
 

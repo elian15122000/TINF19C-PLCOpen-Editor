@@ -1,11 +1,11 @@
 export class Variable {
-  public xml: Document;
+  public xml: any;
   public class = 'local';
   public option = '';
   public name = 'a';
   public type = 'BOOL';
-  public iec: any = '';
-  public init: any = '';
+  public iec = '';
+  public init = '';
   public documentation = '';
 
 
@@ -19,7 +19,9 @@ export class Variable {
       }
       if (xmlVariable.getElementsByTagName('documentation') !== undefined) {
         if (xmlVariable.getElementsByTagName('documentation')[0] !== undefined) {
-          this.documentation = xmlVariable.getElementsByTagName('documentation')[0].children[0].innerText;
+          if (xmlVariable.getElementsByTagName('documentation')[0].children[0] !== undefined) {
+            this.documentation = xmlVariable.getElementsByTagName('documentation')[0].children[0].innerText;
+          }
         }
       }
       if (xmlVariable.getElementsByTagName('simpleValue') !== undefined){
@@ -47,13 +49,55 @@ export class Variable {
         }
       }
     }
-    else {
-      this.createXML();
-    }
+    this.createXML();
   }
 
   createXML(): void {
+    let variableString = '<variable name="' + this.name + '" address="' + this.iec + '">\n' +
+      '              <type>\n' +
+      '                <' + this.type + '/>\n' +
+      '              </type>\n' +
+      '              <initialValue>\n' +
+      '                <simpleValue value="' + this.init + '"/>\n' +
+      '              </initialValue>\n' +
+      '              <documentation>\n' +
+      '              </documentation>\n' +
+      '            </variable>\n';
 
+    const parser = new DOMParser();
+
+    switch (this.class) {
+      case 'local': variableString = '\n<localVars>\n' + variableString + '</localVars>\n\n';
+                    const variableXML1 = parser.parseFromString(variableString, 'application/xml');
+                    this.xml = variableXML1.getElementsByTagName('localVars')[0];
+                    break;
+      case 'input': variableString = '\n<inputVars>\n' + variableString + '</inputVars>\n';
+                    const variableXML2 = parser.parseFromString(variableString, 'application/xml');
+                    this.xml = variableXML2.getElementsByTagName('inputVars')[0];
+                    break;
+      case 'output': variableString = '<outputVars>\n' + variableString + '</outputVars>\n';
+                     const variableXML3 = parser.parseFromString(variableString, 'application/xml');
+                     this.xml = variableXML3.getElementsByTagName('outputVars')[0];
+                     break;
+      case 'external': variableString = '<externalVars>\n' + variableString + '</externalVars>\n';
+                       const variableXML4 = parser.parseFromString(variableString, 'application/xml');
+                       this.xml = variableXML4.getElementsByTagName('externalVars')[0];
+                       break;
+      case 'temp': variableString = '<tempVars>\n' + variableString + '</tempVars>\n';
+                   const variableXML5 = parser.parseFromString(variableString, 'application/xml');
+                   this.xml = variableXML5.getElementsByTagName('tempVars')[0];
+                   break;
+      case 'inOut': variableString = '<inOutVars>\n' + variableString + '</inOutVars>\n';
+                    const variableXML6 = parser.parseFromString(variableString, 'application/xml');
+                    this.xml = variableXML6.getElementsByTagName('inOutVars')[0];
+                    break;
+      default: variableString = '<localVars>\n' + variableString + '</localVars>\n';
+               const variableXML7 = parser.parseFromString(variableString, 'application/xml');
+               this.xml = variableXML7.getElementsByTagName('localVars')[0];
+
+    }
+
+    console.log(this.xml);
   }
 }
 
