@@ -18,8 +18,8 @@
 
 
           <div *ngFor="let pou of pous">
-            <b><a class="dropbtn" routerLink="/editor/{{pou}}" style="font-size: 150%">{{pou}}</a></b><br>
-            <button class="btn btn-outline-danger btn-sm" (click)="deletePou(pou)">Delete</button>
+            <b><a class="dropbtn" routerLink="/editor/{{pou}}" style="font-size: 150%">{{pou}}</a></b>
+            <button class="btn btn-outline-danger btn-sm" (click)="deletePou(pou)"><i class="fa fa-trash"></i></button>
             <hr>
           </div>
 
@@ -33,7 +33,7 @@
 
       <button class="btn btn-outline-primary" data-toggle="modal" data-target="#newpoumodal"
             style="margin-top: 5%">Add POU</button><br><br>
-          <button class="btn btn-outline-primary" data-toggle="modal" data-target="#openprojectmodal">Open project</button><br><br>
+          <button class="btn btn-outline-primary" data-toggle="modal" data-target="#openprojectmodal">Open another project</button><br><br>
           <button class="btn btn-outline-primary" (click)="exportProject()">Export</button>
 
       
