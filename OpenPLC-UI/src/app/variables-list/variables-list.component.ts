@@ -93,7 +93,6 @@ export class VariablesListComponent implements OnInit {
       variable.createXML();
       this.pou.getElementsByTagName('interface')[0].appendChild(variable.xml);
     }
-    console.log(this.pou);
   }
 
 

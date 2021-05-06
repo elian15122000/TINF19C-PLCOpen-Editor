@@ -94,10 +94,8 @@ export class Variable {
       default: variableString = '<localVars>\n' + variableString + '</localVars>\n';
                const variableXML7 = parser.parseFromString(variableString, 'application/xml');
                this.xml = variableXML7.getElementsByTagName('localVars')[0];
-
     }
 
-    console.log(this.xml);
   }
 }
 
