@@ -166,6 +166,8 @@ export class GraphComponent implements OnInit {
 
     if (sourcePoint.sourceId === targetPoint.targetId) {
       // In case of connecting the same node with itself
+      alert("can't connect a block with itself");
+      return
     }
 
     // check if points have an exisiting connection
@@ -185,6 +187,7 @@ export class GraphComponent implements OnInit {
           this.remove_edge(oldEdgeId);
         }
       }
+      
     }
 
 
@@ -273,7 +276,9 @@ export class GraphComponent implements OnInit {
     }
 
     this.edgesIdCounter = 0;
-
+    this.allConnectionPoints = [];
+    this.allConnectionPointIns = [];
+    this.allConnectionPointOuts = [];
     for (const node of this.nodes) {
       for (const con of node.connectionPoints) {
         if (con.type === 'OUT') {
@@ -321,9 +326,11 @@ export class GraphComponent implements OnInit {
   }
 
   public test(): void{
-    this.editorService.outVariableList[0].change_refid('100');
+    this.editorService.outVariableList[0].change_refid('1', "");
     console.log(this.editorService.nodes);
     console.log(this.editorService.outVariableList);
-
+  }
+  public save(): void{
+    this.editorService.save_to_xml();
   }
 }

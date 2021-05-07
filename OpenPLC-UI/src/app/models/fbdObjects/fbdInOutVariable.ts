@@ -66,7 +66,7 @@ export class FbdInOutVariable {
       }
       this.node.id = this.localId;
       this.node.label = this.name;
-      this.node.type = 'var';
+      this.node.type = 'fbdInOutVariable';
 
       const newConnectionPointOut: ConnectionPoint = {
         type: 'OUT',

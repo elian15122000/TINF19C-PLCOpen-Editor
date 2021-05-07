@@ -83,7 +83,7 @@ export class FbdOutVariable {
     this.xml.setAttribute('localId', localId);
     this.xml.setAttribute('negated', negated);
   }
-  change_refid(newRef): void {
+  change_refid(newRef, formalParameter): void {
     // go to connectionPointIn
     // change refLocal ID
     console.log(this.xml.getElementsByTagName('connectionPointIn')[0]);

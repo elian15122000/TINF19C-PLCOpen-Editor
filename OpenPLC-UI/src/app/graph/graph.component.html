@@ -3,6 +3,7 @@
   <!-- <app-library></app-library> -->
   <button class="btn btn-outline-primary" (click)="updateChart()">Update Chart</button>
   <button (click)="test()">Test Change Ref</button>
+  <button (click)="save()">SAVE TO XML</button>
 </div>
 
 <div *ngFor="let con of selectedNodeCons; let i = index" >
@@ -71,7 +72,7 @@
       </svg:g>
 
       <!-- The Variable Template -->
-      <svg:g class="node" *ngIf="node.type=='var'">
+      <svg:g class="node" *ngIf="node.type==='var' || node.type==='fbdInOutVariable'">
         <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height" [attr.fill]="'white'"
           [attr.stroke]='"black"' />
         <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height/2">
