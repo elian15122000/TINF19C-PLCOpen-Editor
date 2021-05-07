@@ -2,7 +2,7 @@ export class Variable {
   public xml: any;
   public class = 'local';
   public option = '';
-  public name = 'a';
+  public name = 'variable';
   public type = 'BOOL';
   public iec = '';
   public init = '';
