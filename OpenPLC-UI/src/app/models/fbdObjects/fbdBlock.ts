@@ -233,4 +233,12 @@ export class FbdBlock {
       this.node.connectionPoints.push(newConnectionPointOut);
     }
   }
+  change_refid(newRef, formalParameter: string): void {
+    const variable = this.xml.getElementsByTagName('variable');
+    for (var i=0; i<variable.length; i++){
+      if (variable[i].getAttribute('formalParameter') === formalParameter){
+        variable[i].getElementsByTagName('connectionPointIn')[0].getElementsByTagName('connection')[0].setAttribute('refLocalId', newRef);
+      }
+    }
+  }
 }

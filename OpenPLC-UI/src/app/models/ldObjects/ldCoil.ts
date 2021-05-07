@@ -109,4 +109,8 @@ export class LdCoil {
     this.xml.setAttribute('localId', localId);
     this.xml.setAttribute('negated', negated);
   }
+
+  change_refid(newRef): void {
+    this.xml.getElementsByTagName('connectionPointIn')[0].getElementsByTagName('connection')[0].setAttribute('refLocalId', newRef);
+  }
 }

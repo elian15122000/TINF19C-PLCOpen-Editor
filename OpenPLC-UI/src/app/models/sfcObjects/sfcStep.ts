@@ -94,4 +94,8 @@ export class SfcStep
     this.xml.setAttribute('negated', negated);
     this.xml.setAttribute('initialStep', initialStep);
   }
+
+  change_refid(newRef): void {
+    this.xml.getElementsByTagName('connectionPointIn')[0].getElementsByTagName('connection')[0].setAttribute('refLocalId', newRef);
+  }
 }

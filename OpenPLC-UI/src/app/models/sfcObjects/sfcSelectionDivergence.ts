@@ -104,6 +104,10 @@ export class SfcSelectionDivergence{
   updateAttributes(localId: number): void{
     this.xml.setAttribute('localId', localId);
   }
+
+  change_refid(newRef): void {
+    this.xml.getElementsByTagName('connectionPointIn')[0].getElementsByTagName('connection')[0].setAttribute('refLocalId', newRef);
+  }
 }
 
 

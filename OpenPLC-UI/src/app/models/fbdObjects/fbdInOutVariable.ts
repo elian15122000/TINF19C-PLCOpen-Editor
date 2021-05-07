@@ -116,4 +116,7 @@ export class FbdInOutVariable {
     this.xml.setAttribute('negated', negatedIn);
     this.xml.setAttribute('negated', negatedOut);
   }
+  change_refid(newRef): void {
+    this.xml.getElementsByTagName('connectionPointIn')[0].getElementsByTagName('connection')[0].setAttribute('refLocalId', newRef);
+  }
 }

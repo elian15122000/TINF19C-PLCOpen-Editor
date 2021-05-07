@@ -77,4 +77,8 @@ constructor(xmlJumpStep: any) {
     this.xml.setAttribute('localId', localId);
     this.xml.setAttribute('targetName', targetName);
   }
+
+  change_refid(newRef): void {
+    this.xml.getElementsByTagName('connectionPointIn')[0].getElementsByTagName('connection')[0].setAttribute('refLocalId', newRef);
+  }
 }

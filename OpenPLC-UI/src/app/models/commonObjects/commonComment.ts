@@ -4,7 +4,7 @@ import { PLCNode } from '../PLCNode';
 export class CommonComment{
   public xml: any;
   public localId: string;
-  public height = '20'; // TODO: als String
+  public height = '20';
   public width = '20';
   public content = '';
   public position: {x: number, y: number} = {x: 0, y: 0};
