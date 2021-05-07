@@ -14,6 +14,7 @@ export class LibraryComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadFunctionBlocks('Standard_Function_Blocks.xml');
   }
 
   loadFunctionBlocks(blockUrl: string): void {

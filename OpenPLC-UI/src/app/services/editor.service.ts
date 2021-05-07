@@ -83,6 +83,7 @@ export class EditorService {
         this.elementCounter = Number(fbdInVariable.localId);
       }
       this.inVariableList.push(fbdInVariable);
+      this.allList.push(fbdInVariable);
       this.nodes.push(fbdInVariable.node);
     }
     for (const outVariable of pou.getElementsByTagName('outVariable')) {
@@ -91,6 +92,7 @@ export class EditorService {
         this.elementCounter = Number(fbdOutVariable.localId);
       }
       this.outVariableList.push(fbdOutVariable);
+      this.allList.push(fbdOutVariable);
       this.nodes.push(fbdOutVariable.node);
     }
     for (const inOutVariable of pou.getElementsByTagName('inOutVariable')) {
@@ -99,6 +101,7 @@ export class EditorService {
         this.elementCounter = Number(fbdInOutVariable.localId);
       }
       this.inOutVariableList.push(fbdInOutVariable);
+      this.allList.push(fbdInOutVariable);
       this.nodes.push(fbdInOutVariable.node);
     }
 
@@ -108,6 +111,7 @@ export class EditorService {
           this.elementCounter = Number(fbdJump.localId);
         }
         this.jumpList.push(fbdJump);
+        this.allList.push(fbdJump);
         this.nodes.push(fbdJump.node);
       }
     for (const label of pou.getElementsByTagName('label')) {
@@ -116,6 +120,7 @@ export class EditorService {
           this.elementCounter = Number(fbdLabel.localId);
         }
         this.labelList.push(fbdLabel);
+        this.allList.push(fbdLabel);
         this.nodes.push(fbdLabel.node);
       }
     for (const returnItem of pou.getElementsByTagName('return')) {
@@ -124,6 +129,7 @@ export class EditorService {
           this.elementCounter = Number(fbdReturn.localId);
         }
         this.returnList.push(fbdReturn);
+        this.allList.push(fbdReturn);
         this.nodes.push(fbdReturn.node);
       }
     for (const block of pou.getElementsByTagName('block')) {
@@ -132,6 +138,7 @@ export class EditorService {
           this.elementCounter = Number(fbdBlock.localId);
         }
         this.blockList.push(fbdBlock);
+        this.allList.push(fbdBlock);
         this.nodes.push(fbdBlock.node);
       }
     for (const contact of pou.getElementsByTagName('contact')) {
@@ -140,6 +147,7 @@ export class EditorService {
           this.elementCounter = Number(ldContact.localId);
         }
         this.contactList.push(ldContact);
+        this.allList.push(ldContact);
         this.nodes.push(ldContact.node);
       }
     for (const leftPowerRail of pou.getElementsByTagName('leftPowerRail')) {
@@ -148,6 +156,7 @@ export class EditorService {
           this.elementCounter = Number(ldLPR.localId);
         }
         this.leftPowerRailList.push(ldLPR);
+        this.allList.push(ldLPR);
         this.nodes.push(ldLPR.node);
       }
     for (const rightPowerRail of pou.getElementsByTagName('rightPowerRail')) {
@@ -156,6 +165,7 @@ export class EditorService {
           this.elementCounter = Number(ldRPR.localId);
         }
         this.rightPowerRailList.push(ldRPR);
+        this.allList.push(ldRPR);
         this.nodes.push(ldRPR.node);
       }
     for (const coil of pou.getElementsByTagName('coil')) {
@@ -164,9 +174,12 @@ export class EditorService {
           this.elementCounter = Number(ldCoil.localId);
         }
         this.coilList.push(ldCoil);
+        this.allList.push(ldCoil);
         this.nodes.push(ldCoil.node);
       }
-      /* for (const actionBlock of pou.getElementsByTagName('actionBlock')) {
+      /* 
+      // in case of reuse add to allList
+      for (const actionBlock of pou.getElementsByTagName('actionBlock')) {
         const commonActionBlock = new CommonActionBlock(actionBlock);
         if (Number(commonActionBlock.localId) > this.elementCounter){
           this.elementCounter = Number(commonActionBlock.localId);
@@ -180,6 +193,7 @@ export class EditorService {
           this.elementCounter = Number(commonComment.localId);
         }
         this.commentList.push(commonComment);
+        this.allList.push(commonComment);
         this.nodes.push(commonComment.node);
       }
     for (const connector of pou.getElementsByTagName('connector')) {
@@ -188,6 +202,7 @@ export class EditorService {
         this.elementCounter = Number(commonConnector.localId);
       }
       this.connectorList.push(commonConnector);
+      this.allList.push(commonConnector);
       this.nodes.push(commonConnector.node);
     }
     for (const continuation of pou.getElementsByTagName('continuation')) {
@@ -196,6 +211,7 @@ export class EditorService {
         this.elementCounter = Number(commonContinuation.localId);
       }
       this.continuationList.push(commonContinuation);
+      this.allList.push(commonContinuation);
       this.nodes.push(commonContinuation.node);
     }
     for (const error of pou.getElementsByTagName('error')) {
@@ -204,6 +220,7 @@ export class EditorService {
         this.elementCounter = Number(commonError.localId);
       }
       this.errorList.push(commonError);
+      this.allList.push(commonError);
       this.nodes.push(commonError.node);
     }
     for (const jumpStep of pou.getElementsByTagName('jumpStep')) {
@@ -212,6 +229,7 @@ export class EditorService {
         this.elementCounter = Number(sfcJumpStep.localId);
       }
       this.jumpStepList.push(sfcJumpStep);
+      this.allList.push(sfcJumpStep);
       this.nodes.push(sfcJumpStep.node);
     }
     for (const macroStep of pou.getElementsByTagName('macroStep')) {
@@ -220,6 +238,7 @@ export class EditorService {
         this.elementCounter = Number(sfcMacroStep.localId);
       }
       this.macroStepList.push(sfcMacroStep);
+      this.allList.push(sfcMacroStep);
       this.nodes.push(sfcMacroStep.node);
     }
     for (const selectionConvergence of pou.getElementsByTagName('selectionConvergence')) {
@@ -228,6 +247,7 @@ export class EditorService {
         this.elementCounter = Number(sfcSelectionConvergence.localId);
       }
       this.selectionConvergenceList.push(sfcSelectionConvergence);
+      this.allList.push(sfcSelectionConvergence);
       this.nodes.push(sfcSelectionConvergence.node);
     }
     for (const selectionDivergence of pou.getElementsByTagName('selectionDivergence')) {
@@ -236,6 +256,7 @@ export class EditorService {
         this.elementCounter = Number(sfcSelectionDivergence.localId);
       }
       this.selectionDivergenceList.push(sfcSelectionDivergence);
+      this.allList.push(sfcSelectionDivergence);
       this.nodes.push(sfcSelectionDivergence.node);
     }
     for (const simultaneousConvergence of pou.getElementsByTagName('simultaneousConvergence')) {
@@ -244,6 +265,7 @@ export class EditorService {
         this.elementCounter = Number(sfcSimultaneousConvergence.localId);
       }
       this.simultaneousConvergenceList.push(sfcSimultaneousConvergence);
+      this.allList.push(sfcSimultaneousConvergence);
       this.nodes.push(sfcSimultaneousConvergence.node);
     }
     for (const simultaneousDivergence of pou.getElementsByTagName('simultaneousDivergence')) {
@@ -252,9 +274,11 @@ export class EditorService {
         this.elementCounter = Number(sfcSimultaneousDivergence.localId);
       }
       this.simultaneousDivergenceList.push(sfcSimultaneousDivergence);
+      this.allList.push(sfcSimultaneousDivergence);
       this.nodes.push(sfcSimultaneousDivergence.node);
     }
       /*
+            // in case of reuse add to allList
       for (const step of pou.getElementsByTagName('step')) {
         const sfcStep = new SfcStep(step);
         if (Number(sfcStep.localId) > this.elementCounter){
@@ -269,6 +293,7 @@ export class EditorService {
         this.elementCounter = Number(sfcTransition.localId);
       }
       this.transitionList.push(sfcTransition);
+      this.allList.push(sfcTransition);
       this.nodes.push(sfcTransition.node);
     }
   }
@@ -325,6 +350,43 @@ export class EditorService {
 
   update_chart(): void{
     this.update$.next(true);
+  }
+
+  /**
+   * works 
+   */
+  save_to_xml(): void{
+    console.log(this.allList)
+    for (const node of this.nodes) {
+      var node_id = node.id;
+      var node_cons = node.connectionPoints;
+      var node_pos = node.position;
+      var node_type = node.type;
+      console.log(this.allList);
+        for (const model of this.allList) {
+          if(model.localId === node_id){
+            // change stuff
+            // call change_ref
+            for (const con of node.connectionPoints) {
+              if(con.edgeId != null){
+                // check type
+                if(con.type === "IN"){
+                  // set ref if
+                  var new_refId = con.sourceId;
+                  var old_source = "";
+                  try {
+                  model.change_refid(new_refId, "")
+                  } catch (error) {
+                    console.log(error)
+                  }
+                }
+              }
+            }
+            // call change_att
+            // call change_pos
+          }
+        }
+    }
   }
 
   fillAllList(): void{
