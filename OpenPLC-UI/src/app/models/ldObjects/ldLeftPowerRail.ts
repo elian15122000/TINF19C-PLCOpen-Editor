@@ -1,3 +1,5 @@
+/*** author: Leonie de Santis ***/
+
 import { ConnectionPoint, PLCNode } from '../PLCNode';
 
 
@@ -11,6 +13,7 @@ export class LdLeftPowerRail {
   public node: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
   public edges: string[] = [];
 
+  // check if imported xml ist empty, then create xml, otherwise reads relevant values of xml- file
   constructor(xmlLeftPowerRail: any) {
     if (xmlLeftPowerRail === '') {
       this.createNewLeftPowerRail();
@@ -41,6 +44,8 @@ export class LdLeftPowerRail {
         }
       }
     }
+
+    // values that are relevant for illustration are written into nodes
     this.node.id = this.localId;
     this.node.type = 'LPR';
     const newConnectionPointOut: ConnectionPoint = {
@@ -53,6 +58,7 @@ export class LdLeftPowerRail {
 
   }
 
+  // creates a default xml-file for the object
   createNewLeftPowerRail(): void {
     const xmlString = '<leftPowerRail localId="0" height="20" width="20"> \n' +
       '              <position x="0" y="0"/> \n' +
@@ -65,11 +71,13 @@ export class LdLeftPowerRail {
     this.xml = this.xml.getElementsByTagName('leftPowerRail')[0];
   }
 
+  // updates attributes of position
   updatePosition(xPos: number, yPos: number): void {
     this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
     this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
   }
 
+  // updates relevant attributes
   updateAttributes(localId: number): void{
     this.xml.setAttribute('localId', localId);
   }

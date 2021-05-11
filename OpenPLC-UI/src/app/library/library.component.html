@@ -2,6 +2,7 @@
 <div class="library">
   <h3>Library</h3>
 
+  <!-- Selection of the different types of function blocks -->
   <select>
     <option (click)="loadFunctionBlocks('Standard_Function_Blocks.xml')">Standardfunktionsblöcke</option>
     <option>Zusätzliche Bausteine</option>
@@ -18,6 +19,7 @@
     <option>Python Bausteine</option>
   </select>
 
+  <!-- List of function blocks -->
   <div class="libraryList">
     <div *ngFor="let fb of functionBlocks">
       <table>
@@ -37,5 +39,6 @@
       </table>
     </div>
   </div>
+
 </div>
 

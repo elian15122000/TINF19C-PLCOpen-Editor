@@ -1,3 +1,5 @@
+/*** author: Leonie de Santis ***/
+
 import { ConnectionPoint, PLCNode } from '../PLCNode';
 
 
@@ -14,6 +16,7 @@ export class LdCoil {
   public node: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
   public edges: string[] = [];
 
+  // check if imported xml ist empty, then create xml, otherwise reads relevant values of xml- file
   constructor(xmlCoil: any) {
     if (xmlCoil === '') {
       this.createNewCoil();
@@ -62,6 +65,8 @@ export class LdCoil {
         }
       }
     }
+
+    // values that are relevant for illustration are written into nodes
     this.node.id = this.localId;
     this.node.label = this.variable;
     this.node.type = 'coil';
@@ -81,9 +86,9 @@ export class LdCoil {
       edgeId: null
     };
     this.node.connectionPoints.push(newConnectionPointIn);
+  }
 
-}
-
+  // creates a default xml-file for the object
   createNewCoil(): void {
     const xmlString = '<coil localId="0" height="20" width="20" negated="false" > \n' +
       '              <position x="0" y="0"/> \n' +
@@ -100,16 +105,19 @@ export class LdCoil {
     this.xml = this.xml.getElementsByTagName('coil')[0];
   }
 
+  // updates attributes of position
   updatePosition(xPos: number, yPos: number): void {
     this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
     this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
   }
 
+  // updates relevant attributes
   updateAttributes(localId: number, negated: string): void{
     this.xml.setAttribute('localId', localId);
     this.xml.setAttribute('negated', negated);
   }
 
+  // updates refId of ConnectionPointIn
   change_refid(newRef): void {
     this.xml.getElementsByTagName('connectionPointIn')[0].getElementsByTagName('connection')[0].setAttribute('refLocalId', newRef);
   }

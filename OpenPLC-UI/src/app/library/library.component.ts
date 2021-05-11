@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-import {EditorService} from '../services/editor.service';
+import { EditorService} from '../services/editor.service';
 
 @Component({
   selector: 'app-library',
@@ -17,6 +17,9 @@ export class LibraryComponent implements OnInit {
     this.loadFunctionBlocks('Standard_Function_Blocks.xml');
   }
 
+  // load the xml File of the according function blocks
+  // add the function blocks of the xml to the list of function blocks
+  // to show them in the library
   loadFunctionBlocks(blockUrl: string): void {
     this.functionBlocks = [];
     const httpHeaders = new HttpHeaders({ 'Content-Type': 'text/xml' });
@@ -34,6 +37,7 @@ export class LibraryComponent implements OnInit {
       });
   }
 
+  // addFB -> the editorService create a new function block
   addFB(fbXml: any): void{
     this.editorService.addFB(fbXml);
   }

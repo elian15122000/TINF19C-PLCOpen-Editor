@@ -1,3 +1,5 @@
+/*** author: Leonie de Santis ***/
+
 import { Component, OnInit } from '@angular/core';
 import {ProjectService} from '../services/project.service';
 import {ImportService} from '../services/import.service';
@@ -10,53 +12,50 @@ import {ImportService} from '../services/import.service';
 export class ProjectOverviewComponent implements OnInit {
   public pous: string[] = [];
   public projectName = '';
-  
 
   constructor(private projectService: ProjectService, private importService: ImportService) {
   }
 
+  // load the project name and the list of pous from the projectService
   ngOnInit(): void {
     this.pous = this.projectService.getPouName();
     this.projectName = this.projectService.getProjectName();
-    console.log("Projekt: " + this.projectName);
   }
 
+  // load the list of pous from the projectService
   loadPous(): void {
     this.pous = this.projectService.getPouName();
-  }
-
-  openAddModal(): void {
-    document.getElementById('addPouModal').style.display = 'block';
   }
 
   closePouModal(): void {
     document.getElementById('addPouModal').style.display = 'none';
   }
 
+  // create a new pou and add to the pou list
   addPou(data: any): void {
-    console.log(this.projectService.pouItems);
     this.projectService.addPou(data.name, data.type, data.lang);
-    console.log(this.projectService.pouItems);
     this.loadPous();
     this.closePouModal();
   }
 
+  // remove the selected pou and reload the pou list
   deletePou(deleteItem: string): void {
     this.projectService.deletePou(deleteItem);
     this.loadPous();
   }
 
+  // export the project
   exportProject(): void {
     this.projectService.exportProject();
   }
 
+  // upload another file
   fileUpload(event: Event): void {
     this.importService.fileUpload(event);
   }
 
   openProject(): void {
     this.loadPous();
-    /* document.getElementById("openprojectmodal").style.display = "none"; */
   }
 
 }

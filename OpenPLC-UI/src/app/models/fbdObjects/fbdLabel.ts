@@ -1,4 +1,5 @@
-import {Node} from '@swimlane/ngx-graph';
+/*** author: Leonie de Santis ***/
+
 import { PLCNode } from '../PLCNode';
 
 export class FbdLabel {
@@ -11,6 +12,7 @@ export class FbdLabel {
   public node: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
   public edges: string[] = [];
 
+  // check if imported xml ist empty, then create xml, otherwise reads relevant values of xml- file
   constructor(xmlLabel: any) {
     if (xmlLabel === '') {
       this.createNewLabel();
@@ -32,11 +34,14 @@ export class FbdLabel {
         this.position = { x: position.getAttribute('x'), y: position.getAttribute('y')};
       }
     }
+
+    // values that are relevant for illustration are written into nodes
     this.node.id = this.localId;
     this.node.label = this.label;
     this.node.type = 'label';
   }
 
+  // creates a default xml-file for the object
   createNewLabel(): void {
     const xmlString = '<label localId="0" height="20" width="20" label="" > \n' +
       '              <position x="0" y="0"/> \n' +
@@ -46,11 +51,13 @@ export class FbdLabel {
     this.xml = this.xml.getElementsByTagName('label')[0];
   }
 
+  // updates attributes of position
   updatePosition(xPos: number, yPos: number): void {
     this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
     this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
   }
 
+  // updates relevant attributes
   updateAttributes(localId: number, label: string): void{
     this.xml.setAttribute('localId', localId);
     this.xml.setAttribute('label', label);

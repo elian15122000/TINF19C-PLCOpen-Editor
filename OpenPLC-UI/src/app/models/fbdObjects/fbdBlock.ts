@@ -1,4 +1,5 @@
-import {Node} from '@swimlane/ngx-graph';
+/*** author: Leonie de Santis ***/
+
 import {ConnectionPoint, PLCNode} from '../PLCNode';
 
 export class FbdBlock {
@@ -15,6 +16,7 @@ export class FbdBlock {
   public node: PLCNode = {id: null, label: null, type: null, connectionPoints: []};
   public edges: string[] = [];
 
+  // check if imported xml ist empty, then create xml, otherwise reads relevant values of xml- file
   constructor(xmlBlock: any) {
     if (xmlBlock === ''){
       this.createNewBlock();
@@ -57,6 +59,8 @@ export class FbdBlock {
         }
       }
     }
+
+    // values that are relevant for illustration are written into nodes
     this.node.id = this.localId;
     this.node.type = 'fbs';
     this.node.label = this.typeName;
@@ -85,6 +89,7 @@ export class FbdBlock {
     }
   }
 
+  // read values of the inputVariables
   readInputVariable(xmlVariable: any): any {
     const variable = {
       formalParameter: 'IN',
@@ -113,6 +118,7 @@ export class FbdBlock {
     return variable;
   }
 
+  // read values of the outputVariables
   readOutputVariable(xmlVariable: any): any {
     const variable = {
       formalParameter: 'OUT',
@@ -141,6 +147,7 @@ export class FbdBlock {
     return variable;
   }
 
+  // read values of the inoutVariable
   readInOutVariable(xmlVariable: any): any {
     const variable = {
       formalParameter: '',
@@ -183,6 +190,7 @@ export class FbdBlock {
     return variable;
   }
 
+  // creates a default xml-file for the object
   createNewBlock(): void {
     const xmlString = '<block localId="0" typeName="" instanceName="" height="50" width="30"> \n' +
       '              <position x="0" y="0"/> \n' +
@@ -195,17 +203,20 @@ export class FbdBlock {
     this.xml = this.xml.getElementsByTagName('block')[0];
   }
 
+  // updates attributes of position
   updatePosition(xPos: number, yPos: number): void {
     this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
     this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
   }
 
+  // updates relevant attributes
   updateAttributes(localId: number, typeName: string, instanceName: string): void{
     this.xml.setAttribute('localId', localId);
     this.xml.setAttribute('typeName', typeName);
     this.xml.setAttribute('instanceName', instanceName);
   }
 
+  // updates relevant attributes of the node
   updateNode(): void {
     this.node.id = this.localId;
     this.node.type = 'fbs';
@@ -233,9 +244,12 @@ export class FbdBlock {
       this.node.connectionPoints.push(newConnectionPointOut);
     }
   }
+
+  // updates refId of ConnectionPointIn
   change_refid(newRef, formalParameter: string): void {
     const variable = this.xml.getElementsByTagName('variable');
-    for (var i=0; i<variable.length; i++){
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < variable.length; i++){
       if (variable[i].getAttribute('formalParameter') === formalParameter){
         variable[i].getElementsByTagName('connectionPointIn')[0].getElementsByTagName('connection')[0].setAttribute('refLocalId', newRef);
       }

@@ -1,3 +1,4 @@
+/*** author: Leonie de Santis ***/
 import { ConnectionPoint, PLCNode } from '../PLCNode';
 
 export class FbdInOutVariable {
@@ -13,7 +14,7 @@ export class FbdInOutVariable {
   public connectionPointOut: { x: number, y: number, refLocalID: string } = { x: 0, y: 0, refLocalID: null };
   public node: PLCNode = { id: null, label: null, type: null, connectionPoints: [] };
 
-
+  // check if imported xml ist empty, then create xml, otherwise reads relevant values of xml- file
   constructor(xmlInOutVariable: any) {
     if (xmlInOutVariable === '') {
       this.createNewInOutVariable();
@@ -64,6 +65,8 @@ export class FbdInOutVariable {
           this.connectionPointOut.refLocalID = connection.getAttribute('refLocalId');
         }
       }
+
+      // values that are relevant for illustration are written into nodes
       this.node.id = this.localId;
       this.node.label = this.name;
       this.node.type = 'fbdInOutVariable';
@@ -91,6 +94,7 @@ export class FbdInOutVariable {
 
   }
 
+  // creates a default xml-file for the object
   createNewInOutVariable(): void {
     const xmlString = '<inOutVariable localId="0" height="20" width="20" negatedIn="false" negatedOut="false" > \n' +
       '              <position x="0" y="0"/> \n' +
@@ -106,16 +110,20 @@ export class FbdInOutVariable {
     this.xml = this.xml.getElementsByTagName('inOutVariable')[0];
   }
 
+  // updates attributes of position
   updatePosition(xPos: number, yPos: number): void {
     this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
     this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
   }
 
+  // updates relevant attributes
   updateAttributes(localId: number, negatedIn: string, negatedOut: string): void{
     this.xml.setAttribute('localId', localId);
     this.xml.setAttribute('negated', negatedIn);
     this.xml.setAttribute('negated', negatedOut);
   }
+
+  // updates refId of ConnectionPointIn
   change_refid(newRef): void {
     this.xml.getElementsByTagName('connectionPointIn')[0].getElementsByTagName('connection')[0].setAttribute('refLocalId', newRef);
   }

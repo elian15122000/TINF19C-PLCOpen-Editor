@@ -27,8 +27,6 @@ import {SfcSimultaneousConvergence} from '../models/sfcObjects/sfcSimultaneousCo
 import {SfcSimultaneousDivergence} from '../models/sfcObjects/sfcSimultaneousDivergence';
 import {SfcStep} from '../models/sfcObjects/sfcStep';
 import {SfcTransition} from '../models/sfcObjects/sfcTransition';
-import { ProjectService } from './project.service';
-import { StringMapWithRename } from '@angular/compiler/src/compiler_facade_interface';
 
 @Injectable({
   providedIn: 'root'
@@ -71,8 +69,9 @@ export class EditorService {
   allConnectionPoints: ConnectionPoint[] = [];
   serverConnections: ConnectionPoint[] = [];
 
-  constructor(private projectService: ProjectService) { }
+  constructor() { }
 
+  // load the information of the different PLC-Elements of the selected pou
   loadPou(pou: any): void {
     this.pou = pou;
     this.elementCounter = 0;
@@ -178,7 +177,7 @@ export class EditorService {
         this.allList.push(ldCoil);
         this.nodes.push(ldCoil.node);
       }
-      /* 
+      /*
       // in case of reuse add to allList
       for (const actionBlock of pou.getElementsByTagName('actionBlock')) {
         const commonActionBlock = new CommonActionBlock(actionBlock);
@@ -299,6 +298,8 @@ export class EditorService {
     }
   }
 
+  // create a new block and add to the objectsList and to the nodesList
+  // also push the xml of the new function block into the xml of the pou
   addFB(fbXml: any): void {
     const newBlock = new FbdBlock('');
     this.elementCounter++;
@@ -326,27 +327,21 @@ export class EditorService {
       };
       newBlock.outputVariables.push(variable);
     }
-    console.log(newBlock);
     newBlock.updateNode();
     this.blockList.push(newBlock);
     this.nodes.push(newBlock.node);
     for (const con of newBlock.node.connectionPoints) {
       this.serverConnections.push(con);
     }
-    console.log(this.pou.getElementsByTagName('SFC')[0]);
     if (this.pou.getElementsByTagName('SFC')[0] !== undefined) {
       this.pou.getElementsByTagName('SFC')[0].addChild(newBlock.xml);
-      console.log(this.pou.getElementsByTagName('SFC')[0]);
     }
     if (this.pou.getElementsByTagName('FBD')[0] !== undefined) {
       this.pou.getElementsByTagName('FBD')[0].appendChild(newBlock.xml);
-      console.log(this.pou.getElementsByTagName('FBD')[0]);
     }
     newBlock.updateAttributes(Number(newBlock.localId), newBlock.typeName, newBlock.instanceName);
 
-
     this.update_chart();
-
   }
 
   update_chart(): void{
@@ -354,31 +349,26 @@ export class EditorService {
   }
 
   /**
-   * works 
+   * works
    */
   save_to_xml(): void{
-    console.log(this.allList)
+    console.log(this.allList);
     for (const node of this.nodes) {
-      var node_id = node.id;
-      var node_cons = node.connectionPoints;
-      var node_pos = node.position;
-      var node_type = node.type;
-      console.log(this.allList);
-        for (const model of this.allList) {
-          if(model.localId === node_id){
+      const nodeId = node.id;
+      for (const model of this.allList) {
+          if (model.localId === nodeId){
             // change stuff
             // call change_ref
             for (const con of node.connectionPoints) {
-              if(con.edgeId != null){
+              if (con.edgeId != null){
                 // check type
-                if(con.type === "IN"){
+                if (con.type === 'IN'){
                   // set ref if
-                  var new_refId = con.sourceId;
-                  var old_source = "";
+                  const newRefId = con.sourceId;
                   try {
-                  model.change_refid(new_refId, "")
+                  model.change_refid(newRefId, '');
                   } catch (error) {
-                    console.log(error)
+                    console.log(error);
                   }
                 }
               }
@@ -390,26 +380,20 @@ export class EditorService {
     }
   }
 
-  fillAllList(): void{
-    // für alle Listen
-    for (const item of this.inVariableList) {
-      this.allList.push(item);
-    }
-  }
   /**
    * Add Variables and Blocks
    */
   // HACK: negated will be set to false for now
-   public add_in_variable(name, negated="false"){
+   public add_in_variable(name, negated= 'false'): void{
     // create a new InVariable
     // call update node
     // Do Later: reference a variable from the interface?
-    var new_block = new FbdInVariable("");
+    const newBlock = new FbdInVariable('');
     this.elementCounter++;
-    var id = this.elementCounter.toString();
-    new_block.updateAttributes(id, negated, name);
-    this.inVariableList.push(new_block)
-    this.allList.push(new_block)
-    this.nodes.push(new_block.node)
+    const id = this.elementCounter.toString();
+    newBlock.updateAttributes(id, negated, name);
+    this.inVariableList.push(newBlock);
+    this.allList.push(newBlock);
+    this.nodes.push(newBlock.node);
   }
 }
