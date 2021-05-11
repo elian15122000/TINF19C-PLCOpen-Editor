@@ -1,3 +1,8 @@
+/**
+ * 
+ * 
+ * 
+ */
 import { Component, OnInit } from '@angular/core';
 import { Edge } from '@swimlane/ngx-graph';
 import * as shape from 'd3-shape';
@@ -333,4 +338,18 @@ export class GraphComponent implements OnInit {
   public save(): void{
     this.editorService.save_to_xml();
   }
+
+  /* 
+    Add nodes and var
+  */
+ public add_node(){
+   this.editorService.nodes
+ }
+ public add_variable(form){
+   if(form["type"]=="in"){
+    this.editorService.add_in_variable(form["name"]);
+   }else{
+     alert(form["type"])
+   }
+ }
 }

@@ -72,19 +72,43 @@ export class FbdInVariable {
       '              <position x="0" y="0"/> \n' +
       '              <connectionPointOut> \n' +
       '                <relPosition x="0" y="0"/> \n' +
+      '              <expression>LocalVar0</expression>'+ // added expression
       '              </connectionPointOut> \n' +
       '            </inVariable> ';
     const parser = new DOMParser();
     this.xml = parser.parseFromString(xmlString, 'application/xml');
     this.xml = this.xml.getElementsByTagName('inVariable')[0];
+    
   }
   updatePosition(xPos: number, yPos: number): void {
     this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
     this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
   }
 
-  updateAttributes(localId: number, negated: string): void{
+  // add name to the expression
+  updateAttributes(localId, name, negated): void{
     this.xml.setAttribute('localId', localId);
     this.xml.setAttribute('negated', negated);
+    this.xml.getElementsByTagName('expression')[0].innerHTML = name;
+    if (!this.node){
+      this.instanciate(localId, name);
+    }
+  }
+  // create node for the first time
+  instanciate(id, name){
+    this.node.id = id;
+    this.node.label = name;
+    this.node.type = "var";
+    const newConnectionPoint: ConnectionPoint = {
+      type: 'OUT',
+      sourcePoint: 'OUT',
+      targetPoint: null,
+      targetName: null,
+      sourceId: id,
+      sourceName: name,
+      targetId: null,
+      edgeId: null,
+    };
+    this.node.connectionPoints.push(newConnectionPoint);
   }
 }

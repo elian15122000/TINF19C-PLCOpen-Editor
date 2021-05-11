@@ -28,6 +28,7 @@ import {SfcSimultaneousDivergence} from '../models/sfcObjects/sfcSimultaneousDiv
 import {SfcStep} from '../models/sfcObjects/sfcStep';
 import {SfcTransition} from '../models/sfcObjects/sfcTransition';
 import { ProjectService } from './project.service';
+import { StringMapWithRename } from '@angular/compiler/src/compiler_facade_interface';
 
 @Injectable({
   providedIn: 'root'
@@ -394,5 +395,21 @@ export class EditorService {
     for (const item of this.inVariableList) {
       this.allList.push(item);
     }
+  }
+  /**
+   * Add Variables and Blocks
+   */
+  // HACK: negated will be set to false for now
+   public add_in_variable(name, negated="false"){
+    // create a new InVariable
+    // call update node
+    // Do Later: reference a variable from the interface?
+    var new_block = new FbdInVariable("");
+    this.elementCounter++;
+    var id = this.elementCounter.toString();
+    new_block.updateAttributes(id, negated, name);
+    this.inVariableList.push(new_block)
+    this.allList.push(new_block)
+    this.nodes.push(new_block.node)
   }
 }
