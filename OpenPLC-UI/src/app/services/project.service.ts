@@ -1,3 +1,5 @@
+/*** author: Leonie de Santis ***/
+
 import { Injectable } from '@angular/core';
 import {DatePipe} from '@angular/common';
 import { saveAs } from 'file-saver';
@@ -5,7 +7,8 @@ import { saveAs } from 'file-saver';
 @Injectable({
   providedIn: 'root'
 })
-// In diesem Service sind alle Infomationen eines Projekts gespeichert
+
+// The ProjectService contains all relevant information
 export class ProjectService {
   public pouItems: any[] = [];
   public headerItems: any[] = [];
@@ -13,6 +16,7 @@ export class ProjectService {
 
   constructor() { }
 
+  // This function reads the names of the pous and is used for the project overview
   getPouName(): string[] {
     const pouNames = [];
     this.pouItems.forEach((item) => {
@@ -21,6 +25,7 @@ export class ProjectService {
     return pouNames;
   }
 
+  // This function reads the project name
   getProjectName(): string {
     if ( this.headerItems[1].getAttribute('name') !== undefined) {
       return this.headerItems[1].getAttribute('name');
@@ -28,6 +33,7 @@ export class ProjectService {
     return '';
   }
 
+  // the function searches for the according pou
   getPou(pouName: string): any {
     let pou;
     for (const item of this.pouItems) {
@@ -40,11 +46,13 @@ export class ProjectService {
     return undefined;
   }
 
+  // Delete a pou -> remove pou from pouItems
   deletePou(pouName: string): void {
     this.pouItems = this.pouItems.filter( (pou) =>
       pou.getAttribute('name') !== pouName);
   }
 
+  // Add Pou -> create a default-xml of a pou and add it to the pouItems
   addPou(pouName: string, pouType: string, lang: string): void {
     const pouStr = '<pou name="' + pouName + '" pouType="' + pouType + '">\n' +
       '        <interface/>' +
@@ -57,8 +65,12 @@ export class ProjectService {
     this.pouItems.push(parser.parseFromString(pouStr, 'application/xml').getElementsByTagName('pou')[0]);
   }
 
+  // Create a new Project
+  // clear the existing lists
+  // create the default xml strings of the headers and instances
   createNewProject(projectName: string): void {
     this.headerItems = [];
+    this.pouItems = [];
     const datePipe = new DatePipe('en-US');
     const date = datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm:ss');
     if (projectName === '') {
@@ -99,6 +111,7 @@ export class ProjectService {
     this.instanceItems = parser.parseFromString(instanceStr, 'application/xml').getElementsByTagName('instances')[0];
   }
 
+  // export Project -> merge the xml of the headers, pous and instances and save as plc.xml
   exportProject(): void {
     let pouString = '';
     this.pouItems.forEach((item) => {

@@ -1,3 +1,5 @@
+/*** author: Leonie de Santis ***/
+
 import { Component, OnInit } from '@angular/core';
 import { Variable} from '../models/variable';
 import {ActivatedRoute} from '@angular/router';
@@ -18,6 +20,7 @@ export class VariablesListComponent implements OnInit {
   constructor(private projectService: ProjectService, private route: ActivatedRoute) {
   }
 
+  // find the current pou and read the values of the interface-Tag
   ngOnInit(): void {
     this.pouName = this.route.snapshot.params.pouName;
     this.pou = this.projectService.getPou(this.pouName);
@@ -65,6 +68,7 @@ export class VariablesListComponent implements OnInit {
     }
   }
 
+  // check the option of the variable
   checkVariableOption(xmlVariable: any): string{
     let option = '';
     if (xmlVariable.getAttribute('constant') === 'true') {
@@ -77,16 +81,19 @@ export class VariablesListComponent implements OnInit {
     return option;
   }
 
+  // Create a new variable and add to the list of Variables
   public newVariable(): void {
     const newVariable = new Variable('', '', '');
     this.variables.push(newVariable);
     this.onchange();
   }
 
+  // delete variable -> remove item of the variable list
   deleteVariable(item: Variable): void {
     this.variables = this.variables.filter(obj => obj !== item);
   }
 
+  // updates the xml of the variable and push into xml of the pou
   onchange(): void{
     this.pou.getElementsByTagName('interface')[0].innerHTML = '';
     for (const variable of this.variables) {
@@ -94,7 +101,6 @@ export class VariablesListComponent implements OnInit {
       this.pou.getElementsByTagName('interface')[0].appendChild(variable.xml);
     }
   }
-
 
 }
 

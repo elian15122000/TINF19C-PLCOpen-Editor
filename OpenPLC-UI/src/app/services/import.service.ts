@@ -1,16 +1,19 @@
+/*** author: Leonie de Santis ***/
+
 import { Injectable } from '@angular/core';
 import {ProjectService} from './project.service';
 
 @Injectable({
   providedIn: 'root'
 })
-// Liest die hochgeladene xml-Datei und speichert die Werte an der entsprechenden Variable des ProjectService
+
 export class ImportService {
   xmlFile: any;
 
   constructor(private projectService: ProjectService) {
   }
 
+  // check if a file was uploaded and read the uploaded file as a string
   fileUpload(event: Event): void {
     // @ts-ignore
     if (event.target.files[0] !== null) {
@@ -28,6 +31,9 @@ export class ImportService {
     }
   }
 
+  // Tries to read the information of the xml-file and saves
+  // the different parts (header, pous and instances) into the projectService.
+  // If there is an invalid xml-file an error message is shown on the display
   uploadProject(): void {
     try {
       this.projectService.headerItems = [];
@@ -37,17 +43,12 @@ export class ImportService {
       const i = dom.documentElement.getElementsByTagName('pous')[0].childElementCount;
       for (let j = 0; j < i; j++){
         this.projectService.pouItems.push(dom.documentElement.getElementsByTagName('pou')[j]);
-        //console.log(this.projectService.pouItems[j]);
       }
-      //console.log(this.xmlFile);
       this.projectService.headerItems.push(dom.documentElement.getElementsByTagName('fileHeader')[0]);
       this.projectService.headerItems.push(dom.documentElement.getElementsByTagName('contentHeader')[0]);
       this.projectService.instanceItems = dom.documentElement.getElementsByTagName('instances')[0];
-      //console.log(this.projectService.headerItems[0]);
-      //console.log(this.projectService.headerItems[1]);
-      //console.log(this.projectService.instanceItems);
     } catch (e) {
-      console.log('FEHLER BEIM IMPORT');
+      alert('An error occurred during import');
     }
   }
 }

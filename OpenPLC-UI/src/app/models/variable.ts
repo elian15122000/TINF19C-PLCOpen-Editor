@@ -1,3 +1,5 @@
+/*** author: Leonie de Santis ***/
+
 export class Variable {
   public xml: any;
   public class = 'local';
@@ -8,7 +10,7 @@ export class Variable {
   public init = '';
   public documentation = '';
 
-
+  // check if imported xml ist empty, then create xml, otherwise reads relevant values of xml- file
   constructor(xmlVariable: any, varClass: string, varOption: string) {
     if (xmlVariable !== '') {
       this.class = varClass;
@@ -52,6 +54,7 @@ export class Variable {
     this.createXML();
   }
 
+  // creates a default xml-file for the object
   createXML(): void {
     let variableString = '<variable name="' + this.name + '" address="' + this.iec + '">\n' +
       '              <type>\n' +

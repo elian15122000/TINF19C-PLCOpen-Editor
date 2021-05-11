@@ -1,3 +1,5 @@
+/*** author: Leonie de Santis ***/
+
 import { PLCNode, ConnectionPoint } from '../PLCNode';
 
 export class FbdJump {
@@ -11,6 +13,7 @@ export class FbdJump {
   public node: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
   public edges: string[] = [];
 
+  // check if imported xml ist empty, then create xml, otherwise reads relevant values of xml- file
   constructor(xmlJump: any) {
     if (xmlJump === '') {
       this.createNewJump();
@@ -44,6 +47,8 @@ export class FbdJump {
         }
       }
     }
+
+    // values that are relevant for illustration are written into nodes
     this.node.id = this.localId;
     this.node.label = this.label;
     this.node.type = 'jump';
@@ -56,6 +61,7 @@ export class FbdJump {
     this.node.connectionPoints.push(newConnectionPointIn);
   }
 
+  // creates a default xml-file for the object
   createNewJump(): void {
     const xmlString = '<jump localId="0" height="20" width="20" label="" > \n' +
       '              <position x="0" y="0"/> \n' +
@@ -68,15 +74,19 @@ export class FbdJump {
     this.xml = this.xml.getElementsByTagName('jump')[0];
   }
 
+  // updates attributes of position
   updatePosition(xPos: number, yPos: number): void {
     this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
     this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
   }
 
+  // updates relevant attributes
   updateAttributes(localId: number, label: string): void{
     this.xml.setAttribute('localId', localId);
     this.xml.setAttribute('label', label);
   }
+
+  // updates refId of ConnectionPointIn
   change_refid(newRef): void {
     this.xml.getElementsByTagName('connectionPointIn')[0].getElementsByTagName('connection')[0].setAttribute('refLocalId', newRef);
   }

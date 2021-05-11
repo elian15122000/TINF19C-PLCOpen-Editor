@@ -1,3 +1,5 @@
+/*** author: Leonie de Santis ***/
+
 import { ConnectionPoint, PLCNode } from '../PLCNode';
 
 
@@ -11,6 +13,7 @@ export class FbdReturn {
   public node: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
   public edges: string[] = [];
 
+  // check if imported xml ist empty, then create xml, otherwise reads relevant values of xml- file
   constructor(xmlReturn: any) {
     if (xmlReturn === '') {
       this.createNewReturn();
@@ -41,6 +44,8 @@ export class FbdReturn {
         }
       }
     }
+
+    // values that are relevant for illustration are written into nodes
     this.node.id = this.localId;
     this.node.type = 'return';
     const newConnectionPointIn: ConnectionPoint = {
@@ -52,6 +57,7 @@ export class FbdReturn {
     this.node.connectionPoints.push(newConnectionPointIn);
   }
 
+  // creates a default xml-file for the object
   createNewReturn(): void {
     const xmlString = '<return localId="0" height="20" width="20" > \n' +
       '              <position x="0" y="0"/> \n' +
@@ -64,14 +70,18 @@ export class FbdReturn {
     this.xml = this.xml.getElementsByTagName('return')[0];
   }
 
+  // updates attributes of position
   updatePosition(xPos: number, yPos: number): void {
     this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
     this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
   }
 
+  // updates relevant attributes
   updateAttributes(localId: number): void{
     this.xml.setAttribute('localId', localId);
   }
+
+  // updates refId of ConnectionPointIn
   change_refid(newRef): void {
     this.xml.getElementsByTagName('connectionPointIn')[0].getElementsByTagName('connection')[0].setAttribute('refLocalId', newRef);
   }

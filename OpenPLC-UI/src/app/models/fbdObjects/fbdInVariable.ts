@@ -1,3 +1,5 @@
+/*** author: Leonie de Santis ***/
+
 import { PLCNode, ConnectionPoint } from '../PLCNode';
 
 export class FbdInVariable {
@@ -12,6 +14,7 @@ export class FbdInVariable {
     { x: 0, y: 0, refLocalID: null, formalParameter: null };
   public node: PLCNode = { id: null, label: null, type: null, connectionPoints: [] };
 
+  // check if imported xml ist empty, then create xml, otherwise reads relevant values of xml- file
   constructor(xmlInVariable: any) {
     if (xmlInVariable === '') {
       this.createNewInVariable();
@@ -50,6 +53,8 @@ export class FbdInVariable {
           console.log(connection);
         }
       }
+
+      // values that are relevant for illustration are written into nodes
       this.node.id = this.localId;
       this.node.label = this.name;
       this.node.type = 'var';
@@ -67,25 +72,28 @@ export class FbdInVariable {
     }
   }
 
+  // creates a default xml-file for the object
   createNewInVariable(): void {
     const xmlString = '<inVariable localId="0" height="20" width="20" negated="false" > \n' +
       '              <position x="0" y="0"/> \n' +
       '              <connectionPointOut> \n' +
       '                <relPosition x="0" y="0"/> \n' +
-      '              <expression>LocalVar0</expression>'+ // added expression
+      '              <expression>LocalVar0</expression>' + // added expression
       '              </connectionPointOut> \n' +
       '            </inVariable> ';
     const parser = new DOMParser();
     this.xml = parser.parseFromString(xmlString, 'application/xml');
     this.xml = this.xml.getElementsByTagName('inVariable')[0];
-    
+
   }
+
+  // updates attributes of position
   updatePosition(xPos: number, yPos: number): void {
     this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
     this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
   }
 
-  // add name to the expression
+  // updates relevant attribute
   updateAttributes(localId, name, negated): void{
     this.xml.setAttribute('localId', localId);
     this.xml.setAttribute('negated', negated);
@@ -95,10 +103,10 @@ export class FbdInVariable {
     }
   }
   // create node for the first time
-  instanciate(id, name){
+  instanciate(id, name): void{
     this.node.id = id;
     this.node.label = name;
-    this.node.type = "var";
+    this.node.type = 'var';
     const newConnectionPoint: ConnectionPoint = {
       type: 'OUT',
       sourcePoint: 'OUT',
