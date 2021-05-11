@@ -24,7 +24,7 @@ visit this [link](https://nodejs.org/en/download/) to download and install NodeJ
 
 **Installing Angular**<br>
 Now go to your terminal and install angular by entering the following:
-npm install ```-g @angular/cli```
+```npm install -g @angular/cli```
 
 **Installing dependencies**<br>
 Navigate in the terminal into OpenPLC-UI in the terminal and enter
