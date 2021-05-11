@@ -1,3 +1,5 @@
+/*** author: Franziska Kopp ***/
+
 import {ConnectionPoint, PLCNode} from '../PLCNode';
 
 export class SfcMacroStep {

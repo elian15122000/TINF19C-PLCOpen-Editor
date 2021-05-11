@@ -1,3 +1,5 @@
+/*** author: Franziska Kopp ***/
+
 export class SfcStep
 {
   public xml: any;

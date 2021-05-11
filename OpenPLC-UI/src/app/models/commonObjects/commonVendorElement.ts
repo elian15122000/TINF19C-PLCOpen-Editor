@@ -1,3 +1,5 @@
+/*** author: Franziska Kopp ***/
+
 import {Node} from '@swimlane/ngx-graph';
 import { PLCNode } from '../PLCNode';
 

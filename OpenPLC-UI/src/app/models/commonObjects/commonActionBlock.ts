@@ -1,3 +1,5 @@
+/*** author: Franziska Kopp ***/
+
 // import {PLCNode} from '@swimlane/ngx-graph';
 import { ConnectionPoint, PLCNode } from '../PLCNode';
 
@@ -10,7 +12,6 @@ export class CommonActionBlock{
   public position: {x: 0, y: 0};
   public actionRelPosition: {x: 0, y: 0};
   public actionReferenceName = '';
-  // TODO: public actionConnectionPointOut = {x: 0, y: 0};
   public actionLocalId: number;
   public actionQualifier: string;
   public actionHeight = 20;
