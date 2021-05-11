@@ -24,17 +24,17 @@ visit this [link](https://nodejs.org/en/download/) to download and install NodeJ
 
 **Installing Angular**<br>
 Now go to your terminal and install angular by entering the following:
-npm install -g @angular/cli
+```npm install -g @angular/cli```
 
 **Installing dependencies**<br>
 Navigate in the terminal into OpenPLC-UI in the terminal and enter
-npm i
-this will install all the packages needed for the project
+```npm i```
+this should install all the packages needed for the project
 
 **Testing the project**<br>
 If all the dependancies are installed just navigate to OpenPLC-UI in the terminal and enter
-ng serve
-This will lunch a development serve on localhost://4200 open that on your browser and you should be good to go
+```ng serve```
+This will lunch a development serve on ```localhost://4200``` open that on your browser and you should be good to go
 
 ## FAQ <br>
 **What is PLC?**<br>
@@ -47,15 +47,21 @@ The OpenPLC [Reference page](https://www.openplcproject.com/plcopen-editor/) has
 <br>
 **Why are we doing the project?**<br>
 We want to develop a web version of the OpenPLC Editor to allow users to work on their programs remotely without requiring installation.<br>
-You can find more information about the project by visiting the wiki and reading the [CRS](https://github.com/elian15122000/TINF19C-PLCOpen-Editor/blob/master/PROJECT/CRS/TINF19C_CRS_Team_1_0v1.pdf), [SRS](https://github.com/elian15122000/TINF19C-PLCOpen-Editor/wiki/1-System-Requirements-Specification) and [SAS](https://github.com/elian15122000/TINF19C-PLCOpen-Editor/wiki/2-System-Architecture-Specification) documents.<br>
+You can find more information about the project by visiting the wiki and reading the [Customer Requirement Specification](https://github.com/elian15122000/TINF19C-PLCOpen-Editor/blob/master/PROJECT/CRS/TINF19C_CRS_Team_1_0v1.pdf), [System Requirements Specification](https://github.com/elian15122000/TINF19C-PLCOpen-Editor/wiki/1.-System-Requirements-Specification) and [System Architecture Specification](https://github.com/elian15122000/TINF19C-PLCOpen-Editor/wiki/2.-System-Architecture-Specification) documents.<br>
 
 **What technologies are we using to make the application?**<br>
 The Application runs is written in Angular 8 and runs solely as a front end application. There is no backedend envolved<br>
 <br>
 <br>
 
-**Why are we using a weird template for this project?**<br>
+**Why are we using this template for the project?**<br>
 Its required of us to use this template.<br>
 However, you only need to navigate to OpenPLC-UI to see our source-code. Everything outside of the that folder is just for Project management purposes.
+The Template works as follows:
+* OpenPLC-UI: Has all the sourcefiles needed to run the project
+* Meeting Minutes: The folder where we save protocols of our meetings
+* Executables: Part of the template we have to use, but we don't have any executables so this folder is not necessary
+* Resources: The folder where we save all pictures we need to reference in the markdown documents
+* Project: The Folder where we keep all organisation related documents.
 <br>
 <br>
