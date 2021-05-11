@@ -1,3 +1,5 @@
+/*** author: Leonie de Santis ***/
+
 import { Component, OnInit } from '@angular/core';
 import {ProjectService} from '../services/project.service';
 import {ImportService} from '../services/import.service';
