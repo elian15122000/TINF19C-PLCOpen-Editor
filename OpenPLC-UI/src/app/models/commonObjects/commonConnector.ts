@@ -1,5 +1,8 @@
+/*** author: Franziska Kopp ***/
+
 import {Node} from '@swimlane/ngx-graph';
 import { ConnectionPoint, PLCNode } from '../PLCNode';
+
 
 export class CommonConnector{
   public xml: any;
@@ -77,7 +80,7 @@ export class CommonConnector{
     this.xml.setAttribute('localId', localId);
     this.xml.setAttribute('name', name);
   }
-
+  // updates refId of ConnectionPointIn
   change_refid(newRef): void {
     this.xml.getElementsByTagName('connectionPointIn')[0].getElementsByTagName('connection')[0].setAttribute('refLocalId', newRef);
   }

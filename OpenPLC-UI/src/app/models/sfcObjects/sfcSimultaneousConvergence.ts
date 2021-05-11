@@ -1,4 +1,6 @@
-import {ConnectionPoint, PLCNode} from "../PLCNode";
+/*** author: Franziska Kopp ***/
+
+import {ConnectionPoint, PLCNode} from '../PLCNode';
 
 export class SfcSimultaneousConvergence{
   public xml: any;
