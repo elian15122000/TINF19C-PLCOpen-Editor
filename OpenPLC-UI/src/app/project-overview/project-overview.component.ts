@@ -44,10 +44,12 @@ export class ProjectOverviewComponent implements OnInit {
     this.loadPous();
   }
 
+  // export the project
   exportProject(): void {
     this.projectService.exportProject();
   }
 
+  // upload another file
   fileUpload(event: Event): void {
     this.importService.fileUpload(event);
   }
