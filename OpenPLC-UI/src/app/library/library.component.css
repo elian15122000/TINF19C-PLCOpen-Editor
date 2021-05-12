@@ -23,12 +23,12 @@ li {
  */
 
 .libraryList {
-  overflow-y: hidden;
   box-sizing: border-box;
   margin-top: 20px;
   padding: 20px;
-  height: 90%;
+  overflow-y: scroll;
   border-top: solid black 1px;
 }
+
 
 
