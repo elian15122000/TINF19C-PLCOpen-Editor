@@ -2,10 +2,6 @@
   Filename: graph.component.html
   Authors: Mouaz Tabboush, Elian Yildirim
   Date: 11. May 2021
-  
-  Content:
-  The HTML code that displays the graph part of the editor.
-  Here the toolbar and the graph are displayed and can call functions from graph.component.html
 -->
 <div class="row shadow my-lg-2 mx-lg-4 p-2">
   <div class="col col-4">
@@ -34,28 +30,27 @@
   </div>
 </div>
   <hr>
-  <div class="col col-2">
+  <div class="col col-3">
     <b>Outputs</b>
     <div *ngFor="let con of selectedNodeCons; let i = index">
       <div *ngIf="con.type==='OUT'">
-        <div class="col">
-          {{con.sourcePoint}}:
-        </div>
-        <div class="col">
-        <select [(ngModel)]="ConnectionPoint" (ngModelChange)="connect_points(con, $event)">
-          <option disable selected value></option>
-          <option *ngFor="let selectable_con of allConnectionPointIns; let i = index" [ngValue]="selectable_con">
-            {{selectable_con.targetName}} -- {{selectable_con.targetPoint}}
-          </option>
-        </select>
+        <div class="row">
+          <div class="col">
+            {{con.sourcePoint}}:
+          </div>
+          <div class="col">
+          <select [(ngModel)]="ConnectionPoint" (ngModelChange)="connect_points(con, $event)">
+            <option disable selected value></option>
+            <option *ngFor="let selectable_con of allConnectionPointIns; let i = index" [ngValue]="selectable_con">
+              {{selectable_con.targetName}} -- {{selectable_con.targetPoint}}
+            </option>
+          </select>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
 </div>
-
-
 
 <ngx-graph class="chart-container" [update$]="update$" [view]="[2000, 800]" [links]="edges" [nodes]="nodes"
   [curve]="curve">

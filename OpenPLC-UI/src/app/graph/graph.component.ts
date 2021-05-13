@@ -1,55 +1,9 @@
 /**
  * @Filename : graph.component.ts
  * 
- * @Purpose : This file alonge with editor service is responsible for editing.
- *          while graph.component.ts changes the rendered graph and applies restrictions to how FBS are edited
- *          Information are passed to editor service so it can be applied to the xml
- * 
  * @Author : Mouaz Tabboush
  * 
- * Global Variables:
- * pouName: string; -- The name of the program being edited
- * nodes: PLCNode[]; -- a list of all nodes rendered on the graph. This is has to be passing into the ngx-graph element to be rendered
- * edges: Edge[]; -- a list of all connections rendered on the graph
- * edgesIdCounter: number; -- a counter for the edgesId. set to 0 on start
- * curve: any = shape.curveStepAfter; -- 
- * selectedNode: PLCNode;
- * selectedNodeEdges: Edge[];
- * selectedNodeCons: ConnectionPoint[] = null;
- * allConnectionPoints: ConnectionPoint[] = [];
- * allConnectionPointIns: ConnectionPoint[] = [];
- * allConnectionPointOuts: ConnectionPoint[] = [];
- * serverConnections: ConnectionPoint[] = [];
- *
- * update$: Subject<any> = new Subject();
- *
- * 
- * Content:
- *        remove_edge(edgeId): removes an edge from the rendered graph.
- *                             this function call update_chart() when finnished
- *        
- *        set_selected_node(nodeId): this function is called in the graph.componen.html when a node is clicked.
- *                                   it changes selected node to match the given nodeId.
- *                                   it also changes the selected cons to match that of the new selected node
- *
- *        add_edge(sourceId, targetId): adds an edge to the rendered graph connecting the two given NodeIds.
- *                                      This function calls update_chart() when finnished
- *                                      @avoid calling this function directly. instead use connect_points()
- * 
- *       connect_points(sourcePoint, targetPoint): this function runs a number of checks on the input before calling add_edge to avoid breaking any PLCXML restrictions
- *                                      instead of passing the NodeIds to be connected, PLCXML requires passing the formalParameter of the source and target
- *                                      @bug : this function uses remove_edge(edgeId) to remove old edges connected to one of the nodes
- *                                             PLCXML allows connecting an Output to multiple inputs, but this function doesn't allow it.
- *                                      This function calls add_edge() when all checks are valid
- *                          
- *      ngOnInit(): in the init function is required to bind the project service and read the content on connectionPointIns/Outs
- *                  in this function the initial edges are also set up
- *                                              
- * 
- *      
- *                                      
- * 
- *         
+ * @Last_Modified : 13, Mai, 2021
  * 
  */
 import { Component, OnInit } from '@angular/core';
@@ -75,8 +29,6 @@ export class GraphComponent implements OnInit {
     this.allConnectionPointIns = this.editorService.allConnectionPointIns;
     this.allConnectionPointOuts = this.editorService.allConnectionPointOuts;
   }
-
-  //
   pouName: string;
   nodes: PLCNode[] = [];
   edges: Edge[] = [];
@@ -93,11 +45,9 @@ export class GraphComponent implements OnInit {
   update$: Subject<any> = new Subject();
 
   /**
-   * remove_edge(edgeId)
-   * @param edgeId : edgeId to be deleted
-   * @returns : none
-   * @does : removes the given edge from this.edges
-   * @tests : 
+   * remove_edge(edgeId): removes an edge from the rendered graph.
+   *                      this function call update_chart() when finnished
+   * @param edgeId: edgeId of the edge to be removed
    */
   
   public remove_edge(edgeId): void {
@@ -110,6 +60,15 @@ export class GraphComponent implements OnInit {
     }
   }
 
+
+  /**
+   * set_selected_node(node): this function is called in the graph.componen.html when a node is clicked.
+   *                            it changes selected node to match the given nodeId.
+   *                            it also changes the selected cons to match that of the new selected node
+   * 
+   * @param node: node that has been clicked
+   * 
+   */
   set_selected_node(node: PLCNode): void {
     for (const con of this.editorService.serverConnections) {
       if (con.type === 'OUT') {
@@ -168,15 +127,15 @@ export class GraphComponent implements OnInit {
     }
 
 
-  // TODO:
+
   /**
-   * 1) connect two points: call on a function that takes ids of two connectionPoints and connect them
-   *        - when connecting. check if the edgeId == null and remove edge if not
-   *        - after connecting. write the newe edgeId and change the source/target in the connectionPoints
+   * connect_points(sourcePoint, targetPoint): this function runs a number of checks on the input before calling add_edge to avoid breaking any PLCXML restrictions
+   *                                    instead of passing the NodeIds to be connected, PLCXML requires passing the formalParameter of the source and target
+   *                                    @bug : this function uses remove_edge(edgeId) to remove old edges connected to one of the nodes
+   *                                           PLCXML allows connecting an Output to multiple inputs, but this function doesn't allow it.
+   *                                    This function calls add_edge() when all checks are valid     
    */
-  /**
-   * connect_points
-   */
+
   public connect_points(sourcePoint, targetPoint): void {
     // check if input is valid
     if (sourcePoint === '' || targetPoint === '') {
@@ -211,8 +170,6 @@ export class GraphComponent implements OnInit {
       // find old connection point
       for (const con of this.allConnectionPointIns) {
         if (con.edgeId === oldEdgeId) {
-          // remove informations
-          // TODO: Remove Localref ID in the old target from the xml
           con.edgeId = null;
           con.sourceId = null;
           con.sourcePoint = null;
@@ -222,6 +179,8 @@ export class GraphComponent implements OnInit {
       }
       
     }
+
+    
 
 
     if (targetPoint.edgeId != null) {
@@ -293,8 +252,25 @@ export class GraphComponent implements OnInit {
 
 
   /**
-   * process_elements
-   */
+  * save(): saves current edits to the xml data
+  */
+   public save(): void{
+    this.editorService.save_to_xml();
+  }
+
+ /**
+  * add_variable(form): checks what variable the user wants to add
+  * @param form: carries the user input
+  */
+ public add_variable(form){
+   if(form["type"]=="in"){
+    console.log(form["name"]);
+    this.editorService.add_in_variable(form["name"]);
+   }else{
+     alert("Variables of Type " + form["type"] + "Are not supported yet.");
+   }
+ }
+
 
   ngOnInit(): void {
     this.pouName = this.route.snapshot.params.pouName;
@@ -358,27 +334,5 @@ export class GraphComponent implements OnInit {
     }
   }
 
-  public test(): void{
-    this.editorService.outVariableList[0].change_refid('1', "");
-    console.log(this.editorService.nodes);
-    console.log(this.editorService.outVariableList);
-  }
-  public save(): void{
-    this.editorService.save_to_xml();
-  }
 
-  /* 
-    Add nodes and var
-  */
- public add_node(){
-   this.editorService.nodes
- }
- public add_variable(form){
-   if(form["type"]=="in"){
-    console.log(form["name"]);
-    this.editorService.add_in_variable(form["name"]);
-   }else{
-     alert(form["type"])
-   }
- }
 }
