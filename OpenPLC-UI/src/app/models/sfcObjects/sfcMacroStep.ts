@@ -13,6 +13,7 @@ export class SfcMacroStep {
   public position: {x: 0, y: 0};
   public node: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
 
+  // check if imported xml ist empty, then create xml, otherwise reads relevant values of xml- file
   constructor(xmlMacroStep: any) {
     if (xmlMacroStep === '') {
       this.createXML();
@@ -66,6 +67,7 @@ export class SfcMacroStep {
         }
       }
     }
+    // values that are relevant for illustration are written into nodes
     this.node.id = this.localId;
     this.node.label = '';
     this.node.type = 'default';
@@ -86,6 +88,7 @@ export class SfcMacroStep {
     this.node.connectionPoints.push(newConnectionPointIn);
     this.node.connectionPoints.push(newConnectionPointOut);
   }
+  // creates a default xml-file for the object
   createXML(): void {
     const xmlString = '<macroStep localId="0" height="50" width="30" name="">\n' +
       '<position x="0" y="0"/>\n' +
@@ -99,16 +102,17 @@ export class SfcMacroStep {
     const parser = new DOMParser();
     this.xml = parser.parseFromString(xmlString, 'application/xml').getElementsByTagName('macroStep')[0];
   }
+  // updates attributes of position
   updatePosition(xPos: number, yPos: number): void {
     this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
     this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
   }
-
+// updates relevant attributes
   updateAttributes(localId: number, name: string): void{
     this.xml.setAttribute('localId', localId);
     this.xml.setAttribute('name', name);
   }
-
+// updates refId of ConnectionPointIn
   change_refid(newRef): void {
     this.xml.getElementsByTagName('connectionPointIn')[0].getElementsByTagName('connection')[0].setAttribute('refLocalId', newRef);
   }

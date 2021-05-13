@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ImportService} from '../services/import.service';
 import {ProjectService} from '../services/project.service';
-import {isCombinedNodeFlagSet} from "tslint";
 
 @Component({
   selector: 'app-homepage',
@@ -15,8 +14,7 @@ export class HomepageComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  public openProjectModal(): void {
+ /*  public openProjectModal(): void {
     // @ts-ignore
     document.getElementById('openProjectModal').style.display = 'block';
   }
@@ -27,7 +25,7 @@ export class HomepageComponent implements OnInit {
 
   public closeNewProject(): void {
     document.getElementById('newProjectModal').style.display = 'none';
-  }
+  } */
 
   public closeProjectModal(): void {
     // @ts-ignore

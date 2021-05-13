@@ -11,7 +11,7 @@ import { Edge } from '@swimlane/ngx-graph';
 import * as shape from 'd3-shape';
 import { Subject } from 'rxjs';
 import { ProjectService } from '../services/project.service';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { ConnectionPoint, PLCNode } from '../models/PLCNode';
 import { EditorService } from '../services/editor.service';
 
@@ -24,7 +24,7 @@ import { EditorService } from '../services/editor.service';
 export class GraphComponent implements OnInit {
 
   constructor(private projectService: ProjectService, private editorService: EditorService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute, private router: Router) {
     this.update$ = this.editorService.update$;
     this.allConnectionPointIns = this.editorService.allConnectionPointIns;
     this.allConnectionPointOuts = this.editorService.allConnectionPointOuts;
@@ -49,7 +49,7 @@ export class GraphComponent implements OnInit {
    *                      this function call update_chart() when finnished
    * @param edgeId: edgeId of the edge to be removed
    */
-  
+
   public remove_edge(edgeId): void {
     for (let index = 0; index < this.edges.length; index++) {
       const edge = this.edges[index];
@@ -177,7 +177,7 @@ export class GraphComponent implements OnInit {
           this.remove_edge(oldEdgeId);
         }
       }
-      
+
     }
 
     
@@ -282,6 +282,8 @@ export class GraphComponent implements OnInit {
       this.allConnectionPoints = this.editorService.allConnectionPoints;
       this.allConnectionPointIns = this.editorService.allConnectionPointIns;
       this.allConnectionPointOuts = this.editorService.allConnectionPointOuts;
+    } else {
+      this.router.navigateByUrl('projectOverview');
     }
 
     this.edgesIdCounter = 0;

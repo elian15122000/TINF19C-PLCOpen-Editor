@@ -1,3 +1,11 @@
+/**
+
+@filename : editor.component.css
+@author : Elian Yildirim
+@Last_Modified : 13.05.2021
+
+*/
+
 .variablesList {
     height: 250px;
     overflow: auto;
@@ -8,7 +16,6 @@
     
 }
 .graph {
-    /* height: 1000px; */
     z-index: 1;
 }
 
@@ -16,15 +23,13 @@
     overflow: hidden;
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
 ::-webkit-scrollbar {
     display: none;
   }
   
-  /* Hide scrollbar for IE, Edge and Firefox */
   .editor {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; 
+    scrollbar-width: none;  
   }
 
   .library {

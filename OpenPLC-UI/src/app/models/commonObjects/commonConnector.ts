@@ -14,6 +14,7 @@ export class CommonConnector{
   public position: {x: 0, y: 0};
   public node: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
 
+  // check if imported xml ist empty, then create xml, otherwise reads relevant values of xml- file
   constructor(xmlCommonConnector: any) {
     if (xmlCommonConnector === ''){
       this.createXML();
@@ -49,6 +50,7 @@ export class CommonConnector{
         }
       }
     }
+    // values that are relevant for illustration are written into nodes
     this.node.id = this.localId;
     this.node.label = this.name;
     this.node.type = 'default';
@@ -60,6 +62,7 @@ export class CommonConnector{
     };
     this.node.connectionPoints.push(newConnectionPointIn);
   }
+  // creates a default xml-file for the object
   createXML(): void{
     const xmlString = '<connector localId="0" height="50" width="30" name=""  >\n' +
       '<position x="0" y="0"/>\n' +
@@ -71,11 +74,12 @@ export class CommonConnector{
     this.xml = parser.parseFromString(xmlString, 'application/xml').getElementsByTagName('connector')[0];
   }
 
+  // updates attributes of position
   updatePosition(xPos: number, yPos: number): void {
     this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
     this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
   }
-
+  // updates relevant attributes
   updateAttributes(localId: number, name: string): void{
     this.xml.setAttribute('localId', localId);
     this.xml.setAttribute('name', name);

@@ -1,4 +1,11 @@
-/*** author: Leonie de Santis ***/
+/**
+ * @Filename : project-overview.component.ts
+ *
+ * @Author : Leonie de Santis
+ *
+ * @Last_Modified : 13.05.2021
+ *
+ */
 
 import { Component, OnInit } from '@angular/core';
 import {ProjectService} from '../services/project.service';

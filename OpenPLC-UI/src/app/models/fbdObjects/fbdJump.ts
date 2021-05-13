@@ -1,5 +1,11 @@
-/*** author: Leonie de Santis ***/
-
+/**
+ * @Filename : fbdJump.ts
+ *
+ * @Author : Leonie de Santis
+ *
+ * @Last_Modified : 13.05.2021
+ *
+ */
 import { PLCNode, ConnectionPoint } from '../PLCNode';
 
 export class FbdJump {

@@ -8,6 +8,7 @@ import { AboutComponent } from './about/about.component';
 
 const routes: Routes = [
   {path: '', component: HomepageComponent},
+  {path: 'home', component: HomepageComponent},
   {path: 'editor/:pouName', component: EditorComponent},
   {path: 'projectOverview', component: ProjectOverviewComponent},
   {path: 'userManual', component: UserManualComponent},

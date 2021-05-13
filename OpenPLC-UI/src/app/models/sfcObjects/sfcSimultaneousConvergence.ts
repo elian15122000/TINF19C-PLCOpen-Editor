@@ -13,6 +13,7 @@ export class SfcSimultaneousConvergence{
   public position: {x: 0, y: 0};
   public node: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
 
+  // check if imported xml ist empty, then create xml, otherwise reads relevant values of xml- file
   constructor(xmlSimConvergence: any) {
     if (xmlSimConvergence === '') {
       this.createXML();
@@ -64,6 +65,7 @@ export class SfcSimultaneousConvergence{
         this.position = {x: position.getAttribute('x'), y: position.getAttribute('y')};
       }
     }
+    // values that are relevant for illustration are written into nodes
     this.node.id = this.localId;
     this.node.type = 'default';
     for (let i = 0; i < this.connectionPointIn.length; i++){
@@ -85,6 +87,7 @@ export class SfcSimultaneousConvergence{
       this.node.connectionPoints.push(newConnectionPointOut);
     }
   }
+  // creates a default xml-file for the object
   createXML(): void {
     const xmlString = '<simultaneousConvergence localId="0" height="50" width="30">\n' +
       '<position x="0" y="0"/>\n' +
@@ -98,15 +101,16 @@ export class SfcSimultaneousConvergence{
     const parser = new DOMParser();
     this.xml = parser.parseFromString(xmlString, 'application/xml').getElementsByTagName('simultaneousConvergence')[0];
   }
+  // updates attributes of position
   updatePosition(xPos: number, yPos: number): void {
     this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
     this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
   }
-
+  // updates relevant attributes
   updateAttributes(localId: number): void{
     this.xml.setAttribute('localId', localId);
   }
-
+// updates refId of ConnectionPointIn
   change_refid(newRef): void {
     this.xml.getElementsByTagName('connectionPointIn')[0].getElementsByTagName('connection')[0].setAttribute('refLocalId', newRef);
   }
