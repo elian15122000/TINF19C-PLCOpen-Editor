@@ -7,11 +7,10 @@
   The HTML code that displays the graph part of the editor.
   Here the toolbar and the graph are displayed and can call functions from graph.component.html
 -->
-
 <div class="row shadow my-lg-2 mx-lg-4 p-2">
   <div class="col col-4">
-    <button class="btn btn-outline-primary mx-1" (click)="updateChart()">Update Chart</button>
-    <button class="btn btn-outline-primary mx-1" (click)="save()">SAVE</button>
+    <button class="btn btn-outline-primary mx-1" (click)="updateChart()" title="Update Chart"><i class="fa fa-refresh"></i></button>
+    <button class="btn btn-outline-primary mx-1" (click)="save()" title="Save to XML"><i class="fa fa-save"></i></button>
     <button class="btn btn-outline-primary mx-1"  data-toggle="modal" data-target="#new-variable-modal">Add Variable</button>
   </div>
   <div class="col col-3">
