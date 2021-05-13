@@ -1,4 +1,11 @@
-/*** author: Leonie de Santis ***/
+/**
+ * @Filename : project.service.ts
+ *
+ * @Author : Leonie de Santis
+ *
+ * @Last_Modified : 13.05.2021
+ *
+ */
 
 import { Injectable } from '@angular/core';
 import {DatePipe} from '@angular/common';

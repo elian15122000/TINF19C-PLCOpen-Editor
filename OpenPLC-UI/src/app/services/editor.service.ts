@@ -1,3 +1,12 @@
+/**
+ * @Filename : editor.service.ts
+ *
+ * @Author : Leonie de Santis
+ *
+ * @Last_Modified : 13.05.2021
+ *
+ */
+
 import { Injectable } from '@angular/core';
 import {FbdInVariable} from '../models/fbdObjects/fbdInVariable';
 import {FbdOutVariable} from '../models/fbdObjects/fbdOutVariable';
@@ -10,22 +19,18 @@ import {LdContact} from '../models/ldObjects/ldContact';
 import {LdCoil} from '../models/ldObjects/ldCoil';
 import {LdLeftPowerRail} from '../models/ldObjects/ldLeftPowerRail';
 import {LdRightPowerRail} from '../models/ldObjects/ldRightPowerRail';
-
 import {ConnectionPoint, PLCNode} from '../models/PLCNode';
 import { Subject } from 'rxjs';
-import {CommonActionBlock} from '../models/commonObjects/commonActionBlock';
 import {CommonComment} from '../models/commonObjects/commonComment';
 import {CommonConnector} from '../models/commonObjects/commonConnector';
 import {CommonContinuation} from '../models/commonObjects/commonContinuation';
 import {CommonError} from '../models/commonObjects/commonError';
-import {CommonVendorElement} from '../models/commonObjects/commonVendorElement';
 import {SfcJumpStep} from '../models/sfcObjects/sfcJumpStep';
 import {SfcMacroStep} from '../models/sfcObjects/sfcMacroStep';
 import {SfcSelectionConvergence} from '../models/sfcObjects/sfcSelectionConvergence';
 import {SfcSelectionDivergence} from '../models/sfcObjects/sfcSelectionDivergence';
 import {SfcSimultaneousConvergence} from '../models/sfcObjects/sfcSimultaneousConvergence';
 import {SfcSimultaneousDivergence} from '../models/sfcObjects/sfcSimultaneousDivergence';
-import {SfcStep} from '../models/sfcObjects/sfcStep';
 import {SfcTransition} from '../models/sfcObjects/sfcTransition';
 
 @Injectable({
@@ -44,24 +49,19 @@ export class EditorService {
   coilList: LdCoil[] = [];
   leftPowerRailList: LdLeftPowerRail[] = [];
   rightPowerRailList: LdRightPowerRail[] = [];
-  actionBlockList: CommonActionBlock[] = [];
   commentList: CommonComment[] = [];
   connectorList: CommonConnector[] = [];
   continuationList: CommonContinuation[] = [];
   errorList: CommonError[] = [];
-  vendorElementList: CommonVendorElement[] = [];
   jumpStepList: SfcJumpStep[] = [];
   macroStepList: SfcMacroStep[] = [];
   selectionConvergenceList: SfcSelectionConvergence[] = [];
   selectionDivergenceList: SfcSelectionDivergence[] = [];
   simultaneousConvergenceList: SfcSimultaneousConvergence[] = [];
   simultaneousDivergenceList: SfcSimultaneousDivergence[] = [];
-  stepList: SfcStep[] = [];
   transitionList: SfcTransition[] = [];
   allList: any[] = [];
-
   pou: any;
-
   nodes: PLCNode[] = [];
   update$: Subject<any> = new Subject();
   allConnectionPointIns: ConnectionPoint[] = [];
@@ -177,16 +177,6 @@ export class EditorService {
         this.allList.push(ldCoil);
         this.nodes.push(ldCoil.node);
       }
-      /*
-      // in case of reuse add to allList
-      for (const actionBlock of pou.getElementsByTagName('actionBlock')) {
-        const commonActionBlock = new CommonActionBlock(actionBlock);
-        if (Number(commonActionBlock.localId) > this.elementCounter){
-          this.elementCounter = Number(commonActionBlock.localId);
-        }
-        this.actionBlockList.push(commonActionBlock);
-        this.nodes.push(commonActionBlock.node);
-      } */
     for (const comment of pou.getElementsByTagName('comment')) {
         const commonComment = new CommonComment(comment);
         if (Number(commonComment.localId) > this.elementCounter){
@@ -277,16 +267,6 @@ export class EditorService {
       this.allList.push(sfcSimultaneousDivergence);
       this.nodes.push(sfcSimultaneousDivergence.node);
     }
-      /*
-            // in case of reuse add to allList
-      for (const step of pou.getElementsByTagName('step')) {
-        const sfcStep = new SfcStep(step);
-        if (Number(sfcStep.localId) > this.elementCounter){
-          this.elementCounter = Number(sfcStep.localId);
-        }
-        this.stepList.push(sfcStep);
-        this.nodes.push(sfcStep.node);
-      } */
     for (const transition of pou.getElementsByTagName('transition')) {
       const sfcTransition = new SfcTransition(transition);
       if (Number(sfcTransition.localId) > this.elementCounter){
@@ -348,22 +328,16 @@ export class EditorService {
     this.update$.next(true);
   }
 
-  /**
-   * works
-   */
+
+  // update the information in the xml
   save_to_xml(): void{
-    console.log(this.allList);
     for (const node of this.nodes) {
       const nodeId = node.id;
       for (const model of this.allList) {
           if (model.localId === nodeId){
-            // change stuff
-            // call change_ref
             for (const con of node.connectionPoints) {
               if (con.edgeId != null){
-                // check type
                 if (con.type === 'IN'){
-                  // set ref if
                   const newRefId = con.sourceId;
                   try {
                   model.change_refid(newRefId, '');
@@ -373,8 +347,6 @@ export class EditorService {
                 }
               }
             }
-            // call change_att
-            // call change_pos
           }
         }
     }
@@ -385,9 +357,6 @@ export class EditorService {
    */
   // HACK: negated will be set to false for now
    public add_in_variable(name, negated= 'false'): void{
-    // create a new InVariable
-    // call update node
-    // Do Later: reference a variable from the interface?
     const newBlock = new FbdInVariable('');
     this.elementCounter++;
     const id = this.elementCounter.toString();

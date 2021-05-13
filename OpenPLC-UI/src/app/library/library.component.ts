@@ -1,3 +1,12 @@
+/**
+ * @Filename : library.service.ts
+ *
+ * @Author : Leonie de Santis
+ *
+ * @Last_Modified : 13.05.2021
+ *
+ */
+
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { EditorService} from '../services/editor.service';

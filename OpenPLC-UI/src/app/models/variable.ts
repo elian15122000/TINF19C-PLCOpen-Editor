@@ -1,5 +1,11 @@
-/*** author: Leonie de Santis ***/
-
+/**
+ * @Filename : variable.ts
+ *
+ * @Author : Leonie de Santis
+ *
+ * @Last_Modified : 13.05.2021
+ *
+ */
 export class Variable {
   public xml: any;
   public class = 'local';

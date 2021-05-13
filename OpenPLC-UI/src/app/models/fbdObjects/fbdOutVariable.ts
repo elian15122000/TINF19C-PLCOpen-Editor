@@ -1,5 +1,11 @@
-/*** author: Leonie de Santis ***/
-
+/**
+ * @Filename : fbdOutVariable.ts
+ *
+ * @Author : Leonie de Santis
+ *
+ * @Last_Modified : 13.05.2021
+ *
+ */
 import { ConnectionPoint, PLCNode } from '../PLCNode';
 
 export class FbdOutVariable {
