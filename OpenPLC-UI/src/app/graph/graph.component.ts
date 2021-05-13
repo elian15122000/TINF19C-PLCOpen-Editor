@@ -287,7 +287,7 @@ export class GraphComponent implements OnInit {
       this.allConnectionPointIns = this.editorService.allConnectionPointIns;
       this.allConnectionPointOuts = this.editorService.allConnectionPointOuts;
     } else {
-      this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/home');
     }
 
     this.edgesIdCounter = 0;
