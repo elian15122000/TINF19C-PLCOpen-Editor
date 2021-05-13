@@ -30,5 +30,22 @@ li {
   border-top: solid black 1px;
 }
 
+.lib-el {
+  position: relative;
+  display: inline-block;
+  margin-top: 20px;
+  width: 200px;
+}
+
+.lib-el[title]:hover::after {
+  background:white;
+  border: black 1px solid;
+  content: attr(title);
+  position: absolute;
+  width: 200px;
+  left: 50%;
+  top: 50%;
+}
+
 
 

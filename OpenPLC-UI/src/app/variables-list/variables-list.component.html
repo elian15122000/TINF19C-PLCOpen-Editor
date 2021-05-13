@@ -1,7 +1,6 @@
 <div class="variablesList">
-
   <!-- Table of the variables -->
-  <table class="table">
+  <table class="table" style="overflow-y:scroll">
     <thead class="thead" style="border-bottom: 1px solid gray;">
     <tr>
       <th class="header" scope="col">Del.</th>
@@ -14,7 +13,6 @@
       <th class="header" scope="col">Documentation</th>
     </tr>
     </thead>
-
     <tbody *ngFor="let variable of variables">
     <tr>
       <td>
@@ -72,5 +70,5 @@
 
     </tbody>
   </table>
-  <button (click)="newVariable()" class="btn btn-outline-primary">New Variable</button>
+  <button (click)="newVariable()" class="btn btn-outline-success mx-sm-2"><i class="fa fa-plus"></i></button>
 </div>

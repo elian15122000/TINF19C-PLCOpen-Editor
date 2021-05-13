@@ -46,17 +46,13 @@ export class EditorComponent implements OnInit {
 
   }
 
-
-
   ngOnInit(): void {
+
     window.addEventListener("beforeunload", (event) => {
       event.preventDefault();
       event.returnValue = "Unsaved modifications";
       return event;
    });
-/*     var x = window.scrollX;
-    var y = window.scrollY;
-    window.onscroll = function () { window.scrollTo(x, y); }; */
   }
 
 }
