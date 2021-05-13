@@ -356,13 +356,61 @@ export class EditorService {
    * Add Variables and Blocks
    */
   // HACK: negated will be set to false for now
-   public add_in_variable(name, negated= 'false'): void{
+   public add_in_variable(name, negated): void{
     const newBlock = new FbdInVariable('');
     this.elementCounter++;
     const id = this.elementCounter.toString();
-    newBlock.updateAttributes(id, negated, name);
+    newBlock.updateAttributes(id, name, negated);
     this.inVariableList.push(newBlock);
     this.allList.push(newBlock);
     this.nodes.push(newBlock.node);
+    for (const con of newBlock.node.connectionPoints) {
+      this.serverConnections.push(con);
+    }
+    if (this.pou.getElementsByTagName('SFC')[0] !== undefined) {
+      this.pou.getElementsByTagName('SFC')[0].addChild(newBlock.xml);
+    }
+    if (this.pou.getElementsByTagName('FBD')[0] !== undefined) {
+      this.pou.getElementsByTagName('FBD')[0].appendChild(newBlock.xml);
+    }
   }
+
+  public add_out_variable(name, negated): void{
+    const newBlock = new FbdOutVariable('');
+    this.elementCounter++;
+    const id = this.elementCounter.toString();
+    newBlock.updateAttributes(id, name, negated);
+    this.outVariableList.push(newBlock);
+    this.allList.push(newBlock);
+    this.nodes.push(newBlock.node);
+    for (const con of newBlock.node.connectionPoints) {
+      this.serverConnections.push(con);
+    }
+    if (this.pou.getElementsByTagName('SFC')[0] !== undefined) {
+      this.pou.getElementsByTagName('SFC')[0].addChild(newBlock.xml);
+    }
+    if (this.pou.getElementsByTagName('FBD')[0] !== undefined) {
+      this.pou.getElementsByTagName('FBD')[0].appendChild(newBlock.xml);
+    }
+  }
+
+  public add_inout_variable(name, negated): void{
+    const newBlock = new FbdInOutVariable('');
+    this.elementCounter++;
+    const id = this.elementCounter.toString();
+    newBlock.updateAttributes(id, name, negated, negated);
+    this.inOutVariableList.push(newBlock);
+    this.allList.push(newBlock);
+    this.nodes.push(newBlock.node);
+    for (const con of newBlock.node.connectionPoints) {
+      this.serverConnections.push(con);
+    }
+    if (this.pou.getElementsByTagName('SFC')[0] !== undefined) {
+      this.pou.getElementsByTagName('SFC')[0].addChild(newBlock.xml);
+    }
+    if (this.pou.getElementsByTagName('FBD')[0] !== undefined) {
+      this.pou.getElementsByTagName('FBD')[0].appendChild(newBlock.xml);
+    }
+  }
+
 }

@@ -263,12 +263,16 @@ export class GraphComponent implements OnInit {
   * @param form: carries the user input
   */
  public add_variable(form){
-   if(form["type"]=="in"){
+   if(form["type"]==="in"){
     console.log(form["name"]);
-    this.editorService.add_in_variable(form["name"]);
-   }else{
-     alert("Variables of Type " + form["type"] + "Are not supported yet.");
+    this.editorService.add_in_variable(form["name"], form["negated"]);
    }
+   else if(form["type"]==="out"){
+    this.editorService.add_out_variable(form["name"], form["negated"]);
+   } else{
+    this.editorService.add_inout_variable(form["name"], form["negated"]);
+   }
+   this.updateChart()
  }
 
 
@@ -283,7 +287,7 @@ export class GraphComponent implements OnInit {
       this.allConnectionPointIns = this.editorService.allConnectionPointIns;
       this.allConnectionPointOuts = this.editorService.allConnectionPointOuts;
     } else {
-      this.router.navigateByUrl('projectOverview');
+      this.router.navigateByUrl('/');
     }
 
     this.edgesIdCounter = 0;

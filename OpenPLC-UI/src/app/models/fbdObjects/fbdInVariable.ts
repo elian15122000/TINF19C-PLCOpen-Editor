@@ -84,8 +84,8 @@ export class FbdInVariable {
       '              <position x="0" y="0"/> \n' +
       '              <connectionPointOut> \n' +
       '                <relPosition x="0" y="0"/> \n' +
-      '              <expression>LocalVar0</expression>' + // added expression
       '              </connectionPointOut> \n' +
+      '              <expression>LocalVar0</expression>' + // added expression
       '            </inVariable> ';
     const parser = new DOMParser();
     this.xml = parser.parseFromString(xmlString, 'application/xml');
@@ -104,13 +104,7 @@ export class FbdInVariable {
     this.xml.setAttribute('localId', localId);
     this.xml.setAttribute('negated', negated);
     this.xml.getElementsByTagName('expression')[0].innerHTML = name;
-    if (!this.node){
-      this.instanciate(localId, name);
-    }
-  }
-  // create node for the first time
-  instanciate(id, name): void{
-    this.node.id = id;
+    this.node.id = localId;
     this.node.label = name;
     this.node.type = 'var';
     const newConnectionPoint: ConnectionPoint = {
@@ -118,7 +112,7 @@ export class FbdInVariable {
       sourcePoint: 'OUT',
       targetPoint: null,
       targetName: null,
-      sourceId: id,
+      sourceId: localId,
       sourceName: name,
       targetId: null,
       edgeId: null,

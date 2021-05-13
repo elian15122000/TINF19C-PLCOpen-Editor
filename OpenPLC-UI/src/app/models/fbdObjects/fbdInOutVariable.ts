@@ -125,10 +125,11 @@ export class FbdInOutVariable {
   }
 
   // updates relevant attributes
-  updateAttributes(localId: number, negatedIn: string, negatedOut: string): void{
+  updateAttributes(localId: string, name, negatedIn: string, negatedOut: string): void{
     this.xml.setAttribute('localId', localId);
     this.xml.setAttribute('negated', negatedIn);
     this.xml.setAttribute('negated', negatedOut);
+    this.xml.getElementsByTagName('expression')[0].innerHTML = name;
   }
 
   // updates refId of ConnectionPointIn

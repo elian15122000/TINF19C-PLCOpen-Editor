@@ -18,7 +18,10 @@ import {Router} from '@angular/router';
 export class ImportService {
   xmlFile: any;
 
+
+
   constructor(private projectService: ProjectService, private router: Router) {
+
   }
 
   // check if a file was uploaded and read the uploaded file as a string

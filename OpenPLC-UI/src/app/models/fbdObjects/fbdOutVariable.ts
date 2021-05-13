@@ -81,6 +81,7 @@ export class FbdOutVariable {
       '              <connectionPointIn> \n' +
       '                <relPosition x="0" y="0"/> \n' +
       '              </connectionPointIn> \n' +
+      '              <expression>LocalVar0</expression>' +
       '            </outVariable> ';
     const parser = new DOMParser();
     this.xml = parser.parseFromString(xmlString, 'application/xml');
@@ -94,9 +95,23 @@ export class FbdOutVariable {
   }
 
   // updates relevant attributes
-  updateAttributes(localId: number, negated: string): void{
+  updateAttributes(localId: string, name: string,negated: string): void{
     this.xml.setAttribute('localId', localId);
     this.xml.setAttribute('negated', negated);
+    this.xml.getElementsByTagName('expression')[0].innerHTML = name;
+    this.node.id = localId;
+    this.node.label = name;
+    this.node.type = 'var';
+    const newConnectionPoint: ConnectionPoint = {
+      type: 'IN',
+      targetPoint: 'IN',
+      targetId: this.localId,
+      targetName: this.node.label,
+      edgeId: null
+    };
+    this.node.connectionPoints.push(newConnectionPoint);
+    
+  
   }
 
   // updates refId of ConnectionPointIn
