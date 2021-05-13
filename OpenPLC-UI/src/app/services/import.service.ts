@@ -2,6 +2,7 @@
 
 import { Injectable } from '@angular/core';
 import {ProjectService} from './project.service';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import {ProjectService} from './project.service';
 export class ImportService {
   xmlFile: any;
 
-  constructor(private projectService: ProjectService) {
+  constructor(private projectService: ProjectService, private router: Router) {
   }
 
   // check if a file was uploaded and read the uploaded file as a string
@@ -48,7 +49,16 @@ export class ImportService {
       this.projectService.headerItems.push(dom.documentElement.getElementsByTagName('contentHeader')[0]);
       this.projectService.instanceItems = dom.documentElement.getElementsByTagName('instances')[0];
     } catch (e) {
-      alert('An error occurred during import');
+      alert('The uploaded file is empty or corrupted! \n Please upload another file.');
+      if (this.router.url === '/') {
+        this.router.navigateByUrl('home');
+      }
+      else if (this.router.url === '/home') {
+        this.router.navigateByUrl('');
+      }
+      else if (this.router.url === '/projectOverview') {
+        this.router.navigateByUrl('home');
+      }
     }
   }
 }

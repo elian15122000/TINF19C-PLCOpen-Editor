@@ -1,18 +1,18 @@
 /**
  * @Filename : graph.component.ts
- * 
+ *
  * @Purpose : This file alonge with editor service is responsible for editing.
  *          while graph.component.ts changes the rendered graph and applies restrictions to how FBS are edited
  *          Information are passed to editor service so it can be applied to the xml
- * 
+ *
  * @Author : Mouaz Tabboush
- * 
+ *
  * Global Variables:
  * pouName: string; -- The name of the program being edited
  * nodes: PLCNode[]; -- a list of all nodes rendered on the graph. This is has to be passing into the ngx-graph element to be rendered
  * edges: Edge[]; -- a list of all connections rendered on the graph
  * edgesIdCounter: number; -- a counter for the edgesId. set to 0 on start
- * curve: any = shape.curveStepAfter; -- 
+ * curve: any = shape.curveStepAfter; --
  * selectedNode: PLCNode;
  * selectedNodeEdges: Edge[];
  * selectedNodeCons: ConnectionPoint[] = null;
@@ -23,11 +23,11 @@
  *
  * update$: Subject<any> = new Subject();
  *
- * 
+ *
  * Content:
  *        remove_edge(edgeId): removes an edge from the rendered graph.
  *                             this function call update_chart() when finnished
- *        
+ *
  *        set_selected_node(nodeId): this function is called in the graph.componen.html when a node is clicked.
  *                                   it changes selected node to match the given nodeId.
  *                                   it also changes the selected cons to match that of the new selected node
@@ -35,29 +35,29 @@
  *        add_edge(sourceId, targetId): adds an edge to the rendered graph connecting the two given NodeIds.
  *                                      This function calls update_chart() when finnished
  *                                      @avoid calling this function directly. instead use connect_points()
- * 
+ *
  *       connect_points(sourcePoint, targetPoint): this function runs a number of checks on the input before calling add_edge to avoid breaking any PLCXML restrictions
  *                                      instead of passing the NodeIds to be connected, PLCXML requires passing the formalParameter of the source and target
  *                                      @bug : this function uses remove_edge(edgeId) to remove old edges connected to one of the nodes
  *                                             PLCXML allows connecting an Output to multiple inputs, but this function doesn't allow it.
  *                                      This function calls add_edge() when all checks are valid
- *                          
+ *
  *      ngOnInit(): in the init function is required to bind the project service and read the content on connectionPointIns/Outs
  *                  in this function the initial edges are also set up
- *                                              
- * 
- *      
- *                                      
- * 
- *         
- * 
+ *
+ *
+ *
+ *
+ *
+ *
+ *
  */
 import { Component, OnInit } from '@angular/core';
 import { Edge } from '@swimlane/ngx-graph';
 import * as shape from 'd3-shape';
 import { Subject } from 'rxjs';
 import { ProjectService } from '../services/project.service';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { ConnectionPoint, PLCNode } from '../models/PLCNode';
 import { EditorService } from '../services/editor.service';
 
@@ -70,7 +70,7 @@ import { EditorService } from '../services/editor.service';
 export class GraphComponent implements OnInit {
 
   constructor(private projectService: ProjectService, private editorService: EditorService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute, private router: Router) {
     this.update$ = this.editorService.update$;
     this.allConnectionPointIns = this.editorService.allConnectionPointIns;
     this.allConnectionPointOuts = this.editorService.allConnectionPointOuts;
@@ -97,9 +97,9 @@ export class GraphComponent implements OnInit {
    * @param edgeId : edgeId to be deleted
    * @returns : none
    * @does : removes the given edge from this.edges
-   * @tests : 
+   * @tests :
    */
-  
+
   public remove_edge(edgeId): void {
     for (let index = 0; index < this.edges.length; index++) {
       const edge = this.edges[index];
@@ -220,7 +220,7 @@ export class GraphComponent implements OnInit {
           this.remove_edge(oldEdgeId);
         }
       }
-      
+
     }
 
 
@@ -306,6 +306,8 @@ export class GraphComponent implements OnInit {
       this.allConnectionPoints = this.editorService.allConnectionPoints;
       this.allConnectionPointIns = this.editorService.allConnectionPointIns;
       this.allConnectionPointOuts = this.editorService.allConnectionPointOuts;
+    } else {
+      this.router.navigateByUrl('projectOverview');
     }
 
     this.edgesIdCounter = 0;
@@ -367,7 +369,7 @@ export class GraphComponent implements OnInit {
     this.editorService.save_to_xml();
   }
 
-  /* 
+  /*
     Add nodes and var
   */
  public add_node(){
