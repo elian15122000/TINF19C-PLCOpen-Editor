@@ -1,23 +1,20 @@
-<!-- <h1>{{title}}</h1> -->
-
-<!-- <div class="selectionButtons">
-  <a class="button" (click)="newProjectModal()">New Project</a>
-  <br>
-  <a class="button" (click)="openProjectModal()">Open Project</a>
-  <br>
-  <a class="button" routerLink="userManual">User Manual</a>
-</div> -->
+<!--
+Author: Elian Yildirim
+Last Modified: 13.05.2021
+Purpose: Homepage
+-->
 
 
 <app-navigation></app-navigation>
 
+<!-- Welcome text -->
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center text">
   <h1 class="display-4">Welcome to PLCopen-Editor</h1>
   <p class="lead">PLCopen is an organization in the field of industrial control technology.<br>This can be developed
     using our web editor with the help of building blocks and both imported and exported in XML format.</p>
 </div>
 
-
+<!-- cards for open project, create project and user manual -->
 <div class="container">
   <div class="card-deck mb-3 text-center">
     <div class="card mb-4 box-shadow" id="start">
@@ -78,19 +75,7 @@
 
 
 
-<!-- Modals für Öffnen / Neu Projekt -->
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- Modal for creating project -->
 
 <div class="modal fade" id="newprojectmodal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -124,6 +109,8 @@
 </div>
 
 
+
+<!-- Modal for opening existing project -->
 <div class="modal fade" id="openprojectmodal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
