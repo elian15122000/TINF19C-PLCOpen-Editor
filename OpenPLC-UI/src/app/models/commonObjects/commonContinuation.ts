@@ -12,6 +12,7 @@ export class CommonContinuation{
   public position: {x: 0, y: 0};
   public node: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
 
+  // check if imported xml ist empty, then create xml, otherwise reads relevant values of xml- file
   constructor(xmlCommonContinuation: any) {
     if (xmlCommonContinuation === ''){
       this.createXML();
@@ -44,6 +45,7 @@ export class CommonContinuation{
         }
       }
     }
+    // values that are relevant for illustration are written into nodes
     this.node.id = this.localId;
     this.node.type = 'default';
     const newConnectionPoint: ConnectionPoint = {
@@ -58,6 +60,7 @@ export class CommonContinuation{
     this.node.connectionPoints.push(newConnectionPoint);
   }
 
+  // creates a default xml-file for the object
   createXML(): void{
     const xmlString = '<continuation localId="0" height="50" width="30" name=""  >\n' +
       '<position x="0" y="0"/>\n' +
@@ -69,11 +72,12 @@ export class CommonContinuation{
     this.xml = parser.parseFromString(xmlString, 'application/xml').getElementsByTagName('continuation')[0];
     this.xml = this.xml.getElementsByTagName('continuation')[0];
   }
+  // updates attributes of position
   updatePosition(xPos: number, yPos: number): void {
     this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
     this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
   }
-
+// updates relevant attributes
   updateAttributes(localId: number, name: string): void{
     this.xml.setAttribute('localId', localId);
     this.xml.setAttribute('name', name);

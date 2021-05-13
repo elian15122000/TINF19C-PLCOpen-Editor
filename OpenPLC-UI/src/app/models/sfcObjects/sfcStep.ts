@@ -13,8 +13,8 @@ export class SfcStep
   public connectionPointOutAction: {x: 0, y: 0};
   public position: {x: 0, y: 0};
   public initialStep = false;
-  // TODO: formalParameter
 
+  // check if imported xml ist empty, then create xml, otherwise reads relevant values of xml- file
   constructor(xmlStep: any) {
     if (xmlStep === '') {
       this.createXML();
@@ -68,6 +68,8 @@ export class SfcStep
       }
     }
   }
+
+  // creates a default xml-file for the object
   createXML(): void {
     const xmlString = '<step localId="0" height="50" width="30" name="" initialStep="false" negated="false">\n' +
       '<position x="0" y="0"/>\n' +
@@ -84,19 +86,19 @@ export class SfcStep
     const parser = new DOMParser();
     this.xml = parser.parseFromString(xmlString, 'application/xml').getElementsByTagName('step')[0];
   }
-
+// updates attributes of position
   updatePosition(xPos: number, yPos: number): void {
     this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
     this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
   }
-
+  // updates relevant attributes
   updateAttributes(localId: number, name: string, negated: string, initialStep: string): void{
     this.xml.setAttribute('localId', localId);
     this.xml.setAttribute('name', name);
     this.xml.setAttribute('negated', negated);
     this.xml.setAttribute('initialStep', initialStep);
   }
-
+// updates refId of ConnectionPointIn
   change_refid(newRef): void {
     this.xml.getElementsByTagName('connectionPointIn')[0].getElementsByTagName('connection')[0].setAttribute('refLocalId', newRef);
   }

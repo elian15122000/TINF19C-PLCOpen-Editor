@@ -14,6 +14,7 @@ export class CommonVendorElement{
   public outputVariables: any[] = [];
   public node: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
 
+  // check if imported xml ist empty, then create xml, otherwise reads relevant values of xml- file
   constructor(xmlCommonVendorElement: any) {
     this.xml = xmlCommonVendorElement;
     if (xmlCommonVendorElement.getAttribute('localId') !== undefined) {
@@ -47,6 +48,7 @@ export class CommonVendorElement{
         this.inOutVariables.push(this.readInOutVariable(variable));
       }
     }
+    // values that are relevant for illustration are written into nodes
     this.node.id = this.localId;
     this.node.label = '';
     this.node.type = 'default';
@@ -126,6 +128,7 @@ export class CommonVendorElement{
         return variable;
       }
 
+  // creates a default xml-file for the object
   createXML(): void{
     const xmlString = '<vendorElement localId="0" height="50" width="30" >\n' +
       '<position x="0" y="0"/>\n' +
@@ -140,12 +143,12 @@ export class CommonVendorElement{
     this.xml = this.xml.getElementsByTagName('error')[0];
     console.log(this.xml);
   }
-
+  // updates attributes of position
   updatePosition(xPos: number, yPos: number): void {
     this.xml.getElementsByTagName('position')[0].setAttribute('x', xPos);
     this.xml.getElementsByTagName('position')[0].setAttribute('y', yPos);
   }
-
+// updates relevant attributes
   updateAttributes(localId: number): void{
     this.xml.setAttribute('localId', localId);
   }

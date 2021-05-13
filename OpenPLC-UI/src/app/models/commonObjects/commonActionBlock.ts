@@ -21,6 +21,7 @@ export class CommonActionBlock{
   public connectionPointIn: {x: number, y: number, refLocalId: string, formalParameter: string};
   public PLCNode: PLCNode = {id: null, label: null, type: null, connectionPoints: null};
 
+  // check if imported xml ist empty, then create xml, otherwise reads relevant values of xml- file
   constructor(xmlCommonActionBlock: any) {
     if (xmlCommonActionBlock === ''){
       this.createXML();
@@ -87,6 +88,7 @@ export class CommonActionBlock{
 
       }
     }
+    // values that are relevant for illustration are written into nodes
     this.PLCNode.id = this.localId;
     this.PLCNode.label = '';
     this.PLCNode.type = 'default';
@@ -99,6 +101,8 @@ export class CommonActionBlock{
     };
     this.PLCNode.connectionPoints.push(newConnectionPointIn);
   }
+
+  // creates a default xml-file for the object
   createXML(): void{
     const xmlString = '<actionBlock localId="0" height="50" width="30" negated="false"   >\n' +
       '              <position x="0" y="0"/>\n' +
