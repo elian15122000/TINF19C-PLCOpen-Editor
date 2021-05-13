@@ -47,6 +47,12 @@ export class EditorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    window.addEventListener("beforeunload", (event) => {
+      event.preventDefault();
+      event.returnValue = "Unsaved modifications";
+      return event;
+   });
   }
 
 }
