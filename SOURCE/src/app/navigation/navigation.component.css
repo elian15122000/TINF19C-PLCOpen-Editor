@@ -1,0 +1,19 @@
+ /**
+
+@filename : navigation.component.css
+@author : Elian Yildirim
+@Last_Modified : 13.05.2021
+*/
+ 
+ #mobilebar {
+    display: none;
+  }
+
+@media only screen and (max-width: 800px) {
+    #mobilebar {
+      display: block;
+    }
+    #desktopbar {
+      display: none;
+    }
+  } 

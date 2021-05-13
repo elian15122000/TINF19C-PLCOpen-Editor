@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns:ns1="http://www.plcopen.org/xml/tc6.xsd" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.plcopen.org/xml/tc6_0201">
+  <fileHeader companyName="Unknown" productName="Unnamed" productVersion="1" creationDateTime="2021-04-23T13:43:33"/>
+  <contentHeader name="Unnamed" modificationDateTime="2021-04-23T13:44:47">
+    <coordinateInfo>
+      <fbd>
+        <scaling x="10" y="10"/>
+      </fbd>
+      <ld>
+        <scaling x="10" y="10"/>
+      </ld>
+      <sfc>
+        <scaling x="10" y="10"/>
+      </sfc>
+    </coordinateInfo>
+  </contentHeader>
+  <types>
+    <dataTypes/>
+    <pous>
+      <pou name="VariablesConnections" pouType="program">
+        <interface>
+          <localVars>
+            <variable name="InputVariable">
+              <type>
+                <DINT/>
+              </type>
+            </variable>
+            <variable name="Input/OutputVariable">
+              <type>
+                <DINT/>
+              </type>
+            </variable>
+            <variable name="OutputVariable">
+              <type>
+                <DINT/>
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <FBD>
+            <inVariable localId="1" executionOrderId="0" height="30" width="90" negated="false">
+              <position x="170" y="70"/>
+              <connectionPointOut>
+                <relPosition x="90" y="20"/>
+              </connectionPointOut>
+              <expression>InputVariable</expression>
+            </inVariable>
+            <inOutVariable localId="2" executionOrderId="0" height="30" width="90" negatedOut="false" negatedIn="false">
+              <position x="350" y="130"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="1">
+                  <position x="350" y="150"/>
+                  <position x="305" y="150"/>
+                  <position x="305" y="90"/>
+                  <position x="260" y="90"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="90" y="20"/>
+              </connectionPointOut>
+              <expression>Input/OutputVariable</expression>
+            </inOutVariable>
+            <outVariable localId="3" executionOrderId="0" height="30" width="90" negated="false">
+              <position x="550" y="70"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="2">
+                  <position x="550" y="90"/>
+                  <position x="495" y="90"/>
+                  <position x="495" y="150"/>
+                  <position x="440" y="150"/>
+                </connection>
+              </connectionPointIn>
+              <expression>OutputVariable</expression>
+            </outVariable>
+          </FBD>
+        </body>
+      </pou>
+    </pous>
+  </types>
+  <instances>
+    <configurations>
+      <configuration name="Config0">
+        <resource name="Res0">
+          <task name="task0" priority="0" interval="T#20ms">
+            <pouInstance name="instance0" typeName="VariablesConnections"/>
+          </task>
+        </resource>
+      </configuration>
+    </configurations>
+  </instances>
+</project>

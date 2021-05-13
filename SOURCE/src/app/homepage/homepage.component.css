@@ -1,0 +1,41 @@
+/**
+
+@filename : homepage.component.css
+@author : Elian Yildirim
+@Last_Modified : 13.05.2021
+*/
+
+
+ .card {
+   height: 20%;
+   transition: all .3s ease-in-out;
+   background-color: white;
+ }
+
+ .card:hover {
+  transform: scale(1.1);
+  background-color: #d3d3d3;
+ }
+
+ .modal-backdrop {
+  /* bug fix - no overlay */    
+  display: block;    
+}
+
+#mobilebar {
+  display: none;
+}
+
+.modal {
+  background-color: #333b3f;
+}
+
+@media only screen and (max-width: 800px) {
+  #mobilebar {
+    display: block;
+  }
+  #desktopbar {
+    display: none;
+  }
+}
+

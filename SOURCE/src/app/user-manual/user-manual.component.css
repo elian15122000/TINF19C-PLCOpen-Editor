@@ -1,0 +1,30 @@
+.backButton {
+  background-color: black;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 8px 2px;
+  cursor: pointer;
+  border-radius: 16px;
+}
+a{
+  color: white;
+  font-size: small;
+}
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+.userManualText {
+  color: red;
+}

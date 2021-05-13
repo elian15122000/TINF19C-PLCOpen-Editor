@@ -1,0 +1,158 @@
+<app-navigation></app-navigation>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3"></div>
+
+
+    <div class="col-sm-6 text-center">
+
+
+
+
+        <div class="projectOverview">
+          
+          <h2 style="margin-bottom: 3%">Project Overview</h2>
+
+          <h3>Project: {{projectName}}</h3>
+    
+          
+
+          <div *ngFor="let pou of pous">
+            <b><a class="dropbtn" routerLink="/editor/{{pou}}" style="font-size: 150%">{{pou}}</a></b>
+            <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#deletepou" ><i class="fa fa-trash"></i></button>
+            <hr>
+
+
+
+            <div class="modal fade" id="deletepou" tabindex="-1" role="dialog" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Really want to delete the POU {{pou}}?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <button class="btn btn-outline-danger" (click)="deletePou(pou)">Yes</button>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          
+        </div>
+
+
+
+
+      <template #other_content>No list existing... <br></template>
+
+      <button class="btn btn-outline-primary" data-toggle="modal" data-target="#newpoumodal"
+            style="margin-top: 5%">Add POU</button><br><br>
+          <button class="btn btn-outline-primary" data-toggle="modal" data-target="#openprojectmodal">Open another project</button><br><br>
+          <button class="btn btn-outline-primary" (click)="exportProject()">Export</button>
+
+      
+
+
+    </div>
+
+
+
+    <div class="col-sm-3"></div>
+
+
+  </div>
+
+
+
+  <app-footer></app-footer>
+
+
+</div>
+
+
+
+
+
+
+<div class="modal fade" id="openprojectmodal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Open existing PLC project</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <form class="uploadForm">
+            <label for="file" style="margin-right: 5px;">XML file: </label>
+            <input id="file" name="file" type="file" accept="text/xml" (change)="fileUpload($event)" required>
+            <br><br>
+            <input type="submit" data-dismiss="modal" (click)="openProject()" routerLink="/projectOverview"
+              class="btn btn-outline-primary" value="Open">
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="modal fade" id="newpoumodal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create a new POU</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #newPOU="ngForm" class="form">
+          <div class="form-group">
+            <label for="name">Name: </label>
+            <input id="name" class="form-control" name="name" type="text" required ngModel>
+          </div>
+
+          <div class="form-group">
+            <label for="type">Type: </label>
+            <select id="type" name="type" class="form-control" required ngModel>
+              <option value="FBD">Program</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="lang">Language: </label>
+            <select id="lang" name="lang" class="form-control" required ngModel>
+              <option value="FBD">FBD</option>
+              <option value="SFC">SFC</option>
+            </select>
+          </div>
+
+          <input type="submit" data-dismiss="modal" (click)="addPou(newPOU.value)" class="btn btn-primary" value="Open">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

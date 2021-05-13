@@ -1,0 +1,174 @@
+<!--
+  Filename: graph.component.html
+  Authors: Mouaz Tabboush, Elian Yildirim
+  Date: 11. May 2021
+-->
+<div class="row shadow my-lg-2 mx-lg-4 p-2">
+  <div class="col col-4">
+    <button class="btn btn-outline-primary mx-1" (click)="updateChart()" title="Update Chart"><i class="fa fa-refresh"></i></button>
+    <button class="btn btn-outline-primary mx-1" (click)="save()" title="Save to XML"><i class="fa fa-save"></i></button>
+    <button class="btn btn-outline-primary mx-1"  data-toggle="modal" data-target="#new-variable-modal">Add Variable</button>
+  </div>
+  <div class="col col-3">
+    <b>Inputs</b>
+  <div *ngFor="let con of selectedNodeCons; let i = index">
+    <div *ngIf="con.type==='IN'">
+      <div class="row">
+        <div class="col">
+          {{con.targetPoint}}:
+        </div>
+        <div class="col">
+          <select [(ngModel)]="ConnectionPoint" (ngModelChange)="connect_points($event, con)">
+            <option disable selected value>-- Select to change --</option>
+            <option *ngFor="let selectable_con of allConnectionPointOuts; let i = index" [ngValue]="selectable_con">
+              {{selectable_con.sourceName}} -- {{selectable_con.sourcePoint}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <hr>
+  <div class="col col-3">
+    <b>Outputs</b>
+    <div *ngFor="let con of selectedNodeCons; let i = index">
+      <div *ngIf="con.type==='OUT'">
+        <div class="row">
+          <div class="col">
+            {{con.sourcePoint}}:
+          </div>
+          <div class="col">
+          <select [(ngModel)]="ConnectionPoint" (ngModelChange)="connect_points(con, $event)">
+            <option disable selected value></option>
+            <option *ngFor="let selectable_con of allConnectionPointIns; let i = index" [ngValue]="selectable_con">
+              {{selectable_con.targetName}} -- {{selectable_con.targetPoint}}
+            </option>
+          </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ngx-graph class="chart-container" [update$]="update$" [view]="[2000, 800]" [links]="edges" [nodes]="nodes"
+  [curve]="curve">
+  <ng-template #nodeTemplate let-node>
+    <svg:g (click)="set_selected_node(node)">
+
+      <!-- The down-Fork Template -->
+      <!-- The width of the strokes need to be made thiner -->
+      <svg:g class="node" *ngIf="node.type=='fork'">
+        <svg:rect [attr.width]="70" [attr.height]="5" [attr.fill]="'black'" />
+        <svg:rect [attr.x]="0" [attr.y]="5" [attr.width]="5" [attr.height]="20" [attr.fill]="'black'" />
+        <svg:rect [attr.x]="65" [attr.y]="5" [attr.width]="5" [attr.height]="20" [attr.fill]="'black'" />
+        <svg:rect [attr.x]="65/2" [attr.y]="-20" [attr.width]="5" [attr.height]="20" [attr.fill]="'black'" />
+      </svg:g>
+
+      <!-- The down-Fork Template -->
+      <!-- The width of the strokes need to be made thiner -->
+      <svg:g class="node" *ngIf="node.type=='down-fork'">
+        <svg:rect [attr.width]="70" [attr.height]="5" [attr.fill]="'black'" />
+        <svg:rect [attr.x]="0" [attr.y]="5" [attr.width]="5" [attr.height]="20" [attr.fill]="'black'" />
+        <svg:rect [attr.x]="65" [attr.y]="5" [attr.width]="5" [attr.height]="20" [attr.fill]="'black'" />
+        <svg:rect [attr.x]="65/2" [attr.y]="-20" [attr.width]="5" [attr.height]="20" [attr.fill]="'black'" />
+      </svg:g>
+
+      <!-- The Up-Fork Template -->
+      <!-- The width of the strokes need to be made thiner -->
+      <svg:g class="node" *ngIf="node.type=='up-fork'">
+        <svg:rect [attr.width]="70" [attr.height]="5" [attr.fill]="'black'" />
+        <svg:rect [attr.x]="0" [attr.y]="-20" [attr.width]="5" [attr.height]="20" [attr.fill]="'black'" />
+        <svg:rect [attr.x]="65" [attr.y]="-20" [attr.width]="5" [attr.height]="20" [attr.fill]="'black'" />
+        <svg:rect [attr.x]="65/2" [attr.y]="0" [attr.width]="5" [attr.height]="20" [attr.fill]="'black'" />
+      </svg:g>
+
+
+      <!-- The FBS Template -->
+      <!-- The Height ist 40 * number of related edges -->
+      <svg:g class="node" *ngIf="node.type=='fbs'">
+        <svg:rect [attr.width]="node.dimension.width" [attr.height]="40 * get_related_edges(node.id).length + 50"
+          [attr.fill]="'white'" [attr.stroke]='"black"' />
+        <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height/2">
+          {{node.label}}
+        </svg:text>
+      </svg:g>
+
+      <!-- The Variable Template -->
+      <svg:g class="node" *ngIf="node.type==='var' || node.type==='fbdInOutVariable'">
+        <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height" [attr.fill]="'white'"
+          [attr.stroke]='"black"' />
+        <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height/2">
+          {{node.label}}
+        </svg:text>
+      </svg:g>
+
+      <svg:g class="node" *ngIf="node.type==='default'">
+        <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height" [attr.fill]="'white'"
+          [attr.stroke]='"black"' />
+        <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height/2">
+          {{node.label}}
+        </svg:text>
+      </svg:g>
+
+    </svg:g>
+  </ng-template>
+
+
+  <ng-template #linkTemplate let-link>
+    <svg:g class="edge">
+      <svg:path class="line" stroke-width="2"></svg:path>
+      <svg:text class="edge-label" text-anchor="middle">
+        <textPath class="text-path" [attr.href]="'#' + link.id" [style.dominant-baseline]="link.dominantBaseline">
+        </textPath>
+      </svg:text>
+    </svg:g>
+  </ng-template>
+</ngx-graph>
+
+<!--
+  Component Name: new-variable-modal
+  This is a template that is rendered when adding a new variable.
+-->
+
+<div class="modal fade" id="new-variable-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add new Variable</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #newVar="ngForm" class="form">
+          <div class="form-group">
+            <label for="name">Variable: </label>
+            <input id="name" class="form-control" name="name" type="text" required ngModel>
+          </div>
+          <div class="form-group">
+            <label for="lang">Negated: </label>
+            <select id="lang" name="lang" class="form-control" required ngModel>
+              <option value="true">Yes</option>
+              <option selected value="false">No</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="lang">Variabel Type: </label>
+            <select id="type" name="type" class="form-control" required ngModel>
+              <option selected value="in" >In</option>
+              <option value="inOut">InOut</option>
+              <option value="out">Out</option>
+            </select>
+          </div>
+
+          <input type="submit" data-dismiss="modal" (click)="add_variable(newVar.value)" class="btn btn-primary" value="Add">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

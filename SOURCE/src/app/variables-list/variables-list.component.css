@@ -1,0 +1,42 @@
+/* .variablesList {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 78%;
+  height: 20%;
+  border: black solid 2px;
+  padding-left: 10px;
+  overflow: auto;
+  margin: 5px;
+}
+table, th, td {
+  border: 1px solid black;
+}
+table {
+  border-collapse: collapse;
+  width: 96%;
+  margin: 10px 2%;
+}
+th {
+  background-color: lavender;
+}
+.newVariable {
+  margin: 10px 0 5px 2%;
+}
+input {
+  border: none;
+}
+
+select {
+  border: none;
+}
+ */
+
+ .header {
+  position: sticky;
+  top:0;
+  background-color: white;
+  border-bottom: 1px solid gray;
+  z-index: 100;
+}
+

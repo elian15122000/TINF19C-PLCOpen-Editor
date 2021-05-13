@@ -1,0 +1,38 @@
+/**
+
+@filename : editor.component.css
+@author : Elian Yildirim
+@Last_Modified : 13.05.2021
+
+*/
+
+.variablesList {
+    height: 250px;
+    overflow: auto;
+  }
+
+.library {
+    background-color: white;
+    
+}
+.graph {
+    z-index: 1;
+}
+
+.editor {
+    overflow: hidden;
+}
+
+::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .editor {
+    -ms-overflow-style: none; 
+    scrollbar-width: none;  
+  }
+
+  .library {
+    height: 300px;
+  }
+

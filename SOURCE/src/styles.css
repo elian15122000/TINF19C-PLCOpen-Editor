@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+.modal-backdrop {
+    /* bug fix - no overlay */    
+    display: none;    
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+  
+body {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }

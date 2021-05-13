@@ -1,0 +1,51 @@
+/* summary {
+  font-style: normal;
+  font-size: medium;
+}
+li {
+  font-style: normal;
+  font-size: medium;
+}
+
+
+.library {
+  position: absolute;
+  box-sizing: border-box;
+  right: 5px;
+  top: 0px;
+  bottom: 0px;
+  width: 20%;
+  border: solid black 2px;
+  padding-left: 10px;
+  margin: 5px;
+}
+
+ */
+
+.libraryList {
+  box-sizing: border-box;
+  margin-top: 20px;
+  padding: 20px;
+  overflow-y: scroll;
+  border-top: solid black 1px;
+}
+
+.lib-el {
+  position: relative;
+  display: inline-block;
+  margin-top: 20px;
+  width: 200px;
+}
+
+.lib-el[title]:hover::after {
+  background:white;
+  border: black 1px solid;
+  content: attr(title);
+  position: absolute;
+  width: 200px;
+  left: 50%;
+  top: 50%;
+}
+
+
+

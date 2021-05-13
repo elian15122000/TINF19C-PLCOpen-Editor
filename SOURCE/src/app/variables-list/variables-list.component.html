@@ -1,0 +1,80 @@
+<!--
+  Author: Leonie de Santis
+  Last Modified: 13.05.2021
+  Purpose: Variables Interface
+-->
+
+<div class="variablesList">
+  <!-- Table of the variables -->
+  <table class="table" style="overflow-y:scroll">
+    <thead class="thead" style="border-bottom: 1px solid gray;">
+    <tr>
+      <th class="header" scope="col">Del.</th>
+      <th class="header" scope="col">Name</th>
+      <th class="header" scope="col">Class</th>
+      <th class="header" scope="col">Type</th>
+      <th class="header" scope="col">IEC-Address</th>
+      <th class="header" scope="col">Initial value</th>
+      <th class="header" scope="col">Option</th>
+      <th class="header" scope="col">Documentation</th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let variable of variables">
+    <tr>
+      <td>
+        <button (click)="deleteVariable(variable)" class="btn btn-outline-danger"><i class="fa fa-trash"></i></button>
+      </td>
+        <td>
+          <label>
+            <input [(ngModel)]="variable.name" (change)="onchange()">
+          </label>
+        </td>
+        <td>
+          <label>
+            <select [(ngModel)]="variable.class" (change)="onchange()">
+              <option value="input">Input</option>
+              <option value="output">Output</option>
+              <option value="inOut">In-/Output</option>
+              <option value="external">External</option>
+              <option value="local">Local</option>
+              <option value="temp">Temp</option>
+            </select>
+          </label>
+        </td>
+        <td>
+          <label>
+            <select [(ngModel)]="variable.type" (change)="onchange()">
+              <option *ngFor="let type of types" value="{{type}}">{{type}}</option>
+            </select>
+          </label>
+        </td>
+        <td>
+          <label>
+            <input [(ngModel)]="variable.iec" (change)="onchange()">
+          </label>
+        </td>
+        <td>
+          <label>
+            <input [(ngModel)]="variable.init" (change)="onchange()">
+          </label>
+        </td>
+        <td>
+          <label>
+            <select [(ngModel)]="variable.option" (change)="onchange()">
+              <option value="constant">constant</option>
+              <option value="retain">retain</option>
+              <option value="non-retain">non-retain</option>
+            </select>
+          </label>
+        </td>
+        <td>
+          <label>
+            <input [(ngModel)]="variable.documentation" (change)="onchange()">
+          </label>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+  <button (click)="newVariable()" class="btn btn-outline-success mx-sm-2"><i class="fa fa-plus"></i></button>
+</div>

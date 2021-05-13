@@ -1,0 +1,49 @@
+<!--
+  Author: Leonie de Santis
+  Last Modified: 13.05.2021
+  Purpose: Library of function blocks
+-->
+
+<div class="library">
+  <h3>Library</h3>
+  <!-- Selection of the different types of function blocks -->
+  <select>
+      <option (click)="loadFunctionBlocks('Standard_Function_Blocks.xml')">Standardfunktionsblöcke</option>
+      <option>Zusätzliche Bausteine</option>
+      <option>Typumwandlung</option>
+      <option (click)="loadFunctionBlocks('Additional_Function_Blocks.xml')">Numerisch</option>
+      <option>Arithmetik</option>
+      <option>Zeit</option>
+      <option>Bit-Shift</option>
+      <option>Bitwise Operationen</option>
+      <option>Auswahl</option>
+      <option>Vergleich</option>
+      <option>Zeichenkette</option>
+      <option>Native Bausteine</option>
+      <option>Python Bausteine</option>
+  </select>
+  <!-- List of function blocks -->
+  <div class="libraryList">
+    <div *ngFor="let fb of functionBlocks">
+      <table >
+        <tr>
+          <td>
+            <div title="{{fb.getElementsByTagName('documentation')[0].children[0].innerHTML}}" class="lib-el" >
+              <svg style="float:left; width: 120px; height: 120px" >
+                <g>
+                  <rect x="0" y="0" width="100" height="100" fill="white" stroke="black"></rect>
+                  <text x="5" y="50" font-family="Verdana" font-size="15" fill="black" >{{fb.getAttribute('name')}}</text>
+                </g>
+              </svg>
+            </div>
+
+          </td>
+          <td>
+            <button (click)="addFB(fb)" class="btn btn-outline-primary">Add to the editor</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
