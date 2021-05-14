@@ -104,6 +104,10 @@ export class VariablesListComponent implements OnInit {
   onchange(): void{
     this.pou.getElementsByTagName('interface')[0].innerHTML = '';
     for (const variable of this.variables) {
+      if(variable.name === ""){
+        alert("Variable name can't be empty");
+        variable.name = "default_name";
+      }
       variable.createXML();
       this.pou.getElementsByTagName('interface')[0].appendChild(variable.xml);
     }
