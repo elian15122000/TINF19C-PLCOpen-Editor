@@ -307,6 +307,7 @@ export class EditorService {
       };
       newBlock.outputVariables.push(variable);
     }
+    newBlock.createVariableXML();
     newBlock.updateNode();
     this.blockList.push(newBlock);
     this.nodes.push(newBlock.node);

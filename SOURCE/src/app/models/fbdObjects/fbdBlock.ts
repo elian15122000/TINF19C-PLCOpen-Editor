@@ -70,7 +70,14 @@ export class FbdBlock {
     // values that are relevant for illustration are written into nodes
     this.node.id = this.localId;
     this.node.type = 'fbs';
-    this.node.label = this.typeName;
+
+    if (this.instanceName !== undefined && this.instanceName !== null) {
+      this.node.label = this.instanceName;
+    }
+    else {
+      this.node.label = this.typeName + this.localId;
+    }
+
 
     for (const variable of this.inputVariables){
       const newConnectionPointIn: ConnectionPoint = {
@@ -208,6 +215,37 @@ export class FbdBlock {
     const parser = new DOMParser();
     this.xml = parser.parseFromString(xmlString, 'application/xml');
     this.xml = this.xml.getElementsByTagName('block')[0];
+  }
+
+
+  createVariableXML(): void {
+    for (let i = 0; i < this.inputVariables.length; i++) {
+      const xmlString = '<variable formalParameter="' + this.inputVariables[i].formalParameter + '">\n' +
+        '                  <connectionPointIn>\n' +
+        '                    <relPosition x="0" y="' + (20 + i * 10) + '"/>\n' +
+        '                    <connection refLocalId="">\n' +
+        '                    </connection>\n' +
+        '                  </connectionPointIn>\n' +
+        '                </variable>';
+
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(xmlString, 'application/xml');
+      const variableXML = xml.getElementsByTagName('variable')[0];
+      this.xml.getElementsByTagName('inputVariables')[0].appendChild(variableXML);
+    }
+
+    for (let i = 0; i < this.outputVariables.length; i++) {
+      const xmlString = '<variable formalParameter="' + this.outputVariables[i].formalParameter + '">\n' +
+        '                  <connectionPointOut>\n' +
+        '                    <relPosition x="30" y="' + (20 + i * 10) + '"/>\n' +
+        '                  </connectionPointOut>\n' +
+        '                </variable>';
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(xmlString, 'application/xml');
+      const variableXML = xml.getElementsByTagName('variable')[0];
+      this.xml.getElementsByTagName('outputVariables')[0].appendChild(variableXML);
+    }
+
   }
 
   // updates attributes of position
