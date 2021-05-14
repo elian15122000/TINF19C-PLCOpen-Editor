@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns:ns1="http://www.plcopen.org/xml/tc6.xsd" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.plcopen.org/xml/tc6_0201">
+  <fileHeader companyName="Unbekannt" productName="Unbenannt" productVersion="1" creationDateTime="2021-05-14T06:55:36"/>
+  <contentHeader name="Unbenannt" modificationDateTime="2021-05-14T06:57:29">
+    <coordinateInfo>
+      <fbd>
+        <scaling x="10" y="10"/>
+      </fbd>
+      <ld>
+        <scaling x="10" y="10"/>
+      </ld>
+      <sfc>
+        <scaling x="10" y="10"/>
+      </sfc>
+    </coordinateInfo>
+  </contentHeader>
+  <types>
+    <dataTypes/>
+    <pous>
+      <pou name="program0" pouType="program">
+        <body>
+          <SFC>
+            <inVariable localId="1" height="30" width="70" negated="false">
+              <position x="200" y="70"/>
+              <connectionPointOut>
+                <relPosition x="70" y="10"/>
+              </connectionPointOut>
+              <expression>InVar</expression>
+            </inVariable>
+            <inOutVariable localId="2" height="30" width="80" negatedOut="false" negatedIn="false">
+              <position x="340" y="60"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="1">
+                  <position x="340" y="80"/>
+                  <position x="270" y="80"/>
+                </connection>
+              </connectionPointIn>
+              <connectionPointOut>
+                <relPosition x="80" y="20"/>
+              </connectionPointOut>
+              <expression>InOutVar</expression>
+            </inOutVariable>
+            <outVariable localId="3" height="30" width="60" negated="false">
+              <position x="480" y="60"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="2">
+                  <position x="480" y="80"/>
+                  <position x="420" y="80"/>
+                </connection>
+              </connectionPointIn>
+              <expression>OutVar</expression>
+            </outVariable>
+          </SFC>
+        </body>
+      </pou>
+    </pous>
+  </types>
+  <instances>
+    <configurations>
+      <configuration name="Config0">
+        <resource name="Res0">
+          <task name="task0" priority="0" interval="T#20ms">
+            <pouInstance name="instance0" typeName="program0"/>
+          </task>
+        </resource>
+      </configuration>
+    </configurations>
+  </instances>
+</project>
