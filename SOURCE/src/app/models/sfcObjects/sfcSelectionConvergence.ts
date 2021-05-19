@@ -1,4 +1,11 @@
-/*** author: Franziska Kopp ***/
+/**
+ * @Filename : sfcSelectionConvergence.ts
+ *
+ * @Author : Franziska Kopp
+ *
+ * @Last_Modified : 19.05.2021
+ *
+ */
 
 import {ConnectionPoint, PLCNode} from '../PLCNode';
 

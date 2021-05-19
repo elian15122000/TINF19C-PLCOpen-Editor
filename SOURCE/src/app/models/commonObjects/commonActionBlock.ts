@@ -1,4 +1,11 @@
-/*** author: Franziska Kopp ***/
+/**
+ * @Filename : commonActionBlock.ts
+ *
+ * @Author : Franziska Kopp
+ *
+ * @Last_Modified : 19.05.2021
+ *
+ */
 
 // import {PLCNode} from '@swimlane/ngx-graph';
 import { ConnectionPoint, PLCNode } from '../PLCNode';

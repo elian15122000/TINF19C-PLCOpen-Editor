@@ -1,38 +1,102 @@
+<!--
+Author: Franziska Kopp
+Last Modified: 13.05.2021
+Purpose: Homepage
+-->
+
 <app-navigation></app-navigation>
-
-
 <div class="container">
     <div class="row">
         <div class="col-sm-3">
 
         </div>
         <div class="col-sm-6 text-center">
-            <h2>User Manual</h2>
+          <br>
+          <h2>User Manual</h2>
+          <br/>
+          <h3>1. Navigator</h3>
+          <h4>1.1. Usage</h4>
+          <br>
+          <br>
+          <img width="600" src="https://raw.githubusercontent.com/elian15122000/TINF19C-PLCOpen-Editor/master/Resources/NavigationBar.png">
+          <br>
+          <br>
+          There is a bar at the top of each (sub) page as you can see in the image above. On it there is a house icon for navigation back to the homepage. Next to the home button is an about button, which you can use to get to the about page, unless you are in the editor.
+          In addition, you can always see the name of the project or product including version (currently PLCOpen-Editor 1.0) on the bar.
+          <br>
+          <br>
+          <img width="600" src="https://raw.githubusercontent.com/elian15122000/TINF19C-PLCOpen-Editor/master/Resources/homepage.png">
+          <br><br>
+          On the homepage you can click on three boxes that are shown in the picture above. By clicking on them you can create a new project, upload and open an existing project or access the user manual. If you decide to create a new project click the button 'New Project' and an input will open which you can see in the following picture.
+          <br><br>
+          <img height=200 src="https://raw.githubusercontent.com/elian15122000/TINF19C-PLCOpen-Editor/master/Resources/NewProject.png">
+          <br><br>
+          Here you can enter the project name and then open it. If you decide to upload an existing project click the button 'Open Project'. Here you can upload a file to open it as you can see in the picture below.
+          <br><br>
+          <img height=200 src="https://raw.githubusercontent.com/elian15122000/TINF19C-PLCOpen-Editor/master/Resources/OpenProject.png">
+          <br><br>
+          If a project is opened (either by creating a new one or uploading an existing one), you can see the overview of the different POUs (programs) of the project.
+          <br><br>
+          <img height=300 src="https://raw.githubusercontent.com/elian15122000/TINF19C-PLCOpen-Editor/master/Resources/pouOverview.png">
+          <br><br>
+          Here you can add a new POU, delete an existing POU and also export your project by clicking the button 'export'. Furthermore you can change to another project by clicking the button 'Open another project'. If you decide to add a new POU, you will be asked to enter a name, the type and the language of the POU.
+          <br><br>
+          <img height=300 src="https://raw.githubusercontent.com/elian15122000/TINF19C-PLCOpen-Editor/master/Resources/createPOU.png">
+          <br><br>
+          For a language you can choose between Sequential Function Chart (SFC) and Function Block Diagram (FBD). For a type only "program" is supported at the moment. To open a POU and therefore get to the editor you simply have to click on the name of the POU.
+          <br>
+          <br>
+          <h3>2. Converter</h3>
+          <h4>2.1. Import</h4>
+          Click on 'Open Project' on the homepage to upload an existing file as described in Chapter 1. Choose the file and click 'open'. By clicking this button the file gets imported. The POUs get read and appear in the POU list. Click then on a specific POU to load the POU and illustrate it on the editor.
+          <br>
+          <br>
+          <h4>2.2. Export</h4>
+          To export the xml file you will have to go back to the POU overview, where there is an export button. By clicking the button, the xml-file of the project gets exported.
+          <br><br>
+          <img height=300 src="https://raw.githubusercontent.com/elian15122000/TINF19C-PLCOpen-Editor/master/Resources/Export.png">
+          <br><br>
+          <br>
+          <h3>3. Editor</h3>
 
+          <h4>3.1. Adding a function block</h4>
+          <br><br>
+          <img height=300 src="https://raw.githubusercontent.com/elian15122000/TINF19C-PLCOpen-Editor/master/Resources/Library.png">
+          <br><br>
+          On the right side of the window there is a library where you can choose a function block that you want to add. By clicking 'add to the editor' it will appear on the left side in the editor. By using drag and drop you can move the position of the function block within the editor. An example of an added SR and RS block is shown in the picture below.
+          <br><br>
+          <img width="600" src="https://raw.githubusercontent.com/elian15122000/TINF19C-PLCOpen-Editor/master/Resources/editor.png">
+          <br><br>
 
-          <h3> Navigator</h3>
-          There is a bar at the top of each (sub) page. On it there is a house icon for navigation back to the homepage. Next to the home button is an about button, which you can use to get to the about page, unless you are in the editor. In addition, you can always see the name of the project or product including version (currently PLCOpen-Editor 1.0) on the bar. On the homepage you can click on three boxes. Through them you can create a new project, upload and open an existing project or access the user manual. If you decide to create a new project an input opens, where you can enter the project name and open it. If you click the button to open an existing project, you can upload a file to open it. If a project is opened, you can see the overview with the different POUs (programs). There you can add a new POU, delete an existing pou, or export your project by clicking the button 'export'. Furthermore you can change to another project by clicking the button 'Open another project'. If you decide to add a new POU, you will be asked to enter a name, the type and the language of the POU. For a language you can choose between Sequential Function Chart(SFC) and Function Block Diagram (FBD). For a type you can choose between programm, function and function block. To open a POU and therefore get to the editor you simply have to click on the name of the POU.
+          <h4>3.2. Adding a variable</h4>
+          <br><br>
+          <img width="600" src="https://raw.githubusercontent.com/elian15122000/TINF19C-PLCOpen-Editor/master/Resources/variables.png">
+          <br><br>
+          Click the '+'-button to declare a new variable. There you can set a name, a class, an IEC-address, an initial value, options and you may add a documentation. Note that the field documentation is not supported yet and will therefore not be saved to the xml-file! All other attributes will be saved to the xml file. The name will be the name of the variable. For the field class you may choose where the variable shall be created (e.g. local or external). The field type will be the type of the variable like for example a bollean or an integer. Moreover you can set the IEC-address of the variable and you may set an initial value. You can also delete variables by clicking the delete icon. To add a variable to the editor, you can click the button 'add variable'.
+          <br><br>
+          <img height=300 src="https://raw.githubusercontent.com/elian15122000/TINF19C-PLCOpen-Editor/master/Resources/addVariable.png">
+          <br><br>
+          Here you can choose the variable that you want to add, and you can choose the type of the variable (if it has an input, output or both) and if it shall be negated. By clicking the button 'add' the variable will appear on the editor.
+          <br><br>
+          <h4>3.3. Adding connections</h4>
+          <br><br>
+          <img width="600" src="https://raw.githubusercontent.com/elian15122000/TINF19C-PLCOpen-Editor/master/Resources/connections.png">
+          <br><br>
+          Click on the element, you want to add a connection to. There will appear dropdown lists as shown in the image above, where you can choose what the input and output of a variable shall be connected with. Note that this feature is not implemented fully yet and bugs might appear.
+          <br><br>
+          <h4>3.4. Further actions</h4>
+          While editing you can press the button with the save icon.
+          <br><br>
+          <img height=100 src="https://raw.githubusercontent.com/elian15122000/TINF19C-PLCOpen-Editor/master/Resources/SaveToXML.png">
+          <br><br>
+          This button will cache your changes you made in the editor.
+          Furthermore there is a refresh icon next to the save button.
+          <br><br>
+          <img height=100 src="https://raw.githubusercontent.com/elian15122000/TINF19C-PLCOpen-Editor/master/Resources/update.png">
+          <br><br>
+          By clicking this button the chart will be updated.
           <br>
-          <h3> Converter</h3>
-          <h4>Import</h4>
-          Click on 'Open Project' on the homepage to upload an existing file. Choose the file and click 'open'. By clicking this button the file gets imported. The pous get read and appear in the pou list. Click then on a specific pou to load the pou and illustrate it on the editor. <br>
           <br>
-          <h4>Export</h4>
-          While editing you can press the button with the save icon to save your current version to the xml file. To export the xml file you can go back to the pou overview, where there is a export button. By clicking the button, the xml-file of the project gets exported.
-          <br>
-          <br>
-          <h3> Editor</h3>
-          <h4>Adding a function block</h4>
-          On the right side in the library choose a function block you want to add. By clicking 'add to the editor' it will appear on the left side in the editor. By using drag and drop you can move the position of the function block within the editor.<br>
-          <br>
-          <h4>Adding variables</h4>
-          Click the '+'-button to add a new variable. There you can set a name, a class, an IEC-address, an initial value, options and you may add a documentation. You can also delete variables by clicking the delete icon. To add a variable to the editor, you can click the button 'add variable', where you can choose the variable you want to add, and you can choose the type of the variable and if it shall be negated. By clicking the button 'add' the variable will appear on the editor.<br>
-          <br>
-          <h4>Adding connections</h4>
-          Click on the element, you want to add a connection to. There will appear dropdown lists, where you can choose what the input and output of a variable shall be connected with.
-          <br>
-            <a routerLink="" class="btn btn-outline-primary">Back</a>
-        </div>
         <div class="col-sm-3">
 
         </div>

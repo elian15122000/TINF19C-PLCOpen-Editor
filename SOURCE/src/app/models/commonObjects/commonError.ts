@@ -1,4 +1,11 @@
-/*** author: Franziska Kopp ***/
+/**
+ * @Filename : commonError.ts
+ *
+ * @Author : Franziska Kopp
+ *
+ * @Last_Modified : 19.05.2021
+ *
+ */
 
 import {Node} from '@swimlane/ngx-graph';
 import { PLCNode } from '../PLCNode';
