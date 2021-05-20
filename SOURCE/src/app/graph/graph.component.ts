@@ -228,21 +228,6 @@ export class GraphComponent implements OnInit {
     mySource.targetId = targetId;
     // add edge
     const newEdgeId = this.add_edge(sourceId, targetId);
-    // TODO: add reflocal id in target in xml
-    // check the model name of the node
-    // go through the list and change stuff
-    const testNode: PLCNode = {
-      id : 'dsad',
-      type : 'fbdInVariable',
-      connectionPoints : []
-    };
-    switch (testNode.type){
-      case 'fbdInVariable':
-        // loop fbdInVariable and change stuff
-        break;
-      default:
-        break;
-    }
 
     // set new id
     myTarget.edgeId = newEdgeId;
