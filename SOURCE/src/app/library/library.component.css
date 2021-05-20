@@ -1,32 +1,11 @@
-/* summary {
-  font-style: normal;
-  font-size: medium;
-}
-li {
-  font-style: normal;
-  font-size: medium;
-}
 
-
-.library {
-  position: absolute;
-  box-sizing: border-box;
-  right: 5px;
-  top: 0px;
-  bottom: 0px;
-  width: 20%;
-  border: solid black 2px;
-  padding-left: 10px;
-  margin: 5px;
-}
-
- */
 
 .libraryList {
   box-sizing: border-box;
   margin-top: 20px;
   padding: 20px;
-  overflow-y: scroll;
+  max-height: 1000px;
+  overflow-y: scroll !important;
   border-top: solid black 1px;
 }
 
