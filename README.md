@@ -27,7 +27,7 @@ Now go to your terminal and install angular by entering the following:
 ```npm install -g @angular/cli```
 
 **Installing dependencies**<br>
-Navigate in the terminal into OpenPLC-UI in the terminal and enter
+Navigate in the terminal into SOURCE in the terminal and enter
 ```npm i```
 this should install all the packages needed for the project
 
